@@ -98,7 +98,7 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
               </span>
             </p>
           </div>
-          <div className="flex p-5 flex-col justify-between h-full md:h-[600px]">
+          <div className="flex p-5 flex-col justify-between h-full md:h-[650px]">
             <ul role="list" className="mb-8 space-y-4 text-left">
               {features.map((feature, index) => (
                 <li key={index} className="flex items-center space-x-3">

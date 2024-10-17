@@ -62,7 +62,7 @@ const Contact = () => {
     <div id="contact" data-aos="zoom-in-right" className="mx-auto container p-8 rounded-lg">
       <div className="relative my-2 mb-4 ">
         <div className="absolute inset-0">
-          <div className="absolute inset-y-0 left-0 w-1/2 bg-slate-200 rounded-lg" />
+          <div className="absolute inset-y-0 left-0 w-1/2 bg-[#F1F5F9] rounded-lg" />
         </div>
         <div className="relative mx-auto max-w-7xl lg:grid lg:grid-cols-5">
           <div className="bg-[#F1F5F9] rounded-lg px-6 py-16 lg:col-span-2 lg:px-8 lg:py-24 xl:pr-12">

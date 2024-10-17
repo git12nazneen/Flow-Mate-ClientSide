@@ -79,7 +79,7 @@ const DashBoardHome = () => {
 
       {/* Cards */}
       <div className="lg:flex flex-1 my-10">
-        <div className="lg:mx-16 bg-gray-200 p-10 rounded-2xl shadow-lg hover:shadow-sky-100 w-full">
+        <div className="lg:mx-16 bg-[#F1F5F9] p-10 rounded-2xl shadow-lg hover:shadow-[#F1F5F9] w-full">
           <h1 className="mb-2 font-bold text-2xl">FlowMate User Dashboard</h1>
           <p className='text-gray-500 text-sm mb-4'>Here is some user information</p>
           <DashBoardCards />
