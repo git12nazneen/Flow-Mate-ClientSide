@@ -90,7 +90,7 @@ const DashBoardNav = () => {
               className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <BsMicrosoftTeams />
-              My Team
+              My Board
             </NavLink>
 
             {/* <NavLink
