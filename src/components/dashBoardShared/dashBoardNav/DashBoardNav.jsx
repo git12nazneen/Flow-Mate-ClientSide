@@ -26,8 +26,9 @@ const DashBoardNav = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 text-white w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
+        className={`bg-[#F1F5F9] text-black w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
       >
         {/* Sidebar content */}
         <div className="relative space-y-6">
@@ -44,7 +45,7 @@ const DashBoardNav = () => {
             {isAdmin ? (
               <NavLink
                 to="/dashboard/admin"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
               >
                 <RiDashboardHorizontalFill />
                 AdminDashboard
@@ -52,17 +53,17 @@ const DashBoardNav = () => {
             ) : (
               <NavLink
                 to="/dashboard/user"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
               >
                 <FaHome />
-                UserDashBoard
+                User Home
               </NavLink>
             )}
 
             {user?.role === "user" && (
               <NavLink
                 to="/dashboard/booking"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
               >
                 {/* Add your content */}
               </NavLink>
@@ -70,7 +71,7 @@ const DashBoardNav = () => {
 
             <NavLink
               to="/dashboard/tasks"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <RiSecurePaymentLine />
               Create tasks
@@ -78,23 +79,23 @@ const DashBoardNav = () => {
 
             <NavLink
               to="/dashboard/team-request"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <BsMicrosoftTeams />
               Team Request
             </NavLink>
             {/* comment those line by sajib */}
-            {/* <NavLink
+            <NavLink
               to="/dashboard/my-team"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <BsMicrosoftTeams />
               My Team
-            </NavLink> */}
+            </NavLink>
 
             {/* <NavLink
               to="/dashboard/create-team"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <RiSecurePaymentLine />
               Team Create
@@ -103,7 +104,7 @@ const DashBoardNav = () => {
             {isAdmin && (
               <NavLink
                 to="/dashboard/payment_history"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
               >
                 <RiSecurePaymentLine />
                 Payment History
@@ -114,7 +115,7 @@ const DashBoardNav = () => {
 
             <NavLink
               to="/"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
             >
               <FaHome />
               Home
@@ -131,8 +132,9 @@ const DashBoardNav = () => {
       <div className="flex-1">
         {/* Mobile Menu Button */}
         <button
-          className={`${isSidebarOpen ? "hidden" : ""
-            } lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full focus:outline-none`}
+          className={`${
+            isSidebarOpen ? "hidden" : ""
+          } lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full focus:outline-none`}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
           <svg
@@ -147,7 +149,6 @@ const DashBoardNav = () => {
         </button>
 
         {/* Page content here */}
-
       </div>
     </div>
   );
