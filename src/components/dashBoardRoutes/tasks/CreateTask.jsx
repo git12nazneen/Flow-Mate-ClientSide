@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import {
   Select,
@@ -24,11 +24,12 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 
 export function CreateTask({ boardName, teamName }) {
   // State to manage form inputs
+  const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [taskTitle, setTaskTitle] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
@@ -38,8 +39,29 @@ export function CreateTask({ boardName, teamName }) {
   const [loading, setLoading] = useState(false);
   const axiosCommon = UseAxiosCommon();
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
 
+
+  // search the user by name
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["data", search],
+    queryFn: async () => {
+      if (search) {
+        const res = await axiosCommon.get(`/search?name=${search}`);
+        return res.data;
+      }
+      return [];
+    },
+    enabled: !!search,
+  });
+// Inside the component
+useEffect(() => {
+  if (data?.name) {
+    setAssignedTo(data.name);
+  }
+  if (data?.email) {
+    setworkerMail(data.email);
+  }
+}, [data]);
   // Get query client
   const queryClient = useQueryClient();
 
@@ -122,6 +144,17 @@ export function CreateTask({ boardName, teamName }) {
           <DialogDescription>Here you are creating task</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols items-start gap-4">
+              <Label htmlFor="search" className="text-start">
+                Search
+              </Label>
+              <Input
+                id="search"
+                name="search"
+                className="col-span-3"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           <div className="grid gap-6 py-4">
             <div className="grid gap-2">
               <Label htmlFor="title">Task Title</Label>

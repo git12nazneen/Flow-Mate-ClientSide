@@ -120,14 +120,17 @@ const DashBoardHome = () => {
               <p className="text-sm font-bold text-gray-600">{formattedTime}</p>
             </div>
           </div>
-        </nav>
-      </div>
+          
+        </div>
+      </nav>
+    </div>
+    <div className="mx-5">
 
-      {/* Cards */}
-      <div className="lg:flex flex-1 my-10">
-        <div className="lg:mx-16 bg-[#F1F5F9] p-10 rounded-2xl shadow-lg hover:shadow-[#F1F5F9] w-full">
-          <h1 className="mb-2 font-bold text-2xl">FlowMate User Dashboard</h1>
-          <p className='text-gray-500 text-sm mb-4'>Here is some user information</p>
+    <PageHeader title="FlowMate User Dashboard"  breadcrumb="  Here is some user information"/>
+    </div>
+      {/* Dashboard Content */}
+      <div className="lg:flex flex-1 my-10 mx-10">  
+        <div className="px-5 py-10 rounded-2xl  hover:shadow-sky-200 w-full">        
           <DashBoardCards />
         </div>
       </div>
