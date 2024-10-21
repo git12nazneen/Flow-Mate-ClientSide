@@ -94,6 +94,15 @@ const TeamTask = () => {
     const { teamName } = useLoaderData(); // Assuming teamName is included in the loader data
     // console.log('teamName from loader:', teamName);
 
+   
+    // const fetchTasks = async () => {
+    //     const response = await fetch(`https://flowmate-a-team-collaboration-tool.vercel.app/createTask?search=${searchQuery}&sort=${sortOption}`);
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    // };
+
     // Fetch tasks using TanStack Query
     const { data: tasks = [], isLoading, error, refetch } = useQuery({
         queryKey: ['tasks'],
