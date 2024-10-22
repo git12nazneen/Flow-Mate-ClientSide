@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import {
   Select,
@@ -25,11 +25,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export function CreateTask({ boardName, teamName, team }) {
   // State to manage form inputs
+  const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [taskTitle, setTaskTitle] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
@@ -144,6 +146,17 @@ export function CreateTask({ boardName, teamName, team }) {
           <DialogDescription>Here you are creating task</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols items-start gap-4">
+              <Label htmlFor="search" className="text-start">
+                Search
+              </Label>
+              <Input
+                id="search"
+                name="search"
+                className="col-span-3"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           <div className="grid gap-6 py-4">
             <div className="grid gap-2">
               <Label htmlFor="title">Task Title</Label>
