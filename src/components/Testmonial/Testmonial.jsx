@@ -60,8 +60,8 @@ const Testimonial = () => {
       <div className="container mx-auto px-5 py-5">
         {/* Swiper Implementation for Sliding Cards */}
         <Swiper
-         modules={[Autoplay]} // Add Autoplay module here
-         autoplay={{ delay: 3000 }} // 3 seconds delay for autoplay
+          modules={[Autoplay]} // Add Autoplay module here
+          autoplay={{ delay: 3000 }} // 3 seconds delay for autoplay
           spaceBetween={30}
           slidesPerView={1} // One visible card on small screens, can be adjusted
           breakpoints={{
@@ -82,65 +82,56 @@ const Testimonial = () => {
 
             return (
               <SwiperSlide key={index} className="rounded-3xl">
-              <div
-                className={`relative p-8 rounded-2xl overflow-visible transition-transform transform hover:scale-105 w-96 h-80 group 
-                ${index % visibleSlides === middleIndex ? "bg-[#00053d] text-white" : "bg-white hover:bg-[#00053d] hover:text-white rounded-3xl"}
-                `}
-              >
-                {/* User Image */}
-                <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full border-4 border-white overflow-hidden z-20">
-                  <img
-                    src={feedback.image ? defaultImage : feedback.image}
-                    alt={feedback.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-            
-                {/* Card Content */}
-                <div className="mt-20 text-center pt-12">
-                  {/* Stars */}
-                  <div
-                    className={`flex justify-center mb-4 ${
-                      index % visibleSlides === middleIndex
-                        ? "text-white"
-                        : "group-hover:text-white"
-                    }`}
-                  >
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span
-                        key={i}
-                        className={`${i < feedback.rating ? (index % visibleSlides === middleIndex ? "text-white" : "text-yellow-400 group-hover:text-white") : "text-gray-300 group-hover:text-white"} text-xl`}
-                      >
-                        ★
-                      </span>
-                    ))}
+                <div
+                  className={`relative p-8 rounded-2xl overflow-visible transition-transform transform hover:scale-105 w-96 h-80 group 
+    bg-white hover:bg-transparent`}
+                >
+                  {/* Color Overlay for Hover */}
+                  <div className="absolute inset-0 z-10 overflow-hidden rounded-2xl">
+                    <div
+                      className="absolute inset-0 bg-[#00053d] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
+                    ></div>
                   </div>
-            
-                  {/* Review Text */}
-                  <p
-                    className={`mb-6 leading-relaxed ${
-                      index % visibleSlides === middleIndex
-                        ? "text-white"
-                        : "text-gray-500 group-hover:text-white"
-                    }`}
-                  >
-                    {feedback.feedback}
-                  </p>
-            
-                  {/* Reviewer Name */}
-                  <p
-                    className={`font-bold text-lg ${
-                      index % visibleSlides === middleIndex
-                        ? "text-white"
-                        : "text-gray-900 group-hover:text-white"
-                    }`}
-                  >
-                    {feedback.name}
-                  </p>
+
+                  {/* User Image */}
+                  <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full border-4 border-black overflow-hidden z-20">
+                    <img
+                      src={feedback.image ? feedback.image : defaultImage}
+                      alt={feedback.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="mt-20 text-center pt-12 z-20 relative">
+                    {/* Stars */}
+                    <div className="flex justify-center mb-4 group-hover:text-white">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <span
+                          key={i}
+                          className={`${i < feedback.rating
+                              ? "text-yellow-400 group-hover:text-white"
+                              : "text-gray-300 group-hover:text-white"
+                            } text-xl`}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Review Text */}
+                    <p className="mb-6 leading-relaxed text-gray-500 group-hover:text-white">
+                      {feedback.feedback}
+                    </p>
+
+                    {/* Reviewer Name */}
+                    <p className="font-bold text-lg text-gray-900 group-hover:text-white">
+                      {feedback.name}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-            
+              </SwiperSlide>
+
             );
           })}
         </Swiper>

@@ -80,7 +80,7 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <div>
         <div
           className={`flex flex-col border-2 rounded-lg p-1 hover:shadow-lg transform delay-150 mx-auto bg-white hover:bg-slate-200 active:bg-gray-700 active:text-white ${
@@ -213,7 +213,8 @@ const PricingPlans = () => {
   const filteredPlans = pricingPlans.filter((plan) => plan.type === activeTab);
 
   return (
-    <div className="max-w-7xl mx-auto" id="price">
+    <div className="bg-gray-100 mt-28">
+    <div className="max-w-7xl mx-auto " id="price">
       <section
         className="p-4 md:p-8"
       >
@@ -271,6 +272,7 @@ const PricingPlans = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };
