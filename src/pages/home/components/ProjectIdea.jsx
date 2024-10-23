@@ -14,8 +14,8 @@ const ProjectIdea = () => {
     return (
         <div className='bg-gray-50'>
             <Container>
-                <div data-aos="zoom-in" className="text-center pt-10 pb-10">
-                    <h1 className="text-2xl md:text-4xl font-bold mb-5">
+                <div data-aos="zoom-in" className="text-center pt-5 lg:pt-10 pb-5 lg:pb-10">
+                    <h1 className="text-xl lg:text-2xl md:text-4xl font-bold mb-5">
                     Explore our project system
                     </h1>
                     <p className="text-gray-600 text-sm md:text-base max-w-3xl mx-auto">
@@ -24,16 +24,16 @@ const ProjectIdea = () => {
                         helps us achieve success together.
                     </p>
                 </div>
-                <div class="flex flex-col lg:flex-row justify-between items-center py-16 px-8 gap-10">
+                <div class="flex flex-col lg:flex-row justify-between items-center py-5 lg:py-16 px-8 gap-10">
 
-                    <div class="lg:w-1/2 text-left">
-                        <h1 class="text-2xl md:text-5xl text-gray-800 mb-6">
+                    <div class="lg:w-1/2 text-center lg:text-left">
+                        <h1 class="text-xl lg:text-2xl md:text-5xl text-gray-800 mb-6">
                             Built-in project time tracking & team reporting
                         </h1>
-                        <p class="text-lg text-gray-600 mb-4">
+                        <p class="text-md lg:text-lg text-gray-600 mb-4">
                             Per project and task time tracking is as simple as possible and is designed in a way that requires little to no effort. <span class="font-semibold text-gray-800">Reporting features make daily check-ins unnecessary</span> as all work can be viewed and progress tracked by selected team members.
                         </p>
-                        <p class="text-lg text-gray-600 mb-6">
+                        <p class="text-md lg:text-lg text-gray-600 mb-6">
                             Ditch additional task time-tracking software. Follow any project, any team's, and individual productivity in a single place.
                         </p>
                         <a href="#" class="text-purple-600 font-semibold mb-4 inline-block">

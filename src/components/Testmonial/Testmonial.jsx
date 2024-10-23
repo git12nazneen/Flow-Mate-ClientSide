@@ -45,9 +45,9 @@ const Testimonial = () => {
     });
   }, []);
   return (
-    <div className=" mx-auto p-10">
+    <div className=" mx-auto p-5 lg:p-10">
       <div data-aos="zoom-in" className="text-center pt-6 pb-10">
-        <h1 className="text-2xl md:text-4xl font-bold mb-5">
+        <h1 className="text-xl lg:text-2xl md:text-4xl font-bold mb-5">
           Some real-life feedback from our customers
         </h1>
         <p className="text-gray-600 text-sm md:text-base max-w-3xl mx-auto">

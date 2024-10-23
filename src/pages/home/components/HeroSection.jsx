@@ -11,14 +11,14 @@ function HeroSection() {
  
   return (
     <Container>
-      <section className=" py-16">
+      <section className=" py-5 lg:py-16">
         <HeroHeaderSection />
         <div>
-          <div className="text-4xl font-bold md:text-[92px] text-center text-[#00053d] md:leading-[5.5rem] my-8">
+          <div className="text-xl lg:text-4xl font-bold md:text-[92px] text-center text-[#00053d] md:leading-[5.5rem] my-8">
             Empower Your Team, <br /> Achieve More Together
           </div>
 
-          <p className="mb-8 text-[22px] text-center text-[#31373D]">
+          <p className="mb-8 text-sm lg:text-[22px] text-center text-[#31373D]">
             Boost productivity and collaborate effortlessly with{" "}
             <strong>FlowMate</strong>, your all-in-one team platform.
           </p>

@@ -52,9 +52,9 @@ const Features = () => {
     });
   }, []);
   return (
-    <Container className="mt-14">
+    <Container className="mt-5 lg:mt-14">
       <div data-aos="zoom-in" className="text-center">
-        <h1 className="text-2xl md:text-4xl font-bold pb-5">
+        <h1 className="text-xl lg:text-2xl md:text-4xl font-bold pb-5 px-5 lg:px-0">
           Breeze through issues at lighting speed
         </h1>
         <p className="text-muted-foreground text-sm md:text-base max-w-3xl mx-auto">
@@ -69,7 +69,7 @@ const Features = () => {
       {/* Bento Grid */}
 
       <div className="grid sm:grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 my-10 md:my-16 ">
-        <div className="col-span-2 bg-slate-300 text-gray-950 rounded-xl p-5 shadow-sm ">
+        <div className="col-span-1 lg:col-span-2 bg-slate-300 text-gray-950 rounded-xl p-5 shadow-sm ">
           <ListFilter className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
 
           <h1 className="text-2xl font-bold text-[#00053d] py-2">
@@ -86,7 +86,7 @@ const Features = () => {
             style={{ filter: "invert(1)" }}
           />
         </div>
-        <div className="col-span-2 col-start-1 row-start-2 bg-slate-300 text-gray-950 rounded-xl pt-5 pl-5 shadow-sm">
+        <div className="col-span-1 lg:col-span-2 col-start-1 row-start-2 bg-slate-300 text-gray-950 rounded-xl pt-5 pl-5 shadow-sm">
           <div className="flex justify-between">
             <div>
               <Command className="w-10 h-10 border rounded-xl p-2 border-slate-500" />

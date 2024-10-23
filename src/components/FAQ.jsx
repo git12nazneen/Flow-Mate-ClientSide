@@ -18,9 +18,9 @@ export function FAQ() {
     });
   }, []);
   return (
-    <div className="pt-10 pb-10 mx-20">
+    <div className="py-5 lg:py-10 mx-5 lg:mx-20">
       <div  data-aos="zoom-in" className="text-center pb-10">
-        <h1 className="text-2xl md:text-4xl font-bold mb-5">
+        <h1 className="text-xl lg:text-2xl md:text-4xl font-bold mb-5">
           Frequently Asked Questions
         </h1>
         <p className="text-gray-600 text-sm md:text-base max-w-3xl mx-auto">
