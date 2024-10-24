@@ -29,15 +29,15 @@ const TeamOrganize = () => {
   ];
   return (
     <div>
-      <div className="text-center mb-12">
-        <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
-          The platform that <span className="text-blue-500">brings</span> your
-          team together.
-        </h1>
 
-        <p className="max-w-2xl mx-auto mt-3 text-center text-gray-500">
-          Collaborate, manage projects, and reach new productivity peaks with
-          FlowMate.
+      <div className="my-5 lg:my-20">
+        <h2 className="text-center text-xl lg:text-4xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
+        The platform that
+          <span className="text-[#00053d]"> brings</span> your team together.
+        </h2>
+        <p className="text-center text-sm text-slate-800">
+        Collaborate, manage projects, and reach new productivity peaks with
+        FlowMate.
         </p>
       </div>
 

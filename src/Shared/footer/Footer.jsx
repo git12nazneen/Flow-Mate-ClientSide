@@ -198,8 +198,8 @@ const Footer = () => {
         <div className="flex items-center justify-between">
           <Link to={"/"}>
             <img
-              className="lg:w-40 w-28 md:w-32 h-auto"
-              src="https://i.ibb.co/sH49jvt/logo2-removebg-preview.png"
+              className="lg:w-28 w-16  h-auto"
+              src="https://i.ibb.co.com/9ncLQzX/newlogo-removebg-preview.png"
               alt="FlowMate Logo"
             />
           </Link>

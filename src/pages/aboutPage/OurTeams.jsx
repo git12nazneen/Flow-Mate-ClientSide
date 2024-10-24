@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
+import Marquee from "react-fast-marquee";
 
-const teamMembers = [
+const teamitems = [
   {
     name: "Nabila Ferdous",
     role: "Project Manager",
@@ -43,66 +44,67 @@ const teamMembers = [
     image:
       "https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
   },
-  {
-    name: "Nahidul Islam Siam",
-    role: "DevOps Engineer",
-    description:
-      "Specializes in bridging the gap between development and operations, maintaining infrastructure and automating deployments.",
-    image:
-      "https://images.unsplash.com/photo-1548946526-f69e2424cf45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-  },
+ 
 ];
 
-const TeamSection = () => {
+const OurTeams = () => {
   useEffect(() => {
     AOS.init(); // Initialize AOS
   }, []);
 
   return (
-    <div className="mb-16 max-w-7xl mx-auto">
-      <div className="flex justify-center mx-auto pt-16 ">
-        <div className="mx-auto max-w-3xl text-center pb-12 md:pb-20">
-          <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
-            Building <span className="text-blue-500">Team</span>
-          </h1>
-          <p className="text-center text-gray-500">
-            The Talented People Behind the Scenes of the Organization
-          </p>
-        </div>
+    <div className=" max-w-7xl mx-auto">
+      <div className="flex justify-center mx-auto pb-10 ">
+      <div className="my-5 lg:my-0">
+        <h2 className="text-center text-xl lg:text-4xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
+        Building <span className="text-[#00053d]">Team</span>
+        </h2>
+        <p className="text-center text-sm text-slate-800">
+        The Talented People Behind the Scenes of the Organization
+        </p>
       </div>
-      <div className="w-full bg-gray-100 px-10 pt-10">
-        {/* Grid layout for cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {teamMembers.map((member, index) => (
-            <div
+      </div>
+   
+      <div className="w-full  px-10 pt-0">
+         {/* TOP SIDE */}
+      <Marquee
+        direction="left"
+        gradient
+        autoFill
+        speed={20}
+        pauseOnHover
+        pauseOnClick
+      >
+        {teamitems.map((item, index) => (
+          <div key={index} className="logo-container mr-[89px]">
+           <div
               key={index}
-              data-aos="fade-up" 
-              data-aos-duration="600" // Duration of animation
+             
               className="relative mt-16 mb-32 sm:mb-24 transform transition-transform duration-300 hover:scale-105 rounded-md"
             >
-              <div className="rounded overflow-hidden shadow-md bg-white hover:bg-sky-50 transition-all duration-300 lg:h-80 h-96 flex flex-col justify-between">
+              <div className="rounded overflow-hidden shadow-md bg-white hover:bg-sky-50 transition-all duration-300 w-64 lg:h-60 h-96 flex flex-col justify-between mt-10">
                 <div className="absolute -mt-20 w-full flex justify-center">
                   <div className="h-32 w-32">
                     <img
-                      src={member.image}
-                      alt={`Display Picture of ${member.name}`}
+                      src={item.image}
+                      alt={`Display Picture of ${item.name}`}
                       className="rounded-full object-cover h-full w-full shadow-md"
                     />
                   </div>
                 </div>
                 <div className="px-6 mt-16 flex-grow flex flex-col justify-between">
                   <div>
-                    <h1 className="font-bold text-3xl text-center mb-1">
-                      {member.name}
+                    <h1 className="font-bold text-2xl text-center mb-1">
+                      {item.name}
                     </h1>
                     <p className="text-gray-800 text-sm text-center">
-                      {member.role}
+                      {item.role}
                     </p>
-                    <p className="text-center text-gray-600 text-base pt-3 font-normal">
-                      {member.description}
-                    </p>
+                    {/* <p className="text-center text-gray-600 text-base pt-3 font-normal">
+                      {item.description}
+                    </p> */}
                   </div>
-                  <div className="w-full flex justify-center pt-5 pb-5">
+                  <div className="w-full flex justify-center  pb-5">
                     <a href="javascript:void(0)" className="mx-5">
                       <FaGithub size={24} color="#718096" />
                     </a>
@@ -116,11 +118,14 @@ const TeamSection = () => {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </Marquee>
+        {/* Grid layout for cards */}
+       
       </div>
     </div>
   );
 };
 
-export default TeamSection;
+export default OurTeams;

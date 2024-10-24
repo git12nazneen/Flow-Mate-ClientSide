@@ -57,11 +57,11 @@ function Navbar() {
     <div className="fixed top-0 w-full z-50">
       {/* DESKTOP */}
       <Container>
-        <div className="hidden lg:block animate-in fade-in zoom-in bg-white p-4 rounded-full mt-5 shadow-2xl">
+        <div className="hidden lg:block animate-in fade-in zoom-in bg-slate-50 py-2 px-4 rounded-full mt-5 shadow-2xl">
           <div className="flex justify-between mx-4 items-center">
             <img
               className="h-14 w-auto"
-              src="https://i.ibb.co.com/sH49jvt/logo2-removebg-preview.png"
+              src="https://i.ibb.co.com/9ncLQzX/newlogo-removebg-preview.png"
               alt=""
             />
             <div className="flex gap-[20px] xl:gap-[50px] text-[18px] items-center select-none">
@@ -71,7 +71,7 @@ function Navbar() {
                     to={item.route}
                     className={({ isActive }) =>
                       isActive
-                        ? "relative rounded px-5 py-2 overflow-hidden group bg-[#00053d] relative hover:bg-gradient-to-r hover:from-[#00053d] hover:to-[#00053d9c] text-white hover:ring-2 hover:ring-offset-2 hover:ring-[#00053d] transition-all ease-out duration-300"
+                        ? "relative rounded-2xl px-5 py-2 overflow-hidden group bg-[#00053d] relative hover:bg-gradient-to-r hover:from-[#00053d] hover:to-[#00053d9c] text-white hover:ring-2 hover:ring-offset-2 hover:ring-[#00053d] transition-all ease-out duration-300"
                         : "hover:text-[#1e40af] cursor-pointer flex items-center gap-2 font-[500] text-gray"
                     }
                   >
@@ -125,7 +125,7 @@ function Navbar() {
           <Link to="/">
             <img
               className="h-8 md:h-12 w-auto"
-              src="https://i.ibb.co.com/sH49jvt/logo2-removebg-preview.png"
+              src="https://i.ibb.co.com/9ncLQzX/newlogo-removebg-preview.png"
               alt=""
             />
           </Link>
@@ -143,7 +143,7 @@ function Navbar() {
           </div>
         </div>
         {menu && (
-          <div className="my-8 select-none animate-in slide-in-from-right">
+          <div className="my-4 select-none animate-in slide-in-from-right">
             <div className="flex flex-col items-center justify-center gap-8 mt-8 mx-4">
               {links.map((item, index) => (
                 <div key={index} className="flex gap-2 ">
@@ -193,7 +193,6 @@ function Navbar() {
         )}
       </div>
     </div>
-   
   );
 }
 

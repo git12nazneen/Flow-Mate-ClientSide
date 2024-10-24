@@ -28,8 +28,7 @@ const DashBoardProfile = () => {
         formData.append("image", imageFile);
 
         const response = await axiosCommon.post(
-          `https://api.imgbb.com/1/upload?key=${
-            import.meta.env.VITE_IMAGE_HOSTING_KEY
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY
           }`,
           formData
         );
@@ -71,7 +70,7 @@ const DashBoardProfile = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-center my-5 font-bold text-primary text-2xl">
+      <h1 className="text-center my-5 font-bold text-[#020b70] text-2xl">
         User Profile
       </h1>
       <div className="px-4">
@@ -103,21 +102,19 @@ const DashBoardProfile = () => {
             {/* Tab Navigation */}
             <div className="flex justify-center mt-6">
               <button
-                className={`px-4 py-2 text-sm font-semibold ${
-                  activeTab === "profile"
-                    ? "border-b-2 border-blue-500"
-                    : "text-gray-500"
-                }`}
+                className={`px-4 py-2 text-sm font-semibold ${activeTab === "profile"
+                  ? "border-b-2 border-[#020b70]"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => handleTabSwitch("profile")}
               >
                 Profile
               </button>
               <button
-                className={`ml-4 px-4 py-2 text-sm font-semibold ${
-                  activeTab === "update"
-                    ? "border-b-2 border-blue-500"
-                    : "text-gray-500"
-                }`}
+                className={`ml-4 px-4 py-2 text-sm font-semibold ${activeTab === "update"
+                  ? "border-b-2 border-blue-500"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => handleTabSwitch("update")}
               >
                 Update Profile
@@ -169,7 +166,7 @@ const DashBoardProfile = () => {
 
                     <button
                       type="submit"
-                      className="bg-primary text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+                      className="bg-[#020b70] text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
                     >
                       Save Changes
                     </button>

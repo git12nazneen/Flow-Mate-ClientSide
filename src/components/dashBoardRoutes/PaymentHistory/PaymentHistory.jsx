@@ -48,7 +48,7 @@ const PaymentHistory = () => {
   return (
     <div>
       <section className="container p-10 mx-auto">
-      <PageHeader title="Payment data"  breadcrumb="All the payments here show"/>
+        <PageHeader title="Payment data" breadcrumb="All the payments here show" />
         <div className="flex flex-col lg:flex-row justify-between gap-x-3 mx-10">
           <div className="flex items-center">
             <h2 className="text-lg font-medium text-gray-800 dark:text-white">
@@ -62,7 +62,7 @@ const PaymentHistory = () => {
           {/* Export Button */}
           <Button
             onClick={handleExportToExcel}
-            className="bg-blue-800 hover:bg-blue-950 text-white px-4 py-2 rounded"
+            className="bg-[#020b70] hover:bg-blue-950 text-white px-4 py-2 rounded"
           >
             Export to Excel
           </Button>
@@ -73,7 +73,7 @@ const PaymentHistory = () => {
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gradient-to-r from-blue-800 to-blue-700">
+                  <thead className="bg-[#020b70]">
                     <tr>
                       <th className="px-4 py-3.5 text-sm font-normal text-left text-white">
                         Serial No

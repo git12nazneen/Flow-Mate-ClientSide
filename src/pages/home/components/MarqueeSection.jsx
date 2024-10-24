@@ -31,7 +31,7 @@ function MarqueeSection() {
    <Container>
      <section data-aos="zoom-in" className="my-5 sm:my-16 px-5 lg:px-0">
       <div className="my-5 lg:my-20">
-        <h2 className="text-center text-xl lg:text-2xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
+        <h2 className="text-center text-xl lg:text-4xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
           Trusted by
           <span className="text-[#00053d]"> the world’s </span>
           most innovative teams

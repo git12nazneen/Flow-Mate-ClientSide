@@ -30,24 +30,23 @@ import TodoList from "../../tasks/TodoList";
 import InProgress from "../../tasks/InProgress";
 import Completed from "../../tasks/Completed";
 import axios from "axios";
+import CalendarView from "./CalendarView";
 
 // Function to fetch tasks from your API
-const fetchTasks = async () => {
-  const response = await fetch(
-    "https://flowmate-a-team-collaboration-tool.vercel.app/createTask"
-  );
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  return response.json();
-};
+// const fetchTasks = async () => {
+//   const response = await fetch(
+//     "https://flowmate-a-team-collaboration-tool.vercel.app/createTask"
+//   );
+//   if (!response.ok) {
+//     throw new Error("Network response was not ok");
+//   }
+//   return response.json();
+// };
 
 // Main Component
 const TeamTask = () => {
   const axiosCommon = UseAxiosCommon();
   // track user
-  const user = useSelector((state) => state.auth.user);
-  const email = user?.email;
   const [elapsedTime, setElapsedTime] = useState({}); // Track elapsed time for tasks
   const [timers, setTimers] = useState({}); // Track timers for each task
   const [stoppedTimersState, setStoppedTimersState] = useState({}); //for disable timer
@@ -298,8 +297,7 @@ const TeamTask = () => {
     };
   }, [tasks, timers]);
 
-// Timer handlin
-
+  // Timer handlin
 
   const exportToCSV = (teamName) => {
     // Ensure that `tasks` is loaded (assuming `tasks` is from your state or props)
@@ -356,15 +354,20 @@ const TeamTask = () => {
       });
     }
   };
+  const userEmail = useSelector((state) => state.auth.user?.email); // Get user email from Redux
 
   let isUploading = false; // Add a flag to track uploading status
-
   const onDrop = async (acceptedFiles, taskId) => {
     console.log("Accepted Files:", acceptedFiles);
     console.log("Before Upload - Task ID:", taskId);
 
     if (!taskId) {
       console.error("Task ID is invalid!");
+      return;
+    }
+
+    if (!userEmail) {
+      console.error("User email is not available!");
       return;
     }
 
@@ -410,6 +413,7 @@ const TeamTask = () => {
         }
       );
 
+      // Show success message
       Swal.fire({
         title: "Congratulations!",
         text: "You have successfully submitted your task files.",
@@ -421,6 +425,11 @@ const TeamTask = () => {
       });
 
       console.log("Files successfully saved on the server:", response.data);
+
+      // Update file count for the user
+      const updateFileCountUrl = `/users/update-file-count/${userEmail}`;
+      await axiosCommon.put(updateFileCountUrl);
+      console.log("File count updated for user:", userEmail);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -447,25 +456,25 @@ const TeamTask = () => {
     return <div>Error loading tasks: {error.message}</div>;
   }
 
-  // Filter tasks based on the teamName
-  // const filteredTasks = tasks.filter((task) => task.teamName === teamName);
-
   return (
     <div>
       <PageHeader
         title={`${teamName}`}
         breadcrumb="See all task of your team"
       ></PageHeader>
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
-        <div>
-          <TodoList />
+      <div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
+          <div>
+            <TodoList />
+          </div>
+          <div>
+            <InProgress />
+          </div>
+          <div>
+            <Completed />
+          </div>
         </div>
-        <div>
-          <InProgress />
-        </div>
-        <div>
-          <Completed />
-        </div>
+       
       </div>
 
       <div className="flex flex-col justify-center mx-12">
@@ -510,9 +519,8 @@ const TeamTask = () => {
               {/* Dropdown Menu */}
               <div
                 id="dropdownDelay"
-                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
-                  isDropdownVisible ? "" : "hidden"
-                }`}
+                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${isDropdownVisible ? "" : "hidden"
+                  }`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -572,15 +580,15 @@ const TeamTask = () => {
           {tasks.map((task) => (
             <div
               key={task._id}
-              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2"
+              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2 h-80"
             >
               <div className="flex justify-between">
-                <div className="text-blue-500 text-xs font-semibold mb-2 uppercase">
+                <div className="text-black bg-sky-300 px-2 py-1 rounded-3xl  text-xs font-semibold mb-2 uppercase">
                   {task?.priority}
                 </div>
                 <Link
                   to={`/dashboard/taskDetails/${task._id}`}
-                  className="text-blue-500 text-xs font-semibold mb-2 uppercase"
+                  className="text-black bg-sky-300 px-2 py-1 rounded-3xl text-xs font-semibold mb-2 uppercase"
                 >
                   <span>See Details</span>
                 </Link>
@@ -645,11 +653,10 @@ const TeamTask = () => {
                   onClick={() => handleStopTimer(task)}
                   disabled={stoppedTimersState[task._id]} // Disable button when timer is stopped
                   className={`text-sm h-9 mt-2 px-2 rounded 
-                                        ${
-                                          stoppedTimersState[task._id]
-                                            ? "bg-gray-500 cursor-not-allowed"
-                                            : "bg-red-500"
-                                        } 
+                                        ${stoppedTimersState[task._id]
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-red-500"
+                    } 
                       text-white`}
                 >
                   Stop Timer
@@ -702,6 +709,7 @@ const TeamTask = () => {
         </div>
       )}
       {/* </div> */}
+      <CalendarView />
     </div>
   );
 };

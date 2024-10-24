@@ -99,7 +99,7 @@ const MyTeam = () => {
 
               {/* Show Edit/Delete buttons if the user is the team leader */}
 
-             
+
               {team.teamLeader === currentUser?._id && (
                 <div className="flex justify-start mt-4 space-x-4">
                   <EditTeam
@@ -126,7 +126,7 @@ const MyTeam = () => {
         <p className="text-center text-gray-500 text-2xl">
           {user?.email
             ? `No Board found , Please create boards ${user?.email}`
-            : "Please log in to see your boards."}
+            : "Please log in to look your boards."}
         </p>
       )}
     </div>

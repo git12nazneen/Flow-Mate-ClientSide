@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import UseAxiosCommon from '@/hooks/UseAxiosCommon';
+import { useSelector } from 'react-redux';
 
 const ActivityChart = () => {
   const [chartData, setChartData] = useState(null);
-
+const axiosCommon = UseAxiosCommon()
+const user = useSelector((state) => state.auth.user);
+const email = user.email
+  
   useEffect(() => {
     // Fetching data from the provided endpoint
-    axios.get('http://localhost:5000/timerData')
+    axiosCommon.get('/timerData')
       .then((response) => {
         const data = response.data;
 
         // Preparing data for chart
-        const labels = data.map((item) => item.taskTitle);
+        const labels = data.map((item) => item.taskTitle.slice(0,7));
         const elapsedHours = data.map((item) => 
           item.elapsedTime.hours + item.elapsedTime.minutes / 60 + item.elapsedTime.seconds / 3600
         );

@@ -54,9 +54,9 @@ const Features = () => {
   return (
     <Container className="mt-5 lg:mt-14">
       <div data-aos="zoom-in" className="text-center">
-        <h1 className="text-xl lg:text-2xl md:text-4xl font-bold pb-5 px-5 lg:px-0">
+        <h1 className="text-xl lg:text-4xl md:text-4xl font-bold pb-5 px-5 lg:px-0">
           Breeze through issues at lighting speed
-        </h1>
+        </h1>  
         <p className="text-muted-foreground text-sm md:text-base max-w-3xl mx-auto">
           Having trouble keeping track of your issues and their corresponding
           status as well as your team progress? Volta introduces the ultimate

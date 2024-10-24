@@ -21,23 +21,60 @@ import {
 } from "@/components/ui/select";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import axios from "axios"; // Make sure you have axios installed
 
 export function Feedback() {
   const user = useSelector((state) => state.auth.user);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
 
   const handleSubmit = async () => {
     const userEmail = user?.email;
-    console.log(userEmail);
     if (!userEmail) {
       console.error("User email is not available");
       return;
     }
 
+    let imageUrl = null;
+
     try {
-      const response = await fetch(
-        `https://flowmate-a-team-collaboration-tool.vercel.app/feedback?email=${userEmail}`,
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("image", selectedImage);
+
+        // Upload image to imgbb
+        const response = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${
+            import.meta.env.VITE_IMAGE_HOSTING_KEY
+          }`,
+          formData
+        );
+
+        if (
+          response.data &&
+          response.data.data &&
+          response.data.data.display_url
+        ) {
+          imageUrl = response.data.data.display_url; // Extract the image URL correctly
+          console.log("Image URL:", imageUrl); // Log the image URL for debugging
+        } else {
+          console.error("Failed to get image URL from imgbb response");
+        }
+      }
+
+      // Ensure the image URL is correctly sent in the feedback request
+      console.log("Sending feedback with image URL:", imageUrl);
+
+      const feedbackResponse = await fetch(
+        `http://localhost:5000/feedback?email=${userEmail}`,
         {
           method: "POST",
           headers: {
@@ -46,19 +83,21 @@ export function Feedback() {
           body: JSON.stringify({
             rating,
             feedback,
+            imageUrl, // Include the image URL in the feedback payload
           }),
         }
       );
 
-      const data = await response.json();
+      const data = await feedbackResponse.json();
+      console.log(data);
 
-      if (response.ok) {
-        console.log("Feedback submitted:", data);
+      if (feedbackResponse.ok) {
+        console.log("Feedback submitted successfully:", data);
       } else {
         console.error("Error submitting feedback:", data.message);
       }
     } catch (error) {
-      console.error("Error posting feedback:", error);
+      console.error("Error during feedback submission:", error);
     }
   };
 
@@ -79,7 +118,7 @@ export function Feedback() {
             We appreciate your feedback. It helps us improve our product.
           </AlertDialogDescription>
           <Label htmlFor="rating">Rating</Label>
-          <Select onValueChange={setRating}>
+          <Select onValueChange={(value) => setRating(Number(value))}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select Rating" />
             </SelectTrigger>
@@ -94,6 +133,14 @@ export function Feedback() {
 
           <Label htmlFor="feedback">Your Feedback</Label>
           <Textarea onChange={(e) => setFeedback(e.target.value)} />
+
+          <Label htmlFor="image-upload">Attach Image (optional)</Label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-2"
+          />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
