@@ -32,6 +32,7 @@ import Completed from "../../tasks/Completed";
 import axios from "axios";
 import CalendarView from "./CalendarView";
 import DragAndDrop from "../../tasks/DragAndDrop";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 // Main Component
 const TeamTask = () => {
@@ -448,13 +449,14 @@ const TeamTask = () => {
 
   return (
     <div>
+      <UpperNavigation />
       <PageHeader
         title={`${teamName}`}
         breadcrumb="See all task of your team"
       ></PageHeader>
       <div>
         <DragAndDrop />
-        <CalendarView />
+
       </div>
 
       <div className="flex flex-col justify-center mx-12">
@@ -499,9 +501,8 @@ const TeamTask = () => {
               {/* Dropdown Menu */}
               <div
                 id="dropdownDelay"
-                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
-                  isDropdownVisible ? "" : "hidden"
-                }`}
+                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${isDropdownVisible ? "" : "hidden"
+                  }`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -634,11 +635,10 @@ const TeamTask = () => {
                   onClick={() => handleStopTimer(task)}
                   disabled={stoppedTimersState[task._id]} // Disable button when timer is stopped
                   className={`text-sm h-9 mt-2 px-2 rounded 
-                                        ${
-                                          stoppedTimersState[task._id]
-                                            ? "bg-gray-500 cursor-not-allowed"
-                                            : "bg-red-500"
-                                        } 
+                                        ${stoppedTimersState[task._id]
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-red-500"
+                    } 
                       text-white`}
                 >
                   Stop Timer
@@ -690,6 +690,7 @@ const TeamTask = () => {
           No task assign to you.
         </div>
       )}
+      <CalendarView />
       {/* </div> */}
     </div>
   );

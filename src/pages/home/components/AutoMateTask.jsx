@@ -19,11 +19,8 @@ const AutoMateTask = () => {
               drag-and-drop interface that makes new automations easier to
               visualize and deploy.
             </p>
-            <div className="bg-[#393d6dc7] rounded-xl px-7 py-10">
-              <h1 className="font-bold text-2xl">
-                "We have managed to save 10% of our workforce time using
-                FlowMate."
-              </h1>
+            <div className='bg-[#393d6dc7] hover:bg-black shadow-lg shadow-slate-300 rounded-xl px-5 lg:px-7 py-5 lg:py-10'>
+              <h1 className='font-bold text-md lg:text-2xl'>"We have managed to save 10% of our workforce time using FlowMate."</h1>
             </div>
           </div>
         </div>

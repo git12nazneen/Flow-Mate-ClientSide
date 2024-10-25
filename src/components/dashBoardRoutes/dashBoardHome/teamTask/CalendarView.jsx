@@ -52,7 +52,7 @@ const CalendarView = () => {
         events={filteredEvents}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 600, margin: "50px" }}
+        style={{ height: 600, margin: "50px ", background: "white" }}
       />
     </div>
   );

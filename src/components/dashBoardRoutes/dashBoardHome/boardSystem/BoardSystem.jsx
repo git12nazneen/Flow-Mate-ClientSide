@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import MyTeam from "../../myTeam/MyTeam";
 import PageHeader from "@/components/pageHeader/PageHeader";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 const BoardSystem = () => {
   const axiosCommon = UseAxiosCommon();
@@ -36,6 +37,7 @@ const BoardSystem = () => {
 
   return (
     <div className="mx-auto">
+      <UpperNavigation />
       <PageHeader
         title="Your Work Space"
         breadcrumb="FlowMate Work Space" />
