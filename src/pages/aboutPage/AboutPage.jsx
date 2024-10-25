@@ -11,10 +11,7 @@ const AboutPage = () => {
       <AboutScrum />
       <TeamOrganize />
       {/* <FlowMateService/> */}
-      <section className='p-10'>
-        <div>Team page show</div>
-        <p>hello psuh</p>
-      </section>
+
 
 
 
