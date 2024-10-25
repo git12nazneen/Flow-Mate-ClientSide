@@ -11,7 +11,7 @@ const ActivityChart = () => {
     if (!user) return;
 
     axios
-      .get("http://localhost:5000/timerData")
+      .get("https://flowmate-a-team-collaboration-tool.vercel.app/timerData")
       .then((response) => {
         const allData = response.data;
 
