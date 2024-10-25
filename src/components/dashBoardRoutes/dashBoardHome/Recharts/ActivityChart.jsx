@@ -1,44 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ActivityChart = () => {
+  const { user } = useSelector((state) => state.auth);
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    // Fetching data from the provided endpoint
-    axios.get('http://localhost:5000/timerData')
-      .then((response) => {
-        const data = response.data;
+    if (!user) return;
 
-        // Preparing data for chart
-        const labels = data.map((item) => item.taskTitle);
-        const elapsedHours = data.map((item) => 
-          item.elapsedTime.hours + item.elapsedTime.minutes / 60 + item.elapsedTime.seconds / 3600
+    axios
+      .get("http://localhost:5000/timerData")
+      .then((response) => {
+        const allData = response.data;
+
+        const filteredData = allData.filter(
+          (item) => item.workerMail === user.email
+        );
+
+        const labels = filteredData.map((item) => item.taskTitle);
+        const elapsedHours = filteredData.map(
+          (item) =>
+            item.elapsedTime.hours +
+            item.elapsedTime.minutes / 60 +
+            item.elapsedTime.seconds / 3600
         );
 
         setChartData({
           labels,
-          datasets: [{
-            label: 'Elapsed Time (Hours)',
-            data: elapsedHours,
-            backgroundColor: 'rgba(56, 189, 248, 0.8)', // Sky-500 color
-            borderColor: 'rgba(56, 189, 248, 1)',
-            borderWidth: 2,
-            borderSkipped: false,
-            // Mimic triangular effect by adjusting borderRadius
-            borderRadius: {
-              topLeft: 0,
-              topRight: 0,    // One side rounded more to form a triangle
-              bottomLeft: 0,
-              bottomRight: 0,
-            }
-          }]
+          datasets: [
+            {
+              label: "Elapsed Time (Hours)",
+              data: elapsedHours,
+              backgroundColor: "rgba(56, 189, 248, 0.8)", // Sky-500 color
+              borderColor: "rgba(56, 189, 248, 1)",
+              borderWidth: 2,
+              borderSkipped: false,
+              borderRadius: {
+                topLeft: 0,
+                topRight: 0,
+                bottomLeft: 0,
+                bottomRight: 0,
+              },
+            },
+          ],
         });
       })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [user]); // Effect runs when user changes
 
   const options = {
     responsive: true,
@@ -46,28 +56,28 @@ const ActivityChart = () => {
     plugins: {
       legend: {
         display: true,
-      }
+      },
     },
     scales: {
       x: {
         grid: {
-          display: false
-        }
+          display: false,
+        },
       },
       y: {
         beginAtZero: true,
         grid: {
-          display: true
+          display: true,
         },
         ticks: {
-          stepSize: 10
-        }
-      }
-    }
+          stepSize: 10,
+        },
+      },
+    },
   };
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div style={{ width: "100%", height: "400px", overflow: "auto" }}>
       {chartData ? (
         <Bar data={chartData} options={options} />
       ) : (
@@ -76,4 +86,5 @@ const ActivityChart = () => {
     </div>
   );
 };
+
 export default ActivityChart;

@@ -71,7 +71,7 @@ const NotificationDropdown = () => {
                   key={team._id}
                   className="flex items-center justify-between p-3 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-x-3">
                     <div className="size-2 bg-green-500 rounded-full"></div>
                     <p className="text-sm text-muted-foreground">
                       {team.displayName} invite you to join {""}
