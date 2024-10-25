@@ -3,10 +3,12 @@ import React from 'react';
 import ActivityChart from '../dashBoardHome/Recharts/ActivityChart';
 import SupportiveCard from '../dashBoardHome/SuuportiveCard';
 import UserContributionSummary from '../ userContributionSummary/ UserContributionSummary';
+import UpperNavigation from '@/components/admin/elements/upperNavigation/UpperNavigation';
 
 const UserActivity = () => {
   return (
     <div>
+      <UpperNavigation />
       <PageHeader title="User Activity" breadcrumb="  Here is some user activity" />
       <div className="flex flex-col justify-between mx-14 my-10 gap-6">
         {/* Visitor Insights Chart */}
