@@ -9,6 +9,7 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa"; // Importing icons
 
 import PageHeader from "@/components/pageHeader/PageHeader";
 import { EditTeam } from "../../editTeam/EditTeam";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 const AllTeam = () => {
   const user = useSelector((state) => state.auth.user);
@@ -76,6 +77,7 @@ const AllTeam = () => {
   return (
   
 <div>
+<UpperNavigation />
   <PageHeader title='This all are your teams' breadcrumb='See and find your task clicking the team name'/>
 <div className="container mx-auto px-10 py-10 ">
   {currentUserTeams.length > 0 ? (

@@ -31,6 +31,7 @@ import InProgress from "../../tasks/InProgress";
 import Completed from "../../tasks/Completed";
 import axios from "axios";
 import CalendarView from "./CalendarView";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 // Function to fetch tasks from your API
 // const fetchTasks = async () => {
@@ -458,6 +459,7 @@ const TeamTask = () => {
 
   return (
     <div>
+      <UpperNavigation />
       <PageHeader
         title={`${teamName}`}
         breadcrumb="See all task of your team"

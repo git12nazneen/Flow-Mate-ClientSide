@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { CreateTask } from "../tasks/CreateTask";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 const Team = () => {
   const axiosCommon = UseAxiosCommon();
@@ -114,7 +115,10 @@ const Team = () => {
   }
 
   return (
+    <div>
+    <UpperNavigation />
     <div className="md:w-[1050px] mx-auto mt-8">
+     
       <section className="container p-10 mx-auto">
       
         <div className="flex flex-col lg:flex-row justify-between gap-x-3 mb-6">
@@ -235,6 +239,7 @@ const Team = () => {
         )}
         </div>
       </section>
+    </div>
     </div>
   );
 };
