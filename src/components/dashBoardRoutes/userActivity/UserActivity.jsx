@@ -17,9 +17,9 @@ const UserActivity = () => {
           <UserContributionSummary />
         </div>
         {/* Round Graph */}
-        <div className="  w-1/3  ">
+        {/* <div className="  w-1/3  ">
           <SupportiveCard />
-        </div>
+        </div> */}
       </div>
     </div>
   );

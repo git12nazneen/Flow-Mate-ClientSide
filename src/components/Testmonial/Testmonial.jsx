@@ -23,7 +23,7 @@ const Testimonial = () => {
   } = useQuery({
     queryKey: ["feedbackData"],
     queryFn: async () => {
-      const { data } = await axiosCommon.get(`/feedbacks`);
+      const { data } = await axiosCommon.get('/feedbacks');
       return data;
     },
   });
