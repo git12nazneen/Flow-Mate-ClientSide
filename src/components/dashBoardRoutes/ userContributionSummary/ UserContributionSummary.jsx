@@ -3,6 +3,7 @@ import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';  // Ensures chart.js elements are loaded
 import UseAxiosCommon from '@/hooks/UseAxiosCommon';
 import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 
 const UserContributionSummary = () => {
   // Get user email from Redux state
@@ -25,22 +26,48 @@ const UserContributionSummary = () => {
     fetchContributions();
   }, [userEmail, axiosCommon]);
 
+  // Fetch total task data using useQuery
+  const { data: totalTask = {} } = useQuery({
+    queryKey: ["totalTask"],
+    queryFn: async () => {
+      const { data } = await axiosCommon.get(`/createTask/task-count/${userEmail}`);
+      console.log(data);
+      return data;
+    },
+    enabled: !!userEmail, // Only fetch if userEmail is available
+  });
+
   // Display a loading message while data is being fetched
-  if (!contributions) {
+  if (!contributions || !totalTask) {
     return <div>Loading...</div>;
   }
 
-  // Prepare data for the charts
-  const data = {
-    labels: ['Tasks Completed', 'Files Uploaded', 'Comments Made'],
+  // Prepare data for the Pie chart
+  const pieData = {
+    labels: ['Tasks Completed', 'Files Uploaded'],
     datasets: [{
       data: [
-        contributions.tasksCompleted || 0, // Default to 0 if undefined
-        contributions.fileCount || 0,   // Default to 0 if undefined
-        contributions.commentsMade || 0 // Default to 0 if undefined
+        totalTask.totalTasks || 0, // Default to 0 if undefined
+        contributions.fileCount || 0,       // Default to 0 if undefined
+
       ],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-      hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      backgroundColor: ['#FF6384', '#36A2EB',],
+      hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+    }]
+  };
+
+  // Prepare data for the Bar chart (total tasks)
+  const barData = {
+    labels: ['Total Tasks', 'file-count'],
+    datasets: [{
+      label: 'Task Overview',
+      data: [
+        totalTask.totalTasks || 0,              // Total tasks
+        contributions.fileCount || 0,          // Tasks in progress
+        // To-do tasks
+      ],
+      backgroundColor: ['#4BC0C0', '#FF9F40'],
+      hoverBackgroundColor: ['#4BC0C0', '#FF9F40'],
     }]
   };
 
@@ -53,14 +80,14 @@ const UserContributionSummary = () => {
     <div className="w-full max-w-6xl mx-auto p-4">
       <h2 className="text-center text-2xl font-bold mb-6">User Contribution Summary</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Pie Chart */}
+        {/* Pie Chart for Contributions */}
         <div className="relative w-full h-96 p-4 bg-white shadow-md rounded-md">
-          <Pie data={data} options={options} />
+          <Pie data={pieData} options={options} />
         </div>
 
-        {/* Bar Chart */}
+        {/* Bar Chart for Total Task Data */}
         <div className="relative w-full h-96 p-4 bg-white shadow-md rounded-md">
-          <Bar data={data} options={options} />
+          <Bar data={barData} options={options} />
         </div>
       </div>
     </div>

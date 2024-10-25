@@ -37,12 +37,7 @@ const ActivityChart = () => {
               borderColor: "rgba(56, 189, 248, 1)",
               borderWidth: 2,
               borderSkipped: false,
-              borderRadius: {
-                topLeft: 0,
-                topRight: 0,
-                bottomLeft: 0,
-                bottomRight: 0,
-              },
+              borderRadius: 5, // Rounded corners
             },
           ],
         });
@@ -56,12 +51,22 @@ const ActivityChart = () => {
     plugins: {
       legend: {
         display: true,
+        labels: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Adjust font size based on screen width
+          },
+        },
       },
     },
     scales: {
       x: {
         grid: {
           display: false,
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth < 768 ? 8 : 10, // Smaller font for mobile screens
+          },
         },
       },
       y: {
@@ -70,14 +75,17 @@ const ActivityChart = () => {
           display: true,
         },
         ticks: {
-          stepSize: 10,
+          stepSize: 1,
+          font: {
+            size: window.innerWidth < 768 ? 8 : 10,
+          },
         },
       },
     },
   };
 
   return (
-    <div style={{ width: "100%", height: "400px", overflow: "auto" }}>
+    <div className="w-full h-64 md:h-80 lg:h-96 xl:h-[500px] p-4">
       {chartData ? (
         <Bar data={chartData} options={options} />
       ) : (
