@@ -30,6 +30,7 @@ import AllTeam from "@/components/dashBoardRoutes/dashBoardHome/allTeam/AllTeam"
 import TeamTask from "@/components/dashBoardRoutes/dashBoardHome/teamTask/TeamTask";
 import MyTask from "@/components/dashBoardRoutes/dashBoardHome/myTaskk/MyTask";
 import TodoList from "@/components/dashBoardRoutes/tasks/TodoList";
+import AllUser from "@/components/admin/allUser/AllUser";
 
 export const router = createBrowserRouter([
   {
@@ -114,11 +115,11 @@ export const router = createBrowserRouter([
             `http://localhost:5000/createTask/${params.id}`
           ),
       },
-     
-        {
+
+      {
         path: "taskCard",
         element: <TaskCard />,
-        
+
       },
       {
         path: "updateTask/:id",
@@ -128,10 +129,14 @@ export const router = createBrowserRouter([
             `${import.meta.env.VITE_API_URL}/createTask/${params.id}`
           ),
       },
-    
+
       {
         path: "payment_history",
         element: <PaymentHistory />,
+      },
+      {
+        path: 'all_user',
+        element: <AllUser />
       },
       {
         path: "create-team",
@@ -162,7 +167,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-team",
-        element: <AllTeam/>,
+        element: <AllTeam />,
       },
       {
         path: "teamTask/:teamName",
