@@ -1,48 +1,56 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData } from "react-router-dom";
-
-// Function to fetch tasks from your API
-const fetchTasks = async () => {
-  const response = await fetch('https://flowmate-a-team-collaboration-tool.vercel.app/createTask');
-  if (!response.ok) {
-      throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
+import UseAxiosCommon from "@/hooks/UseAxiosCommon";
+import { useEffect } from "react";
 
 const Completed = () => {
-  const { teamName } = useLoaderData(); 
-
+  const { teamName } = useLoaderData();
+  const axiosCommon = UseAxiosCommon();
+  const stage = "done";
+  useEffect(() => {
+    console.log("teamName from loader:", teamName);
+  }, [teamName]); // Add teamName as a dependency to log only when it changes
   // Fetch tasks using TanStack Query
-  const { data: tasks = [], isLoading, error } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: fetchTasks,
+  const {
+    data: tasks = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["tasks", teamName, stage],
+    queryFn: async () => {
+      if (teamName) {
+        const { data } = await axiosCommon.get(
+          `/createTask/tasksByStage/${teamName}/${stage}`
+        );
+        return data;
+      } else {
+        throw new Error("Team name is missing");
+      }
+    },
+    enabled: !!teamName,
   });
 
+  console.log(tasks);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error loading todos</div>;
+    console.error("Error loading tasks:", error);
+    return <div>Error loading tasks: {error.message}</div>; // Show the error message
   }
-
-  // Filter todos to get only those that are completed
-  const filteredTodos = tasks.filter(
-    (todo) => todo.stage === "done" && todo.teamName === teamName
-  );
 
   return (
     <div className="p-4 w-80 mx-auto bg-white rounded-lg shadow-md">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">Completed</h2>
 
-      {/* Show message if there are no completed todos */}
-      {filteredTodos.length === 0 ? (
+      {/* Show message if there are no completed tasks */}
+      {tasks.length === 0 ? (
         <div className="text-gray-500">No completed tasks</div>
       ) : (
-        // Existing completed todos
-        filteredTodos.map((todo) => (
+        tasks.map((todo) => (
           <div
             key={todo._id} // Use _id for uniqueness
             className="p-2 mb-2 bg-gray-100 rounded-md flex justify-between items-center"

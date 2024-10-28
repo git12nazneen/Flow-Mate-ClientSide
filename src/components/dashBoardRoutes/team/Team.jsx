@@ -13,8 +13,8 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 const Team = () => {
   const axiosCommon = UseAxiosCommon();
   const initialTeam = useLoaderData();
-  
-  const { boardName,teamName} = initialTeam;
+
+  const { boardName, teamName } = initialTeam;
 
   const [team, setTeam] = useState(initialTeam); // Use state to manage team data
   const user = useSelector((state) => state.auth.user);
@@ -115,132 +115,128 @@ const Team = () => {
   }
 
   return (
-    <div>
-    <UpperNavigation />
-    <div className="md:w-[1050px] mx-auto mt-8">
-     
-      <section className="container p-10 mx-auto">
-      
-        <div className="flex flex-col lg:flex-row justify-between gap-x-3 mb-6">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 ">
-            Team {team?.teamName} Members
-          </h2>
-          
-          <div className="justify-end space-x-2">
-          
-          <CreateTask boardName={boardName}teamName={teamName} />
-        
+    <>
+      <UpperNavigation />
+      <div className="md:w-[1050px] mx-auto mt-8">
 
-          {team?.teamLeader === userss[0]?._id && (
-            <AddTeamMember refetch={refetch} team={team} />
-          )}
-          </div>
-        </div>
-<div>
-        {filteredMembers.length === 0 ? (
-          <div className="flex justify-center items-center min-h-screen">
-            <div className="text-4xl font-bold text-center text-red-600">
-              No team members added!
+        <section className="container p-10 mx-auto">
+
+          <div className="flex flex-col lg:flex-row justify-between gap-x-3 mb-6">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800 ">
+              Team {team?.teamName} Members
+            </h2>
+
+            <div className="justify-end space-x-2">
+
+              <CreateTask boardName={boardName} teamName={teamName} />
+
+
+              {team?.teamLeader === userss[0]?._id && (
+                <AddTeamMember refetch={refetch} team={team} />
+              )}
             </div>
           </div>
-        ) : (
-          <div className="overflow-hidden border border-gray-200 md:rounded-lg shadow-lg">
-            <table className="min-w-full bg-white">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                    Name
-                  </th>
-                  <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                    Role
-                  </th>
-                  <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                    Email
-                  </th>
-                  <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                    Active
-                  </th>
-                  {team?.teamLeader === userss[0]?._id && (
-                    <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                      Actions
-                    </th>
-                  )}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {filteredMembers?.map((member) => (
-                  <tr
-                    key={member._id}
-                    className="hover:bg-gray-50 transition-colors duration-150"
-                  >
-                    <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                      <div className="flex items-center gap-x-2">
-                        <img
-                          className="object-cover w-10 h-10 rounded-full"
-                          src={
-                            member.photo || "https://via.placeholder.com/150"
-                          }
-                          alt={member.displayName}
-                        />
-                        <span className="font-medium">
-                          {member.displayName}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {member?.role}
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {member.email}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <div
-                        className={`inline-flex items-center px-3 py-1 rounded-full ${
-                          member.isActive ? "bg-emerald-100" : "bg-red-100"
-                        }`}
+          <div>
+            {filteredMembers.length === 0 ? (
+              <div className="flex justify-center items-center min-h-screen">
+                <div className="text-4xl font-bold text-center text-red-600">
+                  No team members added!
+                </div>
+              </div>
+            ) : (
+              <div className="overflow-hidden border border-gray-200 md:rounded-lg shadow-lg">
+                <table className="min-w-full bg-white">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                        Name
+                      </th>
+                      <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                        Role
+                      </th>
+                      <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                        Email
+                      </th>
+                      <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                        Active
+                      </th>
+                      {team?.teamLeader === userss[0]?._id && (
+                        <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                          Actions
+                        </th>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {filteredMembers?.map((member) => (
+                      <tr
+                        key={member._id}
+                        className="hover:bg-gray-50 transition-colors duration-150"
                       >
-                        <span
-                          className={`h-1.5 w-1.5 rounded-full ${
-                            member.isActive ? "bg-emerald-500" : "bg-red-500"
-                          }`}
-                        ></span>
-                        <span
-                          className={`text-sm font-normal ${
-                            member.isActive
-                              ? "text-emerald-500"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {member.isActive ? "Active" : "Inactive"}
-                        </span>
-                      </div>
-                    </td>
-                    {team?.teamLeader === userss[0]?._id && (
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <button
-                            onClick={() => handleRemoveMember(member._id)}
-                            disabled={member?.role === "team-admin"} // Disable button if the member is a 'team-admin'
-                            className={`text-white p-2 rounded-md bg-red-500 hover:bg-red-600 duration-75 
-          ${
-            member?.role === "team-admin" ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+                        <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-x-2">
+                            <img
+                              className="object-cover w-10 h-10 rounded-full"
+                              src={
+                                member.photo || "https://via.placeholder.com/150"
+                              }
+                              alt={member.displayName}
+                            />
+                            <span className="font-medium">
+                              {member.displayName}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                          {member?.role}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                          {member.email}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <div
+                            className={`inline-flex items-center px-3 py-1 rounded-full ${member.isActive ? "bg-emerald-100" : "bg-red-100"
+                              }`}
                           >
-                            Remove
-                          </button>
-                        </div>
-                      </td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full ${member.isActive ? "bg-emerald-500" : "bg-red-500"
+                                }`}
+                            ></span>
+                            <span
+                              className={`text-sm font-normal ${member.isActive
+                                ? "text-emerald-500"
+                                : "text-red-500"
+                                }`}
+                            >
+                              {member.isActive ? "Active" : "Inactive"}
+                            </span>
+                          </div>
+                        </td>
+                        {team?.teamLeader === userss[0]?._id && (
+                          <td className="px-4 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-x-2">
+                              <button
+                                onClick={() => handleRemoveMember(member._id)}
+                                disabled={member?.role === "team-admin"} // Disable button if the member is a 'team-admin'
+                                className={`text-white p-2 rounded-md bg-red-500 hover:bg-red-600 duration-75 
+          ${member?.role === "team-admin" ? "opacity-50 cursor-not-allowed" : ""
+                                  }`}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
-        )}
-        </div>
-      </section>
-    </div>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 

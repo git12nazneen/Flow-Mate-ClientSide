@@ -8,21 +8,17 @@ import UpperNavigation from '@/components/admin/elements/upperNavigation/UpperNa
 const UserActivity = () => {
   return (
     <div>
-            <UpperNavigation />
+      <UpperNavigation />
       <PageHeader title="User Activity" breadcrumb="  Here is some user activity" />
       <div className="flex flex-col justify-between mx-14 my-10 gap-6">
         {/* Visitor Insights Chart */}
         <div className="w-full bg-white rounded-2xl">
           <ActivityChart />
         </div>
-        <div className='w-2/4'>
+        <div className='w-2/4 mx-auto'>
           <UserContributionSummary />
+        </div>
 
-        </div>
-        {/* Round Graph */}
-        <div className="  w-1/3  ">
-          <SupportiveCard />
-        </div>
       </div>
     </div>
   );

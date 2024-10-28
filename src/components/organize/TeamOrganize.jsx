@@ -30,7 +30,7 @@ const TeamOrganize = () => {
   return (
     <div>
 
-      <div className="my-5 lg:my-20">
+      <div className="my-5 lg:my-20 px-10 lg:px-auto pb-7 lg:pb-0">
         <h2 className="text-center text-xl lg:text-4xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
         The platform that
           <span className="text-[#00053d]"> brings</span> your team together.

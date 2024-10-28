@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-import axios from 'axios';
-import UseAxiosCommon from '@/hooks/UseAxiosCommon';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ActivityChart = () => {
   const [chartData, setChartData] = useState(null);
@@ -12,38 +10,42 @@ const user = useSelector((state) => state.auth.user);
 const email = user.email
   
   useEffect(() => {
-    // Fetching data from the provided endpoint
-    axiosCommon.get('/timerData')
-      .then((response) => {
-        const data = response.data;
+    if (!user) return;
 
-        // Preparing data for chart
-        const labels = data.map((item) => item.taskTitle.slice(0,7));
-        const elapsedHours = data.map((item) => 
-          item.elapsedTime.hours + item.elapsedTime.minutes / 60 + item.elapsedTime.seconds / 3600
+    axios
+      .get("https://flowmate-a-team-collaboration-tool.vercel.app/timerData")
+      .then((response) => {
+        const allData = response.data;
+
+        const filteredData = allData.filter(
+          (item) => item.workerMail === user.email
+        );
+
+        const labels = filteredData.map((item) => item.taskTitle);
+        const elapsedHours = filteredData.map(
+          (item) =>
+            item.elapsedTime.hours +
+            item.elapsedTime.minutes / 60 +
+            item.elapsedTime.seconds / 3600
         );
 
         setChartData({
           labels,
-          datasets: [{
-            label: 'Elapsed Time (Hours)',
-            data: elapsedHours,
-            backgroundColor: 'rgba(56, 189, 248, 0.8)', // Sky-500 color
-            borderColor: 'rgba(56, 189, 248, 1)',
-            borderWidth: 2,
-            borderSkipped: false,
-            // Mimic triangular effect by adjusting borderRadius
-            borderRadius: {
-              topLeft: 0,
-              topRight: 0,    // One side rounded more to form a triangle
-              bottomLeft: 0,
-              bottomRight: 0,
-            }
-          }]
+          datasets: [
+            {
+              label: "Elapsed Time (Hours)",
+              data: elapsedHours,
+              backgroundColor: "rgba(56, 189, 248, 0.8)", // Sky-500 color
+              borderColor: "rgba(56, 189, 248, 1)",
+              borderWidth: 2,
+              borderSkipped: false,
+              borderRadius: 5, // Rounded corners
+            },
+          ],
         });
       })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [user]); // Effect runs when user changes
 
   const options = {
     responsive: true,
@@ -51,28 +53,41 @@ const email = user.email
     plugins: {
       legend: {
         display: true,
-      }
+        labels: {
+          font: {
+            size: window.innerWidth < 768 ? 10 : 12, // Adjust font size based on screen width
+          },
+        },
+      },
     },
     scales: {
       x: {
         grid: {
-          display: false
-        }
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: window.innerWidth < 768 ? 8 : 10, // Smaller font for mobile screens
+          },
+        },
       },
       y: {
         beginAtZero: true,
         grid: {
-          display: true
+          display: true,
         },
         ticks: {
-          stepSize: 10
-        }
-      }
-    }
+          stepSize: 1,
+          font: {
+            size: window.innerWidth < 768 ? 8 : 10,
+          },
+        },
+      },
+    },
   };
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div className="w-full h-64 md:h-80 lg:h-96 xl:h-[500px] p-4">
       {chartData ? (
         <Bar data={chartData} options={options} />
       ) : (
@@ -81,4 +96,5 @@ const email = user.email
     </div>
   );
 };
+
 export default ActivityChart;

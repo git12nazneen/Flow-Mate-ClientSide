@@ -75,70 +75,70 @@ const AllTeam = () => {
   );
 
   return (
-  
-<div>
-<UpperNavigation />
-  <PageHeader title='This all are your teams' breadcrumb='See and find your task clicking the team name'/>
-<div className="container mx-auto px-10 py-10 ">
-  {currentUserTeams.length > 0 ? (
-    <div className="overflow-x-auto">
-      <table className="min-w-full table-auto bg-white shadow-2xl border border-gray-800 rounded-lg overflow-hidden">
-        <thead className="bg-[#1e43b8] ">
-          <tr>
-            <th className="p-4 text-left text-gray-200 font-semibold uppercase">Team Name</th>
-            <th className="p-4 text-left text-gray-200 font-semibold uppercase">Admin</th>
-            <th className="p-4 text-left text-gray-200 font-semibold uppercase">Members</th>
-            <th className="p-4 text-left text-gray-200 font-semibold uppercase">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUserTeams.map((team) => (
-            <tr key={team._id} className="border-b transition-colors duration-200">
-              <td className="p-4">
-                <Link
-                  to={`/dashboard/teamTask/${team?.teamName}`}
-                  className="hover:underline  text-gray-800 text-md"
-                >
-                  {team?.teamName}
-                </Link>
-              </td>
-              <td className="p-4 text-gray-700 text-base opacity-90">{team.displayName}</td>
-              <td className="p-4 text-gray-700 text-base opacity-80">{team.teamMembers.length}</td>
-              <td className="p-4">
-                {team.teamLeader === currentUser?._id && (
-                  <div className="flex space-x-3">
-                    <EditTeam
-                      currentUserTeams={team}
-                      refetch={refetch}
-                      className="flex items-center bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-colors duration-200"
-                    >
-                      <FaEdit className="mr-1" />
-                      Edit
-                    </EditTeam>
-                    <button
-                      className="flex items-center text-red-500 hover:text-red-600 transition-colors duration-200"
-                      onClick={() => handleDelete(team._id)}
-                    >
-                      <FaTrash className="mr-1" />
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+    <div>
+      <UpperNavigation />
+      <PageHeader title='This all are your teams' breadcrumb='See and find your task clicking the team name' />
+      <div className="container mx-auto px-10 py-10 ">
+        {currentUserTeams.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto bg-white shadow-2xl border border-gray-800 rounded-lg overflow-hidden">
+              <thead className="bg-[#1e43b8] ">
+                <tr>
+                  <th className="p-4 text-left text-gray-200 font-semibold uppercase">Team Name</th>
+                  <th className="p-4 text-left text-gray-200 font-semibold uppercase">Admin</th>
+                  <th className="p-4 text-left text-gray-200 font-semibold uppercase">Members</th>
+                  <th className="p-4 text-left text-gray-200 font-semibold uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentUserTeams.map((team) => (
+                  <tr key={team._id} className="border-b transition-colors duration-200">
+                    <td className="p-4">
+                      <Link
+                        to={`/dashboard/teamTask/${team?.teamName}`}
+                        className="hover:underline  text-gray-800 text-md"
+                      >
+                        {team?.teamName}
+                      </Link>
+                    </td>
+                    <td className="p-4 text-gray-700 text-base opacity-90">{team.displayName}</td>
+                    <td className="p-4 text-gray-700 text-base opacity-80">{team.teamMembers.length}</td>
+                    <td className="p-4">
+                      {team.teamLeader === currentUser?._id && (
+                        <div className="flex space-x-3">
+                          <EditTeam
+                            currentUserTeams={team}
+                            refetch={refetch}
+                            className="flex items-center bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-colors duration-200"
+                          >
+                            <FaEdit className="mr-1" />
+                            Edit
+                          </EditTeam>
+                          <button
+                            className="flex items-center text-red-500 hover:text-red-600 transition-colors duration-200"
+                            onClick={() => handleDelete(team._id)}
+                          >
+                            <FaTrash className="mr-1" />
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-center text-gray-500 text-2xl">
+            {user?.email
+              ? `No Board found, Please create boards ${user?.email}`
+              : "Please log in to see your boards."}
+          </p>
+        )}
+      </div>
     </div>
-  ) : (
-    <p className="text-center text-gray-500 text-2xl">
-      {user?.email
-        ? `No Board found, Please create boards ${user?.email}`
-        : "Please log in to see your boards."}
-    </p>
-  )}
-</div>
-</div>
 
 
   );

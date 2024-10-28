@@ -31,18 +31,8 @@ import InProgress from "../../tasks/InProgress";
 import Completed from "../../tasks/Completed";
 import axios from "axios";
 import CalendarView from "./CalendarView";
+import DragAndDrop from "../../tasks/DragAndDrop";
 import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
-
-// Function to fetch tasks from your API
-// const fetchTasks = async () => {
-//   const response = await fetch(
-//     "https://flowmate-a-team-collaboration-tool.vercel.app/createTask"
-//   );
-//   if (!response.ok) {
-//     throw new Error("Network response was not ok");
-//   }
-//   return response.json();
-// };
 
 // Main Component
 const TeamTask = () => {
@@ -465,18 +455,8 @@ const TeamTask = () => {
         breadcrumb="See all task of your team"
       ></PageHeader>
       <div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
-          <div>
-            <TodoList />
-          </div>
-          <div>
-            <InProgress />
-          </div>
-          <div>
-            <Completed />
-          </div>
-        </div>
-       
+        <DragAndDrop />
+
       </div>
 
       <div className="flex flex-col justify-center mx-12">
@@ -710,6 +690,7 @@ const TeamTask = () => {
           No task assign to you.
         </div>
       )}
+      <CalendarView />
       {/* </div> */}
       <CalendarView />
     </div>

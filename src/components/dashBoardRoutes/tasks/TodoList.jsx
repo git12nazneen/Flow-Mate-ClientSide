@@ -1,57 +1,68 @@
-// export default TodoList;
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData } from "react-router-dom";
+import UseAxiosCommon from "@/hooks/UseAxiosCommon";
+import { useEffect } from "react";
 
-// Function to fetch tasks from your API
-const fetchTasks = async () => {
-  const response = await fetch('https://flowmate-a-team-collaboration-tool.vercel.app/createTask');
-  if (!response.ok) {
-      throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
-
-const TodoList = () => {
-  // Get teamName from the loader
-  const { teamName } = useLoaderData(); 
-
+const ToDoList = () => {
+  const { teamName } = useLoaderData();
+  const axiosCommon = UseAxiosCommon();
+  const stage = "todo";
+  useEffect(() => {
+    console.log("teamName from loader:", teamName);
+  }, [teamName]); // Add teamName as a dependency to log only when it changes
   // Fetch tasks using TanStack Query
-  const { data: tasks = [], isLoading, error } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: fetchTasks,
+  const {
+    data: tasks = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["tasks", teamName, stage],
+    queryFn: async () => {
+      if (teamName) {
+        const { data } = await axiosCommon.get(
+          `/createTask/tasksByStage/${teamName}/${stage}`
+        );
+        return data;
+      } else {
+        throw new Error("Team name is missing");
+      }
+    },
+    enabled: !!teamName,
   });
+
+  console.log(tasks);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error loading tasks</div>;
+    console.error("Error loading tasks:", error);
+    return <div>Error loading tasks: {error.message}</div>; // Show the error message
   }
-
-  // Filter tasks based on the current teamName and "todo" stage
-  const filteredTodos = tasks.filter(
-    (todo) => todo.stage === "todo" && todo.teamName === teamName
-  );
 
   return (
     <div className="p-4 w-80 mx-auto bg-white rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">Todos for {teamName}</h2>
+      <h2 className="text-lg font-semibold text-gray-700 mb-4">
+        To Do
+      </h2>
 
-      {/* Show message if there are no todos */}
-      {filteredTodos.length === 0 ? (
-        <div className="text-gray-500">No tasks added recently for this team</div>
+      {/* Show message if there are no completed tasks */}
+      {tasks.length === 0 ? (
+        <div className="text-gray-500">No completed tasks</div>
       ) : (
-        // Display the filtered todos
-        filteredTodos.map((todo) => (
+        tasks.map((todo) => (
           <div
             key={todo._id} // Use _id for uniqueness
             className="p-2 mb-2 bg-gray-100 rounded-md flex justify-between items-center"
           >
             <span
-              className={`text-gray-800 ${todo.completed ? "line-through" : ""}`}
+              className={`text-gray-800 ${
+                todo.completed ? "line-through" : ""
+              }`}
             >
-              {todo.taskTitle.slice(0, 35)} {/* Display the task title */}
+              {todo.taskTitle.slice(0, 35)} {/* Display the title */}
             </span>
           </div>
         ))
@@ -60,4 +71,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default ToDoList;

@@ -37,7 +37,7 @@ const BoardSystem = () => {
 
   return (
     <div className="mx-auto">
-       <UpperNavigation />
+      <UpperNavigation />
       <PageHeader
         title="Your Work Space"
         breadcrumb="FlowMate Work Space" />

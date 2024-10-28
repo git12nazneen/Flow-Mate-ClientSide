@@ -8,18 +8,13 @@ const AboutPage = () => {
 
   return (
 
-    <div className="bg-gray-50 pt-24">
+    <div className="bg-gray-100 pt-24">
       <AboutScrum />
       <TeamOrganize />
+      <div className=" lg:pt-16">
+        <OurTeams />
+      </div>
       {/* <FlowMateService/> */}
-      <section className='p-10'>
-        {/* <div>Team page show</div>
-        <p>hello psuh</p> */}
-      </section>
-        <OurTeams></OurTeams>
-
-
-
     </div>
   );
 };

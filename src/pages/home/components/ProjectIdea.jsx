@@ -24,12 +24,12 @@ const ProjectIdea = () => {
             helps us achieve success together.
           </p>
         </div>
-        <div className="flex flex-col lg:flex-row justify-between items-center py-16 px-8 gap-10">
-          <div className="lg:w-1/2 text-left">
-            <h1 className="text-2xl md:text-4xl text-gray-800 mb-6 capitalize">
+        <div className="flex flex-col lg:flex-row justify-between items-center py-8 lg:py-16 px-8 gap-10">
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <h1 className="text-xl lg:text-4xl md:text-5xl text-gray-800 mb-6 capitalize">
               Built-in project time tracking & team reporting
             </h1>
-            <p className="text-lg text-gray-600 mb-4 ">
+            <p className="text-sm lg:text-lg text-gray-600 mb-4 ">
               Per project and task time tracking is as simple as possible and is
               designed in a way that requires little to no effort.{" "}
               <span className="font-semibold text-gray-800">
@@ -38,7 +38,7 @@ const ProjectIdea = () => {
               as all work can be viewed and progress tracked by selected team
               members.
             </p>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-sm lg:text-lg text-gray-600 mb-6">
               Ditch additional task time-tracking software. Follow any project,
               any team's, and individual productivity in a single place.
             </p>

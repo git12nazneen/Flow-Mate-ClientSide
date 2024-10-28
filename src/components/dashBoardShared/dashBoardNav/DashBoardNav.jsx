@@ -26,7 +26,7 @@ const DashBoardNav = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-[#020b70] text-white w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`bg-[#00053d] text-white w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
       >
         {/* Sidebar content */}
