@@ -4,11 +4,9 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const ActivityChart = () => {
+  const { user } = useSelector((state) => state.auth);
   const [chartData, setChartData] = useState(null);
-const axiosCommon = UseAxiosCommon()
-const user = useSelector((state) => state.auth.user);
-const email = user.email
-  
+
   useEffect(() => {
     if (!user) return;
 
