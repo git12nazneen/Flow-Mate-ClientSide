@@ -464,7 +464,7 @@ const TeamTask = () => {
           {/* Search and sort */}
           <div className="flex  mt-2 gap-2">
             <Button
-              className="bg-blue-500 text-white p-2 rounded-md"
+              className="bg-[#00053d] text-white p-2 rounded-md"
               onClick={exportToCSV}
             >
               Export Team Tasks as CSV
@@ -562,15 +562,15 @@ const TeamTask = () => {
           {tasks.map((task) => (
             <div
               key={task._id}
-              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2"
+              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2 h-80"
             >
               <div className="flex justify-between">
-                <div className="text-blue-500 text-xs font-semibold mb-2 uppercase">
+                <div className="text-black bg-sky-300 px-2 py-1 rounded-3xl  text-xs font-semibold mb-2 uppercase">
                   {task?.priority}
                 </div>
                 <Link
                   to={`/dashboard/taskDetails/${task._id}`}
-                  className="text-blue-500 text-xs font-semibold mb-2 uppercase"
+                  className="text-black bg-sky-300 px-2 py-1 rounded-3xl text-xs font-semibold mb-2 uppercase"
                 >
                   <span>See Details</span>
                 </Link>
@@ -692,6 +692,7 @@ const TeamTask = () => {
       )}
       <CalendarView />
       {/* </div> */}
+      <CalendarView />
     </div>
   );
 };

@@ -18,6 +18,7 @@ export function FAQ() {
   }, []);
 
   return (
+
     <div className="pt-10 pb-10 px-2 md:px-20">
       <div data-aos="zoom-in" className="text-center pb-10">
         <h1 className="text-2xl md:text-4xl font-bold mb-5">

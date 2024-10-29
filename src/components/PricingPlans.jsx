@@ -80,7 +80,7 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <div>
         <div
           className={`flex flex-col border-2 rounded-lg p-1 hover:shadow-lg transform delay-150 mx-auto bg-white hover:bg-slate-200 active:bg-gray-700 active:text-white ${isSelected ? "bg-gray-200" : "hover:bg-[#F1F5F9]"

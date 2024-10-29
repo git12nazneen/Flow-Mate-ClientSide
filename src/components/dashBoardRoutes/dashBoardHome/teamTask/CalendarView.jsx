@@ -43,7 +43,7 @@ const CalendarView = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold text-gray-700 mb-4 text-center">
+      <h2 className="text-xl font-bold text-gray-700 mb-10 mt-10 text-center">
         {teamName} - Team Calendar
       </h2>
 
