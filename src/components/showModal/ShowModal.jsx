@@ -11,7 +11,7 @@ const ShowModal = ({ onClose }) => {
             to="subscribe" // Target ID
             smooth={true} // Smooth scrolling
             duration={500} // Duration of the scroll
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-2 cursor-pointer"
+            className="bg-[#00053d] text-white py-2 px-4 rounded hover:bg-blue-600 mb-2 cursor-pointer"
             onClick={onClose} // Close modal on click
           >
             Subscribe
