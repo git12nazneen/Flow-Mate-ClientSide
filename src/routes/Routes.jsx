@@ -135,7 +135,7 @@ export const router = createBrowserRouter([
         element: <PaymentHistory />,
       },
       {
-        path: 'all_user',
+        path: 'all_users',
         element: <AllUser />
       },
       {
