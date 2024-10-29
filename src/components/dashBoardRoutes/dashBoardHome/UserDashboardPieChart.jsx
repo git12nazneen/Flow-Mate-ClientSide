@@ -145,8 +145,8 @@ const UserDashboardAreaChart = () => {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto p-4">
-      <h2 className="text-center text-2xl font-bold mb-6">Task Distribution</h2>
+    <div className="w-full max-w-lg mx-auto ">
+      {/* <h2 className="text-center text-2xl font-bold mb-6">Task Distribution</h2> */}
       <div className="relative w-full h-96 p-4 bg-white shadow-md rounded-md">
         <Line data={areaData} options={options} />
       </div>
