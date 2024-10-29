@@ -194,30 +194,7 @@ const Team = () => {
                         <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {member.email}
                         </td>
-                        <td className="px-4 py-4 whitespace-nowrap">
-                          <div
-                            className={`inline-flex items-center px-3 py-1 rounded-full ${
-                              member.isActive ? "bg-emerald-100" : "bg-red-100"
-                            }`}
-                          >
-                            <span
-                              className={`h-1.5 w-1.5 rounded-full ${
-                                member.isActive
-                                  ? "bg-emerald-500"
-                                  : "bg-red-500"
-                              }`}
-                            ></span>
-                            <span
-                              className={`text-sm font-normal ${
-                                member.isActive
-                                  ? "text-emerald-500"
-                                  : "text-red-500"
-                              }`}
-                            >
-                              {member.isActive ? "Active" : "Inactive"}
-                            </span>
-                          </div>
-                        </td>
+                       
                         {team?.teamLeader === userss[0]?._id && (
                           <td className="px-4 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
