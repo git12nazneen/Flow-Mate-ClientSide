@@ -26,9 +26,8 @@ const DashBoardNav = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-[#F1F5F9] text-black w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
+        className={`bg-gradient-to-r from-blue-800 to-blue-800 text-white w-[250px] h-full lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
       >
         {/* Sidebar content */}
         <div className="relative space-y-6">
@@ -68,13 +67,19 @@ const DashBoardNav = () => {
                 {/* Add your content */}
               </NavLink>
             )}
-
             <NavLink
-              to="/dashboard/tasks"
-              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
+              to="/dashboard/boardSystem"
+              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
             >
               <RiSecurePaymentLine />
-              Create tasks
+              Show all Board
+            </NavLink>
+
+            <NavLink
+              to="/dashboard/profilePage"
+              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+            >
+              <MdRoomPreferences /> My Profile
             </NavLink>
 
             <NavLink
@@ -84,7 +89,14 @@ const DashBoardNav = () => {
               <BsMicrosoftTeams />
               Team Request
             </NavLink>
-            {/* comment those line by sajib */}
+            <NavLink
+              to="/dashboard/userActivity"
+              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+            >
+              <BsMicrosoftTeams />
+              User Activity
+            </NavLink>
+
             <NavLink
               to="/dashboard/my-team"
               className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
@@ -92,14 +104,6 @@ const DashBoardNav = () => {
               <BsMicrosoftTeams />
               My Team
             </NavLink>
-
-            {/* <NavLink
-              to="/dashboard/create-team"
-              className="flex items-center gap-1 hover:bg-[#e4eef8] rounded p-2"
-            >
-              <RiSecurePaymentLine />
-              Team Create
-            </NavLink> */}
 
             {isAdmin && (
               <NavLink
@@ -132,9 +136,8 @@ const DashBoardNav = () => {
       <div className="flex-1">
         {/* Mobile Menu Button */}
         <button
-          className={`${
-            isSidebarOpen ? "hidden" : ""
-          } lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full focus:outline-none`}
+          className={`${isSidebarOpen ? "hidden" : ""
+            } lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full focus:outline-none`}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
           <svg

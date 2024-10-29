@@ -24,10 +24,11 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import UserTeamName from "@/hooks/UserTeamName";
-export function CreateTask() {
+import { useNavigate } from "react-router-dom";
+
+export function CreateTask({ boardName, teamName, team }) {
   // State to manage form inputs
   const [startDate, setStartDate] = useState(new Date());
   const [taskTitle, setTaskTitle] = useState("");
@@ -35,44 +36,50 @@ export function CreateTask() {
   const [stage, setStage] = useState("");
   const [workerMail, setworkerMail] = useState("");
   const [priority, setPriority] = useState("");
-  const [loading, setLoading] = useState(false)
-  const axiosCommon = UseAxiosCommon()
+  const [loading, setLoading] = useState(false);
+  const axiosCommon = UseAxiosCommon();
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
-
-  const { teams } = UserTeamName(); // Destructuring to get 'teams' from the hook
-
-  // Log the entire teams array
-  console.log(teams);
-
-  // Check if the teams array exists and has data
-  if (teams.length > 0) {
-    teams.forEach(team => {
-      console.log('Team Leader:', team.teamLeader);
-      console.log('Team Name:', team.teamName);
-    });
-  } else {
-    console.log('No teams found.');
-  }
-
+  const navigate = useNavigate();
   // Get query client
   const queryClient = useQueryClient();
 
   // data post
   const { mutateAsync } = useMutation({
-    mutationFn: async taskData => {
+    mutationFn: async (taskData) => {
       const { data } = await axiosCommon.post(`/createTask`, taskData);
       return data;
     },
     onSuccess: () => {
-      console.log('Data Saved Successfully');
-      toast.success('Task Added Successfully!');
+      console.log("Data Saved Successfully");
+      toast.success("Task Added Successfully!");
       setLoading(false);
 
       // Invalidate and refetch tasks (if necessary)
-      queryClient.invalidateQueries('tasks'); // Replace 'tasks' with the appropriate query key.
+      queryClient.invalidateQueries("tasks"); // Replace 'tasks' with the appropriate query key.
+      navigate(`/dashboard/all-team`);
     },
   });
+
+  // get the users
+  const { data: users = [], isError } = useQuery({
+    queryKey: ["data", user?.email],
+    queryFn: async () => {
+      const res = await axiosCommon.get(`/users`);
+      return Array.isArray(res.data) ? res.data : [res.data];
+    },
+    enabled: !!user?.email,
+  });
+  // Get the current user's ID
+  const currentUser = users.length > 0 ? users[0] : null;
+  const userId = currentUser?._id;
+  const allMembersId = team?.teamMembers || [];
+
+  // Check if the current user is part of the team members
+  const filteredMembers = allMembersId.includes(userId)
+    ? users.filter((user) => allMembersId.includes(user._id))
+    : [];
+
+  console.log("Filtered Members:", filteredMembers);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -85,11 +92,8 @@ export function CreateTask() {
       stage,
       priority,
       startDate,
-      workerMail
+      workerMail,
     });
-
-    // Prepare the data as a JSON object
-    const firstTeam = teams?.[0];
 
     const taskData = {
       taskTitle,
@@ -100,14 +104,14 @@ export function CreateTask() {
       startDate: startDate.toISOString(),
       email: user?.email,
       userName: user?.displayName,
-      teamName: firstTeam?.teamName, // Correctly accessing teamName
-      teamLeaderId: firstTeam?.teamLeader // Correctly accessing teamLeader
+      boardName: boardName,
+      teamName: teamName,
     };
 
     try {
       console.log("Sending taskData to /createTask");
       const response = await mutateAsync(taskData);
-      console.log(response)
+      console.log(response);
 
       // Show a success toast notification
       toast.success("Task created successfully");
@@ -118,11 +122,11 @@ export function CreateTask() {
       setStage("");
       setPriority("");
       setStartDate(new Date());
-
     } catch (error) {
       console.error("Error creating task:", error);
 
-      // Show an error toast notification
+      console.log("Error creating task:", error);
+
       toast.error("Failed to create task");
     }
   };
@@ -153,18 +157,36 @@ export function CreateTask() {
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="assign">Assign Task To</Label>
-                <Input
-                  id="assign"
-                  placeholder="Codewave Asante, Jane Smith, Alex Johnson"
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                />
+                <Select
+                  onValueChange={(value) => {
+                    const selectedMember = filteredMembers.find(
+                      (member) => member.name === value
+                    );
+                    if (selectedMember) {
+                      setAssignedTo(selectedMember.name);
+                      setworkerMail(selectedMember.email);
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a Member" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {filteredMembers.map((member) => (
+                        <SelectItem key={member._id} value={member.name}>
+                          {member.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="assign">Worker mail</Label>
+                <Label htmlFor="worker_mail">Worker Mail</Label>
                 <Input
                   id="worker_mail"
-                  type='email'
+                  type="email"
                   placeholder="example@gmail.com"
                   value={workerMail}
                   onChange={(e) => setworkerMail(e.target.value)}
@@ -235,4 +257,3 @@ export function CreateTask() {
     </Dialog>
   );
 }
-

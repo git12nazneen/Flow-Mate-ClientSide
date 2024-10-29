@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,21 +24,22 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function CardWithForm({ closeForm }) {
   const [loading, setLoading] = useState(false);
   const axiosCommon = UseAxiosCommon();
-
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const email = user?.email;
-  const {data = {}} = useQuery({
-    queryKey: ['data',email],
+  const { data = {} } = useQuery({
+    queryKey: ['data', email],
     queryFn: async () => {
-      const res = await axiosCommon.get(`/users?email=${email}`)
-      return res.data
+      const res = await axiosCommon.get(`/users?email=${email}`);
+      return res.data;
     },
     enabled: !!email
-  })
+  });
 
   const queryClient = useQueryClient();
 
@@ -47,11 +49,12 @@ export function CardWithForm({ closeForm }) {
       const { data } = await axiosCommon.post(`/create-team`, boardData);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       console.log("Data Saved Successfully");
       toast.success("Project Created Successfully!");
       setLoading(false);
-      queryClient.invalidateQueries("boards");
+      await queryClient.invalidateQueries("boards"); // Refetch the boards query
+      navigate('/dashboard/boardSystem'); // Navigate after refetching
     },
   });
 
@@ -121,7 +124,7 @@ export function CardWithForm({ closeForm }) {
               </Select>
             </div>
           </div>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex justify-between mt-6">
             <Button variant="outline" type="button" onClick={closeForm}>
               Cancel
             </Button>
@@ -132,3 +135,4 @@ export function CardWithForm({ closeForm }) {
     </Card>
   );
 }
+

@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa"; // Importing icons
-import { EditTeam } from "../editTeam/EditTeam";
+import { EditTeam } from "../../editTeam/EditTeam";
 
-const MyTeam = () => {
+
+const MyTask = () => {
   const user = useSelector((state) => state.auth.user);
   const axiosCommon = UseAxiosCommon();
 
@@ -84,7 +85,7 @@ const MyTeam = () => {
             >
               <h3 className="text-2xl font-[500] mb-2">
                 <Link
-                  to={`/dashboard/team/${team?.teamName}`}
+                  to={`/dashboard/task/${team?.teamName}`}
                   className="hover:underline uppercase"
                 >
                   {team?.teamName}
@@ -135,4 +136,4 @@ const MyTeam = () => {
   );
 };
 
-export default MyTeam;
+export default MyTask;

@@ -1,5 +1,5 @@
 
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import UseAxiosCommon from '@/hooks/UseAxiosCommon';
@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 const UpdateTask = () => {
     const task = useLoaderData();
     console.log(task)
+    const navigate = useNavigate()
     const axiosCommon = UseAxiosCommon();
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
@@ -27,6 +28,7 @@ const UpdateTask = () => {
             if (response.data.modifiedCount > 0) {
                 toast.success('Data updated successfully');
             }
+            navigate('/dashboard/teamTask')
         } catch (error) {
             console.error("Error updating data:", error);
             toast.error('Failed to update data');

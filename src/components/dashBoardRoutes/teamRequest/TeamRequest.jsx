@@ -1,3 +1,4 @@
+import PageHeader from "@/components/pageHeader/PageHeader";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -75,6 +76,7 @@ const acceptMember = async (teamId) => {
 
   return (
     <div className="container mx-auto p-4">
+          <PageHeader title="Requested teams"  breadcrumb="All the requested teams here show"/>
       <h2 className="text-3xl font-bold mb-6 text-start opacity-80 text-gray-600"></h2>
       {matchingTeams.length > 0 ? (
         <table className="min-w-full text-center mt-12 w-full border border-gray-300">
@@ -105,7 +107,7 @@ const acceptMember = async (teamId) => {
           </tbody>
         </table>
       ) : (
-        <p>No pending team requests found.</p>
+        <p className="text-center text-gray-500 text-2xl">No pending team requests found.</p>
       )}
     </div>
   );

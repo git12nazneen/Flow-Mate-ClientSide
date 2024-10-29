@@ -37,7 +37,7 @@ export function Feedback() {
 
     try {
       const response = await fetch(
-        `https://flowmate-serverside.vercel.app/feedback?email=${userEmail}`,
+        `https://flowmate-a-team-collaboration-tool.vercel.app/feedback?email=${userEmail}`,
         {
           method: "POST",
           headers: {

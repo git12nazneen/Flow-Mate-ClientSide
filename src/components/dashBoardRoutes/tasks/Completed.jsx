@@ -1,27 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
+import { useLoaderData } from "react-router-dom";
+
+// Function to fetch tasks from your API
+const fetchTasks = async () => {
+  const response = await fetch('https://flowmate-a-team-collaboration-tool.vercel.app/createTask');
+  if (!response.ok) {
+      throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
 
 const Completed = () => {
-  // Fetch todos from the server
-  const user = useSelector((state) => state.auth.user); // Fetch user's email from Redux
+  const { teamName } = useLoaderData(); 
 
-  if (!user) {
-    return <div>Please log in to see your tasks.</div>;
-  }
-  const {
-    isLoading,
-    error,
-    data: todos = [], // Default to an empty array to avoid errors if data is undefined
-  } = useQuery({
-    queryKey: ["todos"],
-    queryFn: async () => {
-      const res = await fetch(`https://flowmate-serverside-ecru.vercel.app/createTask?email=${user.email}`);
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return res.json();
-    },
+  // Fetch tasks using TanStack Query
+  const { data: tasks = [], isLoading, error } = useQuery({
+    queryKey: ['tasks'],
+    queryFn: fetchTasks,
   });
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -32,7 +29,9 @@ const Completed = () => {
   }
 
   // Filter todos to get only those that are completed
-  const filteredTodos = todos.filter((todo) => todo.stage === "done"&& todo.email === user.email);
+  const filteredTodos = tasks.filter(
+    (todo) => todo.stage === "done" && todo.teamName === teamName
+  );
 
   return (
     <div className="p-4 w-80 mx-auto bg-white rounded-lg shadow-md">

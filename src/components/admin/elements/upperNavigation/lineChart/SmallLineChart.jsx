@@ -75,7 +75,7 @@ const SmallLineChart = ({ data }) => {
 
   return (
     <div className="flex justify-center w-full">
-      <div className=" h-96 w-full sm:w-[400px] md:w-[500px] lg:w-[600px] px-3">
+      <div className=" h-96 w-full sm:w-[400px] md:w-[500px] lg:w-[600px] p-3 lg:p-10">
         <Line data={chartData} options={chartOptions} />
       </div>
     </div>

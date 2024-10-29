@@ -7,10 +7,14 @@ import { useLoaderData } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { CreateTask } from "../tasks/CreateTask";
 
 const Team = () => {
   const axiosCommon = UseAxiosCommon();
   const initialTeam = useLoaderData();
+  
+  const { boardName,teamName} = initialTeam;
+
   const [team, setTeam] = useState(initialTeam); // Use state to manage team data
   const user = useSelector((state) => state.auth.user);
   const email = user?.email;
@@ -112,15 +116,23 @@ const Team = () => {
   return (
     <div className="md:w-[1050px] mx-auto mt-8">
       <section className="container p-10 mx-auto">
+      
         <div className="flex flex-col lg:flex-row justify-between gap-x-3 mb-6">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800 ">
             Team {team?.teamName} Members
           </h2>
+          
+          <div className="justify-end space-x-2">
+          
+          <CreateTask team={team} boardName={boardName}teamName={teamName} />
+        
+
           {team?.teamLeader === userss[0]?._id && (
             <AddTeamMember refetch={refetch} team={team} />
           )}
+          </div>
         </div>
-
+<div>
         {filteredMembers.length === 0 ? (
           <div className="flex justify-center items-center min-h-screen">
             <div className="text-4xl font-bold text-center text-red-600">
@@ -221,6 +233,7 @@ const Team = () => {
             </table>
           </div>
         )}
+        </div>
       </section>
     </div>
   );

@@ -2,11 +2,13 @@ import UpperNavigation from "../elements/upperNavigation/UpperNavigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { FaDollarSign, FaUserFriends, FaNewspaper } from "react-icons/fa";
+import { FaDollarSign, FaUserFriends, FaNewspaper, FaTasks } from "react-icons/fa";
 import SmallBarChart from "../elements/upperNavigation/lineChart/SmallLineChart";
 import PieChartInteraction from "../elements/pieChart/PieChartInteraction";
 import { useSelector } from "react-redux";
-
+import PageHeader from "@/components/pageHeader/PageHeader";
+import { PiMicrosoftTeamsLogoBold } from "react-icons/pi";
+import svgImg from '../../../assets/icon-user-male.svg'
 const AdminDashboard = () => {
   const axiosCommon = UseAxiosCommon();
   const user = useSelector((state) => state.auth.user);
@@ -96,14 +98,13 @@ const AdminDashboard = () => {
     <div className=" mx-auto lg:pb-5 ">
       <UpperNavigation />
       <div className="lg:my-8">
-        <h1 className="text-3xl font-semibold text-center py-2">
-          Admin Dashboard
-        </h1>
-        <p className="text-center text-lg text-gray-500">
-          Hello {user.displayName}, Welcome to the admin dashboard
-        </p>
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6 gap-3 text-center">
-          <Card className="transition-transform transform hover:scale-105 bg-gradient-to-r from-white to-gray-200 text-slate-900">
+        <div className="mx-5">
+          <PageHeader title="FlowMate Admin Dashboard"  breadcrumb={`Hello ${user.displayName}, Welcome to the admin dashboard`}   />
+        </div>
+        <div className="flex lg:flex-row flex-col justify-between px-10 mx-auto">
+          <div className="lg:w-2/3 w-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 gap-3 text-center mx-5 my-10">
+          <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
             <CardHeader className="flex items-center">
               <FaDollarSign className="mr-2 text-3xl" />
               <CardTitle>Paid Users</CardTitle>
@@ -116,7 +117,7 @@ const AdminDashboard = () => {
           </Card>
 
           {/* Login User Section */}
-          <Card className="transition-transform transform hover:scale-105 bg-gradient-to-l from-white to-gray-200 text-slate-900 shadow-xl">
+          <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900 shadow-xl">
             <CardHeader className="flex items-center">
               <FaUserFriends className="mr-2 text-3xl" />
               <CardTitle>Login Users</CardTitle>
@@ -129,7 +130,7 @@ const AdminDashboard = () => {
           </Card>
 
           {/* Subscription User Section */}
-          <Card className="transition-transform transform hover:scale-105 bg-gradient-to-r from-white to-gray-200 text-slate-900">
+          <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
             <CardHeader className="flex items-center">
               <FaNewspaper className="mr-2 text-3xl" />
               <CardTitle>Subscription Users</CardTitle>
@@ -140,91 +141,59 @@ const AdminDashboard = () => {
               </p>
             </CardContent>
           </Card>
+          <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
+            <CardHeader className="flex items-center">
+              < PiMicrosoftTeamsLogoBold className="mr-2 text-3xl" />
+              <CardTitle>Total Teams</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-lg font-semibold text-center">
+              Count: {teams.length}
+              </p>
+            </CardContent>
+          </Card>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6 gap-3 text-center my-7">
-          <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
-            {/* Background Image */}
-            <div
-              className="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md"
-              style={{
-                backgroundImage:
-                  "url(https://sloanreview.mit.edu/wp-content/uploads/2022/06/2022_0623_Mashek_Collaboration-1290x860-1.jpg)",
-              }}
-            ></div>
-
-            {/* Card displaying total teams */}
-            <div className="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-              <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
-                Total Teams
-              </h3>
-
-              <div className="flex items-center justify-between px-3 py-2 bg-gray-400">
-                <span className="font-bold text-gray-800 dark:text-gray-200">
-                  Count: {teams.length}
-                </span>
-                <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
-                  Manage Teams
-                </button>
-              </div>
+          </div>
+          <div className="lg:w-1/3 w-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-1 lg:gap-6 gap-3 text-center lg:my-10 my-3 mx-5 lg:mx-0">
+           {/* Card 2: All Team Tasks */}
+           <div className="transition-transform transform hover:scale-105 bg-white text-slate-900 h-auto lg:h-[350px] py-5 lg:py-20 px-5 lg:px-10 rounded-xl shadow-xl border">
+            <div className="flex flex-col items-center space-y-4">
+              {/* < FaTasks className="mr-2 text-3xl" /> */}
+              <img className="lg:h-32 h-20" src={ svgImg} alt="" />
+              <CardTitle>All Team Tasks</CardTitle>
+            </div>
+            <div>
+              <p className="text-lg font-semibold  text-center pt-5">
+              Count: {tasks.length}
+              </p>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
-            {/* Background Image */}
-            <div
-              className="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md"
-              style={{
-                backgroundImage:
-                  "url(https://as2.ftcdn.net/v2/jpg/02/52/84/63/1000_F_252846381_D9YUbBxzLQ3hKvuNlfEQCgI8ddf0ArrD.jpg)",
-              }}
-            ></div>
+         
 
-            {/* Card displaying total teams */}
-            <div className="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-              <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
-                All Team Tasks
-              </h3>
-
-              <div className="flex items-center justify-between px-3 py-2 bg-gray-400">
-                <span className="font-bold text-gray-800 dark:text-gray-200">
-                  Count: {tasks.length}
-                </span>
-                <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
-                  Manage Tasks
-                </button>
-              </div>
-            </div>
+          {/* Card 3: All Contact Mails */}
+          {/* <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
+            <CardHeader className="flex items-center">
+              < FaTasks className="mr-2 text-3xl" />
+              <CardTitle>All Contact Mails</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-lg font-semibold  text-center">
+              Count: {contactUs.length}
+              </p>
+            </CardContent>
+          </Card> */}
           </div>
-          <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
-            {/* Background Image */}
-            <div
-              className="w-full h-64 bg-gray-300 bg-center bg-cover rounded-lg shadow-md"
-              style={{
-                backgroundImage:
-                  "url(https://thumbs.dreamstime.com/b/contact-us-call-mail-icons-contact-us-call-mail-icons-white-background-vector-illustration-117513360.jpg)",
-              }}
-            ></div>
-
-            {/* Card displaying total teams */}
-            <div className="w-56 -mt-10 overflow-hidden bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
-              <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
-                All Contact Mails
-              </h3>
-
-              <div className="flex items-center justify-between px-3 py-2 bg-gray-400">
-                <span className="font-bold text-gray-800 dark:text-gray-200">
-                  Count: {contactUs.length}
-                </span>
-                <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
-                  See Mails
-                </button>
-              </div>
-            </div>
           </div>
         </div>
+      
 
         {/* Chart Section */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 my-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 my-10 mx-16 gap-5">
+          <div className="bg-white rounded-xl shadow-md">
+
           <SmallBarChart data={userGrowthData} /> {/* Use the Bar chart */}
+          </div>
           <PieChartInteraction data={userInteractionData} />
         </div>
       </div>

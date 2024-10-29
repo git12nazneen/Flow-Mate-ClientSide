@@ -42,7 +42,7 @@ const PieChartInteraction = ({ data }) => {
 
   return (
     <div className="flex justify-center items-center w-full">
-      <div className="flex justify-center items-center h-96 w-full sm:w-[450px] md:w-[500px] bg-sky-50 rounded-lg shadow-md p-1">
+      <div className="flex justify-center items-center h-96 w-full sm:w-[450px] md:w-[500px] bg-white rounded-lg shadow-md p-2 lg:p-10">
         <Pie data={chartData} options={chartOptions} />
       </div>
     </div>

@@ -14,7 +14,7 @@ const ProjectCreate = () => {
   };
   return (
     <div>
-      <div className="absolute top-16 text-left left-4 lg:-left-32 m-1 bg-white shadow-lg rounded-md  w-80 z-10">
+      <div className="absolute top-16 text-left left-4 lg:-right-20 m-1 bg-white shadow-lg rounded-md  w-80 z-10">
         {/* Conditionally render the Create board section */}
         {!create && (
           <div

@@ -32,7 +32,7 @@ function Navbar() {
       badgeCount: 0,
     },
     {
-      route: "/contact#contact",
+      route: "/contact",
       name: "Contact",
       badgeCount: 0,
     },
@@ -44,7 +44,7 @@ function Navbar() {
         ...defaultLinks,
         {
           route: isAdmin ? "/dashboard/admin" : "/dashboard",
-          name: "Dashboard",
+          name: isAdminLoading ? "Loading..." : "Dashboard",
           badgeCount: 0,
         },
       ]
@@ -54,7 +54,7 @@ function Navbar() {
   const toggleMenu = () => setMenu(!menu);
 
   return (
-    <div className="fixed top-0 w-full z-50 bg-white   mt-[5rem] md:mt-0">
+    <div className="fixed top-0 w-full z-50 bg-white mt-[5rem] md:mt-0">
       {/* DESKTOP */}
       <Container>
         <div className="hidden lg:block animate-in fade-in zoom-in bg-white p-4">

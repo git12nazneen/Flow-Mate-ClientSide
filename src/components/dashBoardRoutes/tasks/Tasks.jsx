@@ -1,5 +1,6 @@
+import PageHeader from "@/components/pageHeader/PageHeader";
 import Completed from "./Completed";
-import { CreateTask } from "./CreateTask";
+// import { CreateTask } from "./CreateTask";
 import InProgress from "./InProgress";
 import TaskCard from "./TaskCard";
 import TodoList from "./TodoList";
@@ -9,21 +10,13 @@ const Tasks = () => {
 
   return (
     <div>
-      <section className="container px-5 py-10 mx-auto">
+      <section className="container  mx-auto">
         {/* Header and Create Task Button */}
-        <div className="flex flex-col lg:flex-row justify-between gap-x-3">
-          <div className="flex items-center">
-            <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-              Tasks
-            </h2>
-          </div>
-          <div className="py-5 lg:py-0">
-            <CreateTask />
-          </div>
-        </div>
+       
+          <PageHeader title=" Here all the tasks"  breadcrumb="At first create board then create task"/>
 
         {/* Task Lists (Todo, InProgress, Completed) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 py-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
           <div>
             <TodoList />
           </div>

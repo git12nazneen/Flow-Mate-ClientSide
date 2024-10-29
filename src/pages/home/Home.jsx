@@ -33,7 +33,7 @@ const Home = () => {
       {/* <OurTeams /> */}
 
       <PricingPlans />
-   
+
       <Testmonial />
       {/* <Newsletters /> */}
       <FAQ />

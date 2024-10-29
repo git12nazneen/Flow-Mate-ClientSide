@@ -14,10 +14,8 @@ import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import io from "socket.io-client";
 
 export function AddTeamMember({ refetch, reset, team }) {
-  const socket = io('http://localhost:3000')
   const [search, setSearch] = useState("");
   const _id = team?._id;
   const axiosCommon = UseAxiosCommon();
@@ -41,7 +39,10 @@ export function AddTeamMember({ refetch, reset, team }) {
     };
 
     try {
-      const res = await axiosCommon.patch(`/teams/${_id}/add-pending-member`, newMember);
+      const res = await axiosCommon.patch(
+        `/teams/${_id}/add-pending-member`,
+        newMember
+      );
       if (res.status === 200) {
         Swal.fire({
           icon: "success",
@@ -62,13 +63,13 @@ export function AddTeamMember({ refetch, reset, team }) {
     }
   };
 
-
-
-
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" px-4 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50 hover:text-white" variant="outline">
+        <Button
+          className=" px-4 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#1d4ed8] rounded-lg hover:bg-blue-400  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50 hover:text-white"
+          variant="outline"
+        >
           Add New Team Member
         </Button>
       </DialogTrigger>
