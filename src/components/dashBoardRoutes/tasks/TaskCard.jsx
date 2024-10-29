@@ -83,7 +83,7 @@ const TaskCard = () => {
     data: createTask,
     refetch,
   } = useQuery({
-    queryKey: ["createTask", searchQuery, sortOption,email], // Include search and sort in the query key
+    queryKey: ["createTask", searchQuery, sortOption, email], // Include search and sort in the query key
     queryFn: async () => {
       const res = await fetch(
         `https://flowmate-a-team-collaboration-tool.vercel.app/createTask?search=${searchQuery}&sort=${sortOption}=&email=${email}`
@@ -95,7 +95,7 @@ const TaskCard = () => {
     },
   });
 
- 
+
 
 
 
@@ -124,7 +124,7 @@ const TaskCard = () => {
   };
 
 
-  
+
   // delete funciton
 
   const handleDelete = async (task) => {
@@ -137,20 +137,20 @@ const TaskCard = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
-  
+
     if (result.isConfirmed) {
       try {
         const res = await axiosCommon.delete(`/createTask/${task._id}`);
         console.log("Delete response:", res.data); // Log the response for debugging
-  
+
         // Check the response message for success
         if (res.data.message === 'Task deleted successfully') {
           // Refetch to update the tasks
-          await refetch(); 
-          
+          await refetch();
+
           // Optionally update the local state if you're using useState to manage tasks
           // setTasks((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
-  
+
           Swal.fire({
             position: "center",
             icon: "success",
@@ -171,9 +171,9 @@ const TaskCard = () => {
       }
     }
   };
-  
 
-  
+
+
 
 
   // Timer handling
@@ -467,7 +467,7 @@ const TaskCard = () => {
 
             <div className="flex justify-center items-center my-3">
               <Button
-                className="bg-blue-500 text-white p-2 rounded-md"
+                className="bg-[#00053d] text-white p-2 rounded-md"
                 onClick={exportToCSV}
               >
                 Export Team Tasks as CSV
@@ -531,9 +531,8 @@ const TaskCard = () => {
               {/* Dropdown Menu */}
               <div
                 id="dropdownDelay"
-                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
-                  isDropdownVisible ? "" : "hidden"
-                }`}
+                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${isDropdownVisible ? "" : "hidden"
+                  }`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -573,7 +572,7 @@ const TaskCard = () => {
         ) : (
           createTask?.map(
             (task, index) =>
-              task.email=== user.email&& (
+              task.email === user.email && (
                 <div
                   key={index}
                   className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2"
@@ -651,11 +650,10 @@ const TaskCard = () => {
                       onClick={() => handleStopTimer(task)}
                       disabled={stoppedTimersState[task._id]} // Disable button when timer is stopped
                       className={`text-sm h-9 mt-2 px-2 rounded 
-                    ${
-                      stoppedTimersState[task._id]
-                        ? "bg-gray-500 cursor-not-allowed"
-                        : "bg-red-500"
-                    } 
+                    ${stoppedTimersState[task._id]
+                          ? "bg-gray-500 cursor-not-allowed"
+                          : "bg-red-500"
+                        } 
                       text-white`}
                     >
                       Stop Timer

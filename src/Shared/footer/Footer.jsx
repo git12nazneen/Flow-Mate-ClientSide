@@ -127,11 +127,11 @@ const Footer = () => {
           </div>
 
           {/* Explore section with modal */}
-          <div>
-            <p className="font-semibold text-gray-800 dark:text-white">
+          <div className="text-center lg:text-start">
+            <p className="font-semibold text-gray-800 dark:text-white items-center lg:items-start">
               Explore
             </p>
-            <div className="flex flex-col items-start mt-5 space-y-2">
+            <div className="flex flex-col items-center lg:items-start mt-5 space-y-2">
               <Link
                 to={"/"}
                 className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
@@ -168,18 +168,18 @@ const Footer = () => {
           </div>
 
           {/* Tips section */}
-          <div>
+          <div className="text-center lg:text-start">
             <p className="font-semibold text-gray-800 dark:text-white">Tips</p>
-            <div className="flex flex-col items-start mt-5 space-y-2">
+            <div className="flex flex-col mt-5 space-y-2 text-center lg:text-start">
               <button
                 onClick={() => handleTipClick("collaboration")}
-                className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
+                className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500 text-center lg:text-start"
               >
                 Collaboration Tips
               </button>
               <button
                 onClick={() => handleTipClick("remoteWork")}
-                className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
+                className="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500 text-center lg:text-start"
               >
                 Remote Work Guide
               </button>
@@ -229,7 +229,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-1 text-center text-gray-600 dark:text-gray-300">
+        <div className="mt-5 lg:mt-1 text-center text-gray-600 dark:text-gray-300">
           Flowmate 2024 &copy; All rights reserved
         </div>
       </div>

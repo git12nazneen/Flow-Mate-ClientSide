@@ -25,12 +25,10 @@ const DashBoardHome = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-
   // Toggle user profile dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
 
   const user = useSelector((state) => state.auth.user);
   const [isAdmin] = UseAdmin();
@@ -68,7 +66,6 @@ const DashBoardHome = () => {
       </div>
     );
   }
-
 
   return (
     <div className="mb-20">
@@ -131,7 +128,7 @@ const DashBoardHome = () => {
       </div>
       {/* Dashboard Content */}
       <div className="lg:flex flex-1 my-10 mx-10">
-        <div className="px-5 py-10 rounded-2xl  hover:shadow-sky-200 w-full">
+        <div className="px-5 py-6 rounded-2xl  hover:shadow-sky-200 w-full">
           <DashBoardCards />
         </div>
       </div>
@@ -140,16 +137,15 @@ const DashBoardHome = () => {
       {/* Charts and Graphs */}
       <div className="flex lg:flex-row flex-col justify-between mx-14 my-10 gap-6">
         {/* Visitor Insights Chart */}
-        <div className="w-2/3 bg-white mx-auto rounded-2xl">
+        <div className="flex-1  mx-auto rounded-2xl ">
           <ActivityChart />
         </div>
 
-        {/* pie chart */}
+        <div className="flex-1">
         <UserDashboardPieChart />
-
+        </div>
       </div>
     </div>
-
   );
 };
 

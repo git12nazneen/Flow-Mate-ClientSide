@@ -52,11 +52,11 @@ const Features = () => {
     });
   }, []);
   return (
-    <Container className="mt-14">
+    <Container className="mt-5 lg:mt-14">
       <div data-aos="zoom-in" className="text-center">
-        <h1 className="text-2xl md:text-4xl font-bold pb-5">
+        <h1 className="text-xl lg:text-4xl md:text-4xl font-bold pb-5 px-5 lg:px-0">
           Breeze through issues at lighting speed
-        </h1>
+        </h1>  
         <p className="text-muted-foreground text-sm md:text-base max-w-3xl mx-auto">
           Having trouble keeping track of your issues and their corresponding
           status as well as your team progress? Volta introduces the ultimate
@@ -64,66 +64,61 @@ const Features = () => {
         </p>
       </div>
 
-     
-
       {/* Bento Grid */}
-
-      <div className="grid sm:grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 my-10 md:my-16 ">
-        <div className="col-span-2 bg-slate-300 text-gray-950 rounded-xl p-5 shadow-sm ">
-          <ListFilter className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
-
-          <h1 className="text-2xl font-bold text-[#00053d] py-2">
-            Advance Filters
-          </h1>
-          <p className="text-zinc-800">
-            Filter your notifications ans issue by any property with logical
-            operators
-          </p>
-          <img
-            className="pt-4"
-            src="/images/features/filters.svg" // Directly reference the public folder
-            alt="Filter icon"
-            style={{ filter: "invert(1)" }}
-          />
-        </div>
-        <div className="col-span-2 col-start-1 row-start-2 bg-slate-300 text-gray-950 rounded-xl pt-5 pl-5 shadow-sm">
-          <div className="flex justify-between">
-            <div>
-              <Command className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
-
-              <h1 className="text-2xl font-bold text-[#00053d] py-2">
-                Keyboard-first Design
-              </h1>
-              <p className="text-zinc-800">
-                Optimize for efficient keyboard navigation and shortcut for
-                everything
-              </p>
-            </div>
-            <img
-              className="pt-4"
-              src="/images/features/shortcuts.svg"
-              alt=""
-              style={{ filter: "invert(1)" }}
-            />
-          </div>
-        </div>
-        <div className="row-span-2 col-start-3 row-start-1 bg-slate-300 text-gray-950  rounded-xl pl-5 pt-5  shadow-sm">
-          <IoNotificationsSharp className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
-
-          <h1 className="text-2xl font-bold text-[#00053d] py-2">
-            Realtime Notification
-          </h1>
-          <p className="text-zinc-800">
-            Get notified of new issues, comments, and updates in real-time.
-          </p>
-          <img
-            className="pt-4 pl-20"
-            src="/images/features/editor.svg"
-            alt=""
-            style={{ filter: "invert(1)" }}
-          />
-        </div>
+<div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 my-10 md:my-16">
+  <div className="col-span-1 md:col-span-2 bg-slate-300 text-gray-950 rounded-xl p-5 shadow-sm">
+    <ListFilter className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
+    <h1 className="text-2xl font-bold text-[#00053d] py-2">
+      Advance Filters
+    </h1>
+    <p className="text-zinc-800">
+      Filter your notifications and issue by any property with logical operators.
+    </p>
+    <img
+      className="pt-4"
+      src="/images/features/filters.svg"
+      alt="Filter icon"
+      style={{ filter: "invert(1)" }}
+    />
+  </div>
+  
+  <div className="col-span-1 md:col-span-2 md:col-start-1 md:row-start-2 bg-slate-300 text-gray-950 rounded-xl pt-5 pl-5 shadow-sm">
+    <div className="flex justify-between">
+      <div>
+        <Command className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
+        <h1 className="text-2xl font-bold text-[#00053d] py-2">
+          Keyboard-first Design
+        </h1>
+        <p className="text-zinc-800">
+          Optimize for efficient keyboard navigation and shortcuts for everything.
+        </p>
       </div>
+      <img
+        className="pt-4"
+        src="/images/features/shortcuts.svg"
+        alt=""
+        style={{ filter: "invert(1)" }}
+      />
+    </div>
+  </div>
+  
+  <div className="row-span-2 md:col-start-3 md:row-start-1 bg-slate-300 text-gray-950 rounded-xl pl-5 pt-5 shadow-sm">
+    <IoNotificationsSharp className="w-10 h-10 border rounded-xl p-2 border-slate-500" />
+    <h1 className="text-2xl font-bold text-[#00053d] py-2">
+      Real-time Notifications
+    </h1>
+    <p className="text-zinc-800">
+      Get notified of new issues, comments, and updates in real-time.
+    </p>
+    <img
+      className="pt-4 pl-20"
+      src="/images/features/editor.svg"
+      alt=""
+      style={{ filter: "invert(1)" }}
+    />
+  </div>
+</div>
+
     </Container>
   );
 };

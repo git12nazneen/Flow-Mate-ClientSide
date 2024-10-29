@@ -32,6 +32,7 @@ import Completed from "../../tasks/Completed";
 import axios from "axios";
 import CalendarView from "./CalendarView";
 import DragAndDrop from "../../tasks/DragAndDrop";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 // Main Component
 const TeamTask = () => {
@@ -289,7 +290,7 @@ const TeamTask = () => {
 
   // Timer handlin
 
-  const exportToCSV = (teamName) => {
+  const exportToCSV = () => {
     // Ensure that `tasks` is loaded (assuming `tasks` is from your state or props)
     if (!tasks || tasks.length === 0) {
       Swal.fire({
@@ -299,6 +300,8 @@ const TeamTask = () => {
       });
       return;
     }
+    console.log(teamName);
+
 
     // Prepare tasks for CSV export
     const taskData = tasks.map((task) => ({
@@ -448,13 +451,14 @@ const TeamTask = () => {
 
   return (
     <div>
+      <UpperNavigation />
       <PageHeader
         title={`${teamName}`}
         breadcrumb="See all task of your team"
       ></PageHeader>
       <div>
         <DragAndDrop />
-        <CalendarView />
+
       </div>
 
       <div className="flex flex-col justify-center mx-12">
@@ -462,7 +466,7 @@ const TeamTask = () => {
           {/* Search and sort */}
           <div className="flex  mt-2 gap-2">
             <Button
-              className="bg-blue-500 text-white p-2 rounded-md"
+              className="bg-[#00053d] text-white p-2 rounded-md"
               onClick={exportToCSV}
             >
               Export Team Tasks as CSV
@@ -499,9 +503,8 @@ const TeamTask = () => {
               {/* Dropdown Menu */}
               <div
                 id="dropdownDelay"
-                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${
-                  isDropdownVisible ? "" : "hidden"
-                }`}
+                className={`absolute left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 ${isDropdownVisible ? "" : "hidden"
+                  }`}
               >
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -561,15 +564,15 @@ const TeamTask = () => {
           {tasks.map((task) => (
             <div
               key={task._id}
-              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2"
+              className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2 h-80"
             >
               <div className="flex justify-between">
-                <div className="text-blue-500 text-xs font-semibold mb-2 uppercase">
+                <div className="text-black bg-sky-300 px-2 py-1 rounded-3xl  text-xs font-semibold mb-2 uppercase">
                   {task?.priority}
                 </div>
                 <Link
                   to={`/dashboard/taskDetails/${task._id}`}
-                  className="text-blue-500 text-xs font-semibold mb-2 uppercase"
+                  className="text-black bg-sky-300 px-2 py-1 rounded-3xl text-xs font-semibold mb-2 uppercase"
                 >
                   <span>See Details</span>
                 </Link>
@@ -634,11 +637,10 @@ const TeamTask = () => {
                   onClick={() => handleStopTimer(task)}
                   disabled={stoppedTimersState[task._id]} // Disable button when timer is stopped
                   className={`text-sm h-9 mt-2 px-2 rounded 
-                                        ${
-                                          stoppedTimersState[task._id]
-                                            ? "bg-gray-500 cursor-not-allowed"
-                                            : "bg-red-500"
-                                        } 
+                                        ${stoppedTimersState[task._id]
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-red-500"
+                    } 
                       text-white`}
                 >
                   Stop Timer
@@ -690,7 +692,9 @@ const TeamTask = () => {
           No task assign to you.
         </div>
       )}
+      <CalendarView />
       {/* </div> */}
+
     </div>
   );
 };

@@ -147,7 +147,7 @@ const TaskDetails = () => {
                     href={fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
+                    className="bg-[#00053d] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200"
                   >
                     Open
                   </a>

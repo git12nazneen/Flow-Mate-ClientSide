@@ -26,7 +26,7 @@ const DashBoardNav = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div
-        className={`bg-[#020b70] text-white w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`bg-[#00053d] text-white w-[250px] h-full  lg:transform-none transition-transform duration-300 ease-in-out fixed lg:relative ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0 p-4 shadow-lg z-50 absolute lg:relative`}
       >
         {/* Sidebar content */}
@@ -44,7 +44,7 @@ const DashBoardNav = () => {
             {isAdmin ? (
               <NavLink
                 to="/dashboard/admin"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
               >
                 <RiDashboardHorizontalFill />
                 AdminDashboard
@@ -52,41 +52,57 @@ const DashBoardNav = () => {
             ) : (
               <NavLink
                 to="/dashboard/user"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
               >
                 <FaHome />
-                UserDashBoard
+                User Home
               </NavLink>
             )}
 
-
+            {user?.role === "user" && (
+              <NavLink
+                to="/dashboard/booking"
+                className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
+              >
+                {/* Add your content */}
+              </NavLink>
+            )}
+      
 
             <NavLink
               to="/dashboard/boardSystem"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <RiSecurePaymentLine />
               Show all Board
             </NavLink>
 
 
+            {/* <NavLink
+              to="/dashboard/tasks"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
+            >
+              <RiSecurePaymentLine />
+              My task
+            </NavLink> */}
+
             <NavLink
               to="/dashboard/profilePage"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <MdRoomPreferences /> My Profile
             </NavLink>
 
             <NavLink
               to="/dashboard/team-request"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <BsMicrosoftTeams />
               Team Request
             </NavLink>
             <NavLink
               to="/dashboard/userActivity"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <BsMicrosoftTeams />
               User Activity
@@ -94,18 +110,25 @@ const DashBoardNav = () => {
             {/* comment those line by sajib */}
             <NavLink
               to="/dashboard/all-team"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <BsMicrosoftTeams />
-              Specific team with task
+              My Team
             </NavLink>
 
+            {/* <NavLink
+              to="/dashboard/my-task"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
+            >
+              <RiSecurePaymentLine />
+              My task
+            </NavLink> */}
 
 
             {isAdmin && (
               <NavLink
                 to="/dashboard/payment_history"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+                className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
               >
                 <RiSecurePaymentLine />
                 Payment History
@@ -127,7 +150,7 @@ const DashBoardNav = () => {
 
             <NavLink
               to="/"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
+              className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <FaHome />
               Home
