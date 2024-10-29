@@ -24,11 +24,11 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export function CreateTask({ boardName, teamName }) {
+export function CreateTask({ boardName, teamName, team }) {
   // State to manage form inputs
   const [startDate, setStartDate] = useState(new Date());
   const [taskTitle, setTaskTitle] = useState("");
@@ -39,8 +39,7 @@ export function CreateTask({ boardName, teamName }) {
   const [loading, setLoading] = useState(false);
   const axiosCommon = UseAxiosCommon();
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // Get query client
   const queryClient = useQueryClient();
 
@@ -57,9 +56,29 @@ export function CreateTask({ boardName, teamName }) {
 
       // Invalidate and refetch tasks (if necessary)
       queryClient.invalidateQueries("tasks"); // Replace 'tasks' with the appropriate query key.
-      navigate(`/dashboard/all-team`)
+      navigate(`/dashboard/all-team`);
     },
   });
+
+  // get the users
+  const { data: users = [], isError } = useQuery({
+    queryKey: ["data", user?.email],
+    queryFn: async () => {
+      const res = await axiosCommon.get(`/users`);
+      return Array.isArray(res.data) ? res.data : [res.data];
+    },
+    enabled: !!user?.email,
+  });
+  // Get the current user's ID
+  const currentUser = users.length > 0 ? users[0] : null;
+  const userId = currentUser?._id;
+  const allMembersId = team?.teamMembers || [];
+
+  // Check if the current user is part of the team members
+  const filteredMembers = allMembersId.includes(userId)
+    ? users.filter((user) => allMembersId.includes(user._id))
+    : [];
+
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -114,7 +133,7 @@ export function CreateTask({ boardName, teamName }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-blue-700 text-white" variant="outline">
+        <Button className=" bg-[#00053d] hover:bg-black text-white  py-2 px-4 rounded hover:text-white" variant="outline">
           Create task{" "}
         </Button>
       </DialogTrigger>
@@ -137,15 +156,33 @@ export function CreateTask({ boardName, teamName }) {
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="assign">Assign Task To</Label>
-                <Input
-                  id="assign"
-                  placeholder="Codewave Asante, Jane Smith, Alex Johnson"
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                />
+                <Select
+                  onValueChange={(value) => {
+                    const selectedMember = filteredMembers.find(
+                      (member) => member.name === value
+                    );
+                    if (selectedMember) {
+                      setAssignedTo(selectedMember.name);
+                      setworkerMail(selectedMember.email);
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a Member" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {filteredMembers.map((member) => (
+                        <SelectItem key={member._id} value={member.name}>
+                          {member.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="assign">Worker mail</Label>
+                <Label htmlFor="worker_mail">Worker Mail</Label>
                 <Input
                   id="worker_mail"
                   type="email"

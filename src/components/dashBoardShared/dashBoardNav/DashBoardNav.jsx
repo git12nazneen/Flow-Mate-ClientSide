@@ -55,7 +55,7 @@ const DashBoardNav = () => {
                 className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
               >
                 <FaHome />
-                UserDashBoard
+                User Home
               </NavLink>
             )}
 
@@ -67,6 +67,7 @@ const DashBoardNav = () => {
                 {/* Add your content */}
               </NavLink>
             )}
+      
             <NavLink
               to="/dashboard/boardSystem"
               className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
@@ -109,7 +110,7 @@ const DashBoardNav = () => {
               className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <BsMicrosoftTeams />
-              Specific team with task
+              My Team
             </NavLink>
 
             {/* <NavLink
