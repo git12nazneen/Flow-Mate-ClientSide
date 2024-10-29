@@ -70,7 +70,7 @@ const DashBoardProfile = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-center my-5 font-bold text-[#020b70] text-2xl">
+      <h1 className="text-center my-5 font-bold text-[#00053d] text-2xl">
         User Profile
       </h1>
       <div className="px-4">
@@ -103,7 +103,7 @@ const DashBoardProfile = () => {
             <div className="flex justify-center mt-6">
               <button
                 className={`px-4 py-2 text-sm font-semibold ${activeTab === "profile"
-                  ? "border-b-2 border-[#020b70]"
+                  ? "border-b-2 border-[#00053d]"
                   : "text-gray-500"
                   }`}
                 onClick={() => handleTabSwitch("profile")}
@@ -166,7 +166,7 @@ const DashBoardProfile = () => {
 
                     <button
                       type="submit"
-                      className="bg-[#020b70] text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+                      className="bg-[#00053d] text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
                     >
                       Save Changes
                     </button>

@@ -83,7 +83,7 @@ const AllTeam = () => {
         {currentUserTeams.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto bg-white shadow-2xl border border-gray-800 rounded-lg overflow-hidden">
-              <thead className="bg-[#1e43b8] ">
+              <thead className="bg-[#00053d] ">
                 <tr>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Team Name</th>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Admin</th>

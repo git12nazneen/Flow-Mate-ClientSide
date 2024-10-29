@@ -18,7 +18,7 @@ const AboutScrum = () => {
           data-aos-offset="200"
           data-aos-easing="ease-in-sine"
           data-aos-duration="600"
-          className="mt-3"
+          className="mt-3 lg:text-start text-center"
         >
           <h1 className="text-xl text-gray-700 mb-3">About FlowMate</h1>
           <h1 className="text-3xl font-bold">What is FlowMate?</h1>

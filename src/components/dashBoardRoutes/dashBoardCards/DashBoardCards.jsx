@@ -39,11 +39,11 @@ const DashBoardCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 px-4 py-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 px-4 py-0">
       {/* All Tasks Card */}
       <div
         onClick={() => handleCardClick("/all-tasks")}
-        className="bg-gray-300 text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+        className="bg-white text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <FaTasks className="text-2xl text-blue-500" /> {/* All Tasks Icon */}
@@ -55,7 +55,7 @@ const DashBoardCards = () => {
       {/* Completed Tasks Card */}
       <div
         onClick={() => handleCardClick("/completed-tasks")}
-        className="bg-gray-300 text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+        className="bg-white text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <FaCheckCircle className="text-2xl text-green-500" /> {/* Completed Tasks Icon */}
@@ -67,7 +67,7 @@ const DashBoardCards = () => {
       {/* In Progress Tasks Card */}
       <div
         onClick={() => handleCardClick("/in-progress-tasks")}
-        className="bg-gray-300 text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+        className="bg-white text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <FaSpinner className="text-2xl text-yellow-500" /> {/* In Progress Tasks Icon */}
@@ -79,7 +79,7 @@ const DashBoardCards = () => {
       {/* To-do Tasks Card */}
       <div
         onClick={() => handleCardClick("/todo-tasks")}
-        className="bg-gray-300 text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+        className="bg-white text-center p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <FaClipboardList className="text-2xl text-red-500" /> {/* To-do Tasks Icon */}

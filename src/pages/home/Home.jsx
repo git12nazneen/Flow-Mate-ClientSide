@@ -4,7 +4,7 @@ import { FAQ } from "./../../components/FAQ";
 import Newsletters from "@/components/newsletters/Newsletters";
 import Testmonial from "@/components/Testmonial/Testmonial";
 import Contact from "@/components/contact/Contact";
-import OurTeams from "@/components/ourTeams/OurTeams";
+import OurTeams from "@/pages/aboutPage/OurTeams";
 
 import MarketingComponent from "@/components/marketing/MarketingComponent";
 // import Navbar from "@/Shared/Navbar";

@@ -10,14 +10,15 @@ const UserActivity = () => {
     <div>
       <UpperNavigation />
       <PageHeader title="User Activity" breadcrumb="  Here is some user activity" />
+      <div className=' mx-10'>
+          <UserContributionSummary />
+        </div>
       <div className="flex flex-col justify-between mx-14 my-10 gap-6">
         {/* Visitor Insights Chart */}
         <div className="w-full bg-white rounded-2xl">
           <ActivityChart />
         </div>
-        <div className='w-2/4 mx-auto'>
-          <UserContributionSummary />
-        </div>
+        
 
       </div>
     </div>

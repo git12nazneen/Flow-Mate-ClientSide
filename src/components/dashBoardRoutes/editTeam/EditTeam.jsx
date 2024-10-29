@@ -59,7 +59,7 @@ export function EditTeam({ refetch, currentUserTeams }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-blue-500 text-white rounded-lg shadow-md transition-transform transform hover:scale-105" variant="outline">
+        <Button className="bg-[#00053d] text-white rounded-lg shadow-md transition-transform transform hover:scale-105" variant="outline">
           Edit
         </Button>
       </DialogTrigger>
