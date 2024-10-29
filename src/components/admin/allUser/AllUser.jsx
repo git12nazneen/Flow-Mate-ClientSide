@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const AllUser = () => {
   const [users, setUsers] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 7; // Show 10 users per page
 
@@ -10,6 +11,7 @@ const AllUser = () => {
       try {
         const response = await fetch('http://localhost:5000/users');
         const data = await response.json();
+        console.log(data)
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -42,6 +44,9 @@ const AllUser = () => {
               <th className="p-3 text-left">Photo</th>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-left">Role</th>
+              <th className="p-3 text-left">Status</th>
+              <th className="p-3 text-left">Activity</th>
             </tr>
           </thead>
           <tbody>
@@ -54,8 +59,11 @@ const AllUser = () => {
                     className="rounded-full object-cover w-10 h-10 md:w-16 md:h-16 border-2 border-gray-300"
                   />
                 </td>
-                <td className="p-3 md:px-4 md:py-2">{user.name}</td>
-                <td className="p-3 md:px-4 md:py-2">{user.email}</td>
+                <td className="p-3 md:px-4 md:py-2">{user?.name}</td>
+                <td className="p-3 md:px-4 md:py-2">{user?.email}</td>
+                <td className="p-3 md:px-4 md:py-2">{user?.role}</td>
+                <td className="p-3 md:px-4 md:py-2">{user?.status || 'inactive'}</td>
+                <button className="mt-6 md:px-4 md:py-2 bg-blue-500 text-white rounded-md hover:bg-red-500">dectivate</button>
               </tr>
             ))}
           </tbody>
@@ -71,8 +79,11 @@ const AllUser = () => {
               alt={`${user.name}'s avatar`}
               className="rounded-full object-cover w-16 h-16 border-2 border-gray-300"
             />
-            <p><span className="font-semibold">Name:</span> {user.name}</p>
-            <p><span className="font-semibold">Email:</span> {user.email}</p>
+            <p><span className="font-semibold">Name:</span> {user?.name}</p>
+            <p><span className="font-semibold">Email:</span> {user?.email}</p>
+            <p><span className="font-semibold">Role:</span> {user?.role}</p>
+            <p><span className="font-semibold">Status:</span> {user?.status}</p>
+
           </div>
         ))}
       </div>

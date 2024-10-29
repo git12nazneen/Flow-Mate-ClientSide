@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
-import { FaAd, FaHome } from "react-icons/fa";
+import { FaAd, FaHome, FaUsers } from "react-icons/fa";
 import { BsMicrosoftTeams } from "react-icons/bs";
 import { MdRoomPreferences } from "react-icons/md";
 import { RiDashboardHorizontalFill, RiSecurePaymentLine } from "react-icons/ri";
@@ -141,6 +141,7 @@ const DashBoardNav = () => {
               <NavLink
                 to='/dashboard/all_users'
                 className="flex items-center gap-1 hover:bg-blue-500 rounded p-2">
+                <FaUsers />
                 All User
               </NavLink>
 
