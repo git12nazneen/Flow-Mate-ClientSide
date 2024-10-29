@@ -62,7 +62,7 @@ const Team = () => {
   const filteredMembers = team.teamMembers
     .map((memberId) => users.find((user) => user._id === memberId))
     .filter((member) => member !== undefined);
-
+console.log(filteredMembers)
   // Remove member logic
   const handleRemoveMember = async (id) => {
     try {
@@ -174,8 +174,7 @@ const Team = () => {
                             <img
                               className="object-cover w-10 h-10 rounded-full"
                               src={
-                                member.photo ||
-                                "https://via.placeholder.com/150"
+                                member.photo
                               }
                               alt={member.displayName}
                             />

@@ -79,7 +79,6 @@ export function CreateTask({ boardName, teamName, team }) {
     ? users.filter((user) => allMembersId.includes(user._id))
     : [];
 
-  console.log("Filtered Members:", filteredMembers);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
