@@ -158,7 +158,7 @@ const Team = () => {
                         Email
                       </th>
                       <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                        Active
+                        Actions
                       </th>
                       
                     </tr>
