@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 const AllUser = () => {
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 7; // Show 10 users per page
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await fetch('http://localhost:5000/users');
         const data = await response.json();
-        console.log(data)
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -18,34 +19,43 @@ const AllUser = () => {
     fetchUsers();
   }, []);
 
+  // Calculate users to display on the current page
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Total pages
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4 text-center">All Users</h2>
 
       {/* Responsive Table */}
       <div className="hidden md:block overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 text-sm md:text-base">
+        <table className="min-w-full bg-white border border-gray-300 text-sm md:text-base shadow-md rounded-lg">
           <thead>
-            <tr className="bg-gray-100 border-b border-gray-200">
-              <th className="p-3 text-left">photo</th>
+            <tr className="bg-blue-500 text-white">
+              <th className="p-3 text-left">Photo</th>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Email</th>
-
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id} className="border-b hover:bg-gray-50 transition">
-                <img
-                  src={user.photo} // Default placeholder image if no src provided
-
-                  className="rounded-full object-cover
-                   w-10 h-10 sm:w-10 sm:h-10 md:w-24 md:h-24 lg:w-16 lg:h-16
-                   border-2 border-gray-300"
-                />
+            {currentUsers.map((user) => (
+              <tr key={user.id} className="border-b hover:bg-blue-50 transition">
+                <td className="p-3">
+                  <img
+                    src={user.photo}
+                    alt={`${user.name}'s avatar`}
+                    className="rounded-full object-cover w-10 h-10 md:w-16 md:h-16 border-2 border-gray-300"
+                  />
+                </td>
                 <td className="p-3 md:px-4 md:py-2">{user.name}</td>
                 <td className="p-3 md:px-4 md:py-2">{user.email}</td>
-
               </tr>
             ))}
           </tbody>
@@ -54,19 +64,30 @@ const AllUser = () => {
 
       {/* Mobile Stacked View */}
       <div className="block md:hidden">
-        {users.map((user) => (
-          <div key={user._id} className="bg-white shadow rounded-lg p-4 mb-4 border border-gray-200">
+        {currentUsers.map((user) => (
+          <div key={user._id} className="bg-white shadow rounded-lg p-4 mb-4 border border-gray-300">
             <img
-              src={user.photo} // Default placeholder image if no src provided
-
-              className="rounded-full object-cover
-                   w-16 h-10 sm:w-10 sm:h-10 md:w-24 md:h-24 lg:w-10 lg:h-10
-                   border-2 border-gray-300"
+              src={user.photo}
+              alt={`${user.name}'s avatar`}
+              className="rounded-full object-cover w-16 h-16 border-2 border-gray-300"
             />
             <p><span className="font-semibold">Name:</span> {user.name}</p>
             <p><span className="font-semibold">Email:</span> {user.email}</p>
-
           </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-4">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'
+              }`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>
@@ -74,5 +95,3 @@ const AllUser = () => {
 };
 
 export default AllUser;
-
-
