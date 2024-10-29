@@ -62,7 +62,7 @@ const AllUser = () => {
                 <td className="p-3 md:px-4 md:py-2">{user?.name}</td>
                 <td className="p-3 md:px-4 md:py-2">{user?.email}</td>
                 <td className="p-3 md:px-4 md:py-2">{user?.role}</td>
-                <td className="p-3 md:px-4 md:py-2">{user?.status}</td>
+                <td className="p-3 md:px-4 md:py-2">{user?.status || 'inactive'}</td>
                 <button className="mt-6 md:px-4 md:py-2 bg-blue-500 text-white rounded-md hover:bg-red-500">dectivate</button>
               </tr>
             ))}
