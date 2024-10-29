@@ -1,134 +1,108 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useLoaderData } from "react-router-dom";
-import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { DragDropContext, Droppable, Draggable } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { Link, useLocation } from "react-router-dom";
 
-const DragAndDrop = () => {
-  const { teamName } = useLoaderData();
-  const axiosCommon = UseAxiosCommon();
+const Dropdown = () => {
+  const dispatch = useDispatch();
+  const location = useLocation(); // Get the current location
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [taskLists, setTaskLists] = useState({
-    todo: [],
-    inProgress: [],
-    completed: [],
-  });
-
-  const fetchTasksByStage = async (stage) => {
-    if (!teamName) {
-      throw new Error("Team name is missing");
-    }
-    const { data } = await axiosCommon.get(`/createTask/tasksByStage/${teamName}/${stage}`);
-    return data;
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
   };
 
-  // Fetch tasks for each stage using react-query
-  const { data: todoTasks = [] } = useQuery({
-    queryKey: ["tasks", teamName, "todo"],
-    queryFn: () => fetchTasksByStage("todo"),
-    enabled: !!teamName,
-  });
+  const user = useSelector((state) => state.auth.user);
+  const { displayName, email, photoURL } = user;
 
-  const { data: inProgressTasks = [] } = useQuery({
-    queryKey: ["tasks", teamName, "inProgress"],
-    queryFn: () => fetchTasksByStage("in progress"),
-    enabled: !!teamName,
-  });
-
-  const { data: completedTasks = [] } = useQuery({
-    queryKey: ["tasks", teamName, "completed"],
-    queryFn: () => fetchTasksByStage("done"),
-    enabled: !!teamName,
-  });
-
-  useEffect(() => {
-    setTaskLists({
-      todo: todoTasks,
-      inProgress: inProgressTasks,
-      completed: completedTasks,
-    });
-  }, [todoTasks, inProgressTasks, completedTasks]);
-
-  const handleDragEnd = async (result) => {
-    if (!result.destination) return;
-
-    const { source, destination } = result;
-
-    const sourceListId = source.droppableId.replace('Tasks', '');
-    const destinationListId = destination.droppableId.replace('Tasks', '');
-
-    // Create copies of the source and destination lists
-    const sourceList = Array.from(taskLists[sourceListId]);
-    const [movedTask] = sourceList.splice(source.index, 1); // Remove the task from the source list
-    const destinationList = Array.from(taskLists[destinationListId]);
-    destinationList.splice(destination.index, 0, movedTask); // Add the task to the destination list
-
-    // Update the state with the new lists
-    setTaskLists(prev => ({
-      ...prev,
-      [sourceListId]: sourceList,
-      [destinationListId]: destinationList,
-    }));
-
-    // Update the task's stage in the backend
-    if (movedTask?._id) {
-      try {
-        await axiosCommon.put("/createTask/updateStage", {
-          id: movedTask._id,
-          newStage: destinationListId,
-        });
-      } catch (error) {
-        console.error("Error updating task stage:", error);
-      }
-    }
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
-  if (taskLists.todo.length === 0 && taskLists.inProgress.length === 0 && taskLists.completed.length === 0) {
-    return <div>Loading...</div>;
-  }
+  // Check if the current path includes "dashboard"
+  const isInDashboard = location.pathname.includes("dashboard");
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
-        {['todo', 'inProgress', 'completed'].map((status) => (
-          <Droppable droppableId={`${status}Tasks`} key={status}>
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="p-4 w-full bg-white rounded-lg shadow-md"
+    <div className="relative inline-block z-50">
+      {/* Dropdown toggle button */}
+      <button
+        onClick={toggleDropdown}
+        className="relative z-10 flex items-center text-sm border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring focus:outline-none"
+      >
+        <span>
+          <img
+            className="object-cover w-8 h-8 rounded-full"
+            src={
+              photoURL ||
+              "https://i.ibb.co/M7Zxxsm/770fb75f5e81e4c2dbe8934f246aeeab.jpg"
+            }
+            alt="User Avatar"
+          />
+        </span>
+        <svg
+          className="w-5 h-5 mx-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </button>
+
+      {/* Dropdown menu */}
+      {isOpen && (
+        <div className="absolute right-0 z-20 lg:w-64 md:w-56 w-38 py-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+          <li className="flex flex-col md:flex-row justify-center items-center p-2 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+            <img
+              className="flex-shrink-0 object-cover mx-1 rounded-full w-6 h-6"
+              src={photoURL || "https://randomuser.me/api/portraits"}
+              alt="avatar"
+            />
+            <div className="text-center">
+              <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                {displayName || "No Name"}
+              </h1>
+              <p className="lg:text-sm text-xs text-gray-500 dark:text-gray-400">
+                {email || "No Email"}
+              </p>
+            </div>
+          </li>
+
+          <hr className="border-gray-200 dark:border-gray-700" />
+
+          {!isInDashboard && (
+            <>
+              <Link
+                to={"dashboard/profilePage"}
+                className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center"
               >
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
-                </h2>
-                {taskLists[status].length === 0 ? (
-                  <div className="text-gray-500">No tasks in {status}</div>
-                ) : (
-                  taskLists[status].map((task, index) => (
-                    <Draggable key={task._id} draggableId={task._id} index={index}>
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="p-2 mb-2 bg-gray-100 rounded-md cursor-pointer"
-                        >
-                          <span className={`text-gray-800 ${task.completed ? "line-through" : ""}`}>
-                            {task.taskTitle.slice(0, 50)}
-                          </span>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))
-                )}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
-      </div>
-    </DragDropContext>
+                view profile
+              </Link>
+
+              <Link
+                to={"dashboard/settings"}
+                className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center"
+              >
+                settings
+              </Link>
+
+              <hr className="border-gray-200 dark:border-gray-700" />
+            </>
+          )}
+
+          <button
+            onClick={handleLogout}
+            className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center w-full"
+          >
+            log out
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default DragAndDrop;
+export default Dropdown;

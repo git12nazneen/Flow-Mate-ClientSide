@@ -30,6 +30,7 @@ import AllTeam from "@/components/dashBoardRoutes/dashBoardHome/allTeam/AllTeam"
 import TeamTask from "@/components/dashBoardRoutes/dashBoardHome/teamTask/TeamTask";
 import MyTask from "@/components/dashBoardRoutes/dashBoardHome/myTaskk/MyTask";
 import TodoList from "@/components/dashBoardRoutes/tasks/TodoList";
+import AllUser from "@/components/admin/allUser/AllUser";
 
 export const router = createBrowserRouter([
   {
@@ -132,6 +133,10 @@ export const router = createBrowserRouter([
       {
         path: "payment_history",
         element: <PaymentHistory />,
+      },
+      {
+        path: 'all_user',
+        element: <AllUser />
       },
       {
         path: "create-team",
