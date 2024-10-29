@@ -75,14 +75,14 @@ const SignUp = () => {
               photo,
               status: "active",
               password,
-              teamName:[],
+              teamName: [],
             };
 
             axiosCommon
               .post("/users/create", userInfo)
               .then((res) => {
                 console.log('Response from saving user:', res);
-                
+
                 if (res.data.insertedId) {
                   Swal.fire({
                     icon: "success",
@@ -137,7 +137,7 @@ const SignUp = () => {
           photo: user.photoURL,
           status: "active",
           password: "",
-          teamName:[],
+          teamName: [],
         };
 
         // Log the userInfo object for debugging purposes
@@ -209,13 +209,13 @@ const SignUp = () => {
 
   return (
     <div>
-      <section className="">
-        <div className="flex justify-center min-h-screen">
+      <section className="h-screen">
+        <div className="flex justify-center ">
           <div
             className="hidden bg-cover lg:block lg:w-[28%]"
             style={{
               backgroundImage:
-                "url('https://i.ibb.co/zx16q3j/password-lock-phone-screen.jpg')",
+                "url('https://i.ibb.co.com/WDbfCN8/password-lock-phone-screen.jpg')",
             }}
           ></div>
 
@@ -223,7 +223,7 @@ const SignUp = () => {
             <div className="w-full text">
               <img
                 className="w-auto h-20 mx-auto"
-                src="https://i.ibb.co.com/WgPKBVY/Screenshot-2024-09-18-161854-removebg-preview.png"
+                src="https://i.ibb.co.com/9ncLQzX/newlogo-removebg-preview.png"
                 alt=""
               />
               <h1 className="text-2xl font-semibold tracking-wider  capitalize  text-center">

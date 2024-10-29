@@ -31,7 +31,7 @@ const Login = () => {
           photo: user.photoURL,
           status: "active",
           password: "",
-          teamName:[],
+          teamName: [],
         };
 
         // Log the userInfo object for debugging purposes
@@ -103,11 +103,11 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-     
+
       const userCredential = await dispatch(signInWithEmail(data)).unwrap();
-  
+
       const response = await axiosCommon.post("/users/login", data);
-  
+
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
@@ -140,7 +140,7 @@ const Login = () => {
             className="hidden bg-cover lg:block lg:w-1/2"
             style={{
               backgroundImage:
-                "url('https://i.ibb.co/DkPMcKn/2304-i203-047-S-m004-c13-keys-locks-realistic.jpg')",
+                "url('https://i.ibb.co.com/JHM1Nd1/2304-i203-047-S-m004-c13-keys-locks-realistic.jpg')",
             }}
           ></div>
 
@@ -148,7 +148,7 @@ const Login = () => {
             <div className="flex justify-center mx-auto">
               <img
                 className="w-auto h-20"
-                src="https://i.ibb.co.com/WgPKBVY/Screenshot-2024-09-18-161854-removebg-preview.png"
+                src="https://i.ibb.co.com/9ncLQzX/newlogo-removebg-preview.png"
                 alt=""
               />
             </div>
