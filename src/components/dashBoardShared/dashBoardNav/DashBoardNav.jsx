@@ -59,14 +59,8 @@ const DashBoardNav = () => {
               </NavLink>
             )}
 
-            {user?.role === "user" && (
-              <NavLink
-                to="/dashboard/booking"
-                className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
-              >
-                {/* Add your content */}
-              </NavLink>
-            )}
+
+
             <NavLink
               to="/dashboard/boardSystem"
               className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
@@ -75,13 +69,7 @@ const DashBoardNav = () => {
               Show all Board
             </NavLink>
 
-            {/* <NavLink
-              to="/dashboard/tasks"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
-            >
-              <RiSecurePaymentLine />
-              My task
-            </NavLink> */}
+
             <NavLink
               to="/dashboard/profilePage"
               className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
@@ -112,13 +100,7 @@ const DashBoardNav = () => {
               Specific team with task
             </NavLink>
 
-            {/* <NavLink
-              to="/dashboard/my-task"
-              className="flex items-center gap-1 hover:bg-blue-500 rounded p-2"
-            >
-              <RiSecurePaymentLine />
-              My task
-            </NavLink> */}
+
 
             {isAdmin && (
               <NavLink
@@ -127,26 +109,18 @@ const DashBoardNav = () => {
               >
                 <RiSecurePaymentLine />
                 Payment History
-              </NavLink>,
-              <NavLink to='/dashboard/all_user
-              '
+              </NavLink>
+
+            )}
+
+
+            {isAdmin && (
+              <NavLink
+                to='/dashboard/all_users'
                 className="flex items-center gap-1 hover:bg-blue-500 rounded p-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-6 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5m8-10a4 4 0 100-8 4 4 0 000 8zm-6 2a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
                 All User
               </NavLink>
+
             )}
 
             <hr />

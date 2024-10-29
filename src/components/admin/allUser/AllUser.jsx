@@ -20,7 +20,7 @@ const AllUser = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Registered Users</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">All Users</h2>
 
       {/* Responsive Table */}
       <div className="hidden md:block overflow-x-auto">
@@ -40,7 +40,7 @@ const AllUser = () => {
                   src={user.photo} // Default placeholder image if no src provided
 
                   className="rounded-full object-cover
-                   w-16 h-10 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-20 lg:h-20
+                   w-10 h-10 sm:w-10 sm:h-10 md:w-24 md:h-24 lg:w-16 lg:h-16
                    border-2 border-gray-300"
                 />
                 <td className="p-3 md:px-4 md:py-2">{user.name}</td>
@@ -60,7 +60,7 @@ const AllUser = () => {
               src={user.photo} // Default placeholder image if no src provided
 
               className="rounded-full object-cover
-                   w-16 h-10 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-26 lg:h-20
+                   w-16 h-10 sm:w-10 sm:h-10 md:w-24 md:h-24 lg:w-10 lg:h-10
                    border-2 border-gray-300"
             />
             <p><span className="font-semibold">Name:</span> {user.name}</p>
@@ -74,3 +74,5 @@ const AllUser = () => {
 };
 
 export default AllUser;
+
+
