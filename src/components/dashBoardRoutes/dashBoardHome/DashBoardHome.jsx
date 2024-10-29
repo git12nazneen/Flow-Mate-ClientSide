@@ -25,12 +25,10 @@ const DashBoardHome = () => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-
   // Toggle user profile dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
 
   const user = useSelector((state) => state.auth.user);
   const [isAdmin] = UseAdmin();
@@ -68,7 +66,6 @@ const DashBoardHome = () => {
       </div>
     );
   }
-
 
   return (
     <div className="mb-20">
@@ -149,7 +146,6 @@ const DashBoardHome = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
