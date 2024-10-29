@@ -86,7 +86,7 @@ export function EditTeam({ refetch, currentUserTeams }) {
           <DialogFooter>
             <Button 
               type="submit" 
-              className="flex justify-center items-center w-full bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-200 p-2"
+              className="flex justify-center items-center w-full bg-[#00053d] hover:bg-black text-white  py-2 px-4 rounded hover:text-white transition duration-200 p-2"
             >
               Edit Team
             </Button>

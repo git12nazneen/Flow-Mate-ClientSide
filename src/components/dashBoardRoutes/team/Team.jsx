@@ -176,10 +176,10 @@ const Team = () => {
                               src={
                                 member?.photo
                               }
-                              alt={member.displayName}
+                              alt={member.name}
                             />
                             <span className="font-medium">
-                              {member?.displayName}
+                              {member?.name}
                             </span>
                           </div>
                         </td>
