@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const AllUser = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10; // Show 10 users per page
+  const usersPerPage = 7; // Show 10 users per page
 
   useEffect(() => {
     const fetchUsers = async () => {
