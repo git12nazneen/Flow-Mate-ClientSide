@@ -290,7 +290,7 @@ const TeamTask = () => {
 
   // Timer handlin
 
-  const exportToCSV = (teamName) => {
+  const exportToCSV = () => {
     // Ensure that `tasks` is loaded (assuming `tasks` is from your state or props)
     if (!tasks || tasks.length === 0) {
       Swal.fire({
@@ -300,6 +300,8 @@ const TeamTask = () => {
       });
       return;
     }
+    console.log(teamName);
+
 
     // Prepare tasks for CSV export
     const taskData = tasks.map((task) => ({
@@ -692,7 +694,7 @@ const TeamTask = () => {
       )}
       <CalendarView />
       {/* </div> */}
-      <CalendarView />
+
     </div>
   );
 };

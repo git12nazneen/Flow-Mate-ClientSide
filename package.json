@@ -8,7 +8,8 @@
     "start": "npm run dev",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
     "@atlaskit/drag-and-drop": "^0.15.1",
@@ -91,9 +92,11 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.25.8",
-    "@babel/preset-react": "^7.25.7",
+    "@babel/preset-env": "^7.25.9",
+    "@babel/preset-react": "^7.25.9",
     "@eslint/js": "^9.9.0",
+    "@testing-library/jest-dom": "^6.6.2",
+    "@testing-library/react": "^16.0.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
