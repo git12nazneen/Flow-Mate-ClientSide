@@ -67,7 +67,7 @@ const DashBoardNav = () => {
                 {/* Add your content */}
               </NavLink>
             )}
-            <NavLink
+      
             <NavLink
               to="/dashboard/boardSystem"
               className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"

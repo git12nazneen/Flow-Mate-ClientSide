@@ -134,7 +134,7 @@ export function CreateTask({ boardName, teamName, team }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-blue-700 text-white" variant="outline">
+        <Button className=" bg-[#00053d] hover:bg-black text-white  py-2 px-4 rounded hover:text-white" variant="outline">
           Create task{" "}
         </Button>
       </DialogTrigger>

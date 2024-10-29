@@ -67,7 +67,7 @@ export function AddTeamMember({ refetch, reset, team }) {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className=" px-4 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#1d4ed8] rounded-lg hover:bg-blue-400  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50 hover:text-white"
+          className=" bg-[#00053d] hover:bg-black text-white  py-2 px-4 rounded hover:text-white"
           variant="outline"
         >
           Add New Team Member

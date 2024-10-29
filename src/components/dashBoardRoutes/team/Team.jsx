@@ -128,7 +128,7 @@ const Team = () => {
 
             <div className="justify-end space-x-2">
 
-              <CreateTask boardName={boardName} teamName={teamName} />
+              <CreateTask team={team} boardName={boardName} teamName={teamName} />
 
 
               {team?.teamLeader === userss[0]?._id && (
