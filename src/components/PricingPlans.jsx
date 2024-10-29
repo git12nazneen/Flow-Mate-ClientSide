@@ -80,12 +80,11 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <div>
         <div
-          className={`flex flex-col border-2 rounded-lg p-1 hover:shadow-lg transform delay-150 mx-auto bg-white hover:bg-slate-200 active:bg-gray-700 active:text-white ${
-            isSelected ? "bg-gray-200" : "hover:bg-[#F1F5F9]"
-          }`}
+          className={`flex flex-col border-2 rounded-lg p-1 hover:shadow-lg transform delay-150 mx-auto bg-white hover:bg-slate-200 active:bg-gray-700 active:text-white ${isSelected ? "bg-gray-200" : "hover:bg-[#F1F5F9]"
+            }`}
         >
           <div className="flex flex-col text-center mt-5 pb-10 md:w-[350px] w-[263px]">
             <h3 className="text-base font-semibold">{name}</h3>
@@ -98,7 +97,7 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
               </span>
             </p>
           </div>
-          <div className="flex p-5 flex-col justify-between h-full md:h-[600px]">
+          <div className="flex p-5 flex-col justify-between h-full md:h-[650px]">
             <ul role="list" className="mb-8 space-y-4 text-left">
               {features.map((feature, index) => (
                 <li key={index} className="flex items-center space-x-3">
@@ -109,14 +108,14 @@ const PricingPlanCard = ({ name, price, features, paymentType }) => {
             </ul>
             {price === "0" ? (
               <Button
-                className="w-full font-bold gap-2 shadow uppercase p-2 text-white bg-blue-800"
+                className="w-full font-bold gap-2 shadow uppercase p-2 text-white bg-[#00053d]"
                 onClick={handleStartFree}
               >
                 Start Free
               </Button>
             ) : (
               <Button
-                className="w-full font-bold gap-2 shadow uppercase p-2 text-white bg-blue-800"
+                className="w-full font-bold gap-2 shadow uppercase p-2 text-white bg-[#00053d]"
                 onClick={handleGetStarted}
               >
                 Get Started
@@ -213,64 +212,64 @@ const PricingPlans = () => {
   const filteredPlans = pricingPlans.filter((plan) => plan.type === activeTab);
 
   return (
-    <div className="max-w-7xl mx-auto" id="price">
-      <section
-        className="p-4 md:p-8"
-      >
-        <div className="max-w-screen-xl lg:py-16 py-5">
-          <div
-          
-            className="mx-auto max-w-3xl text-center pb-12 md:pb-20"
-          >
-            <h1 className="text-2xl md:text-4xl font-bold pb-5 text-center text-gray-800 capitalize lg:text-3xl">
-              Pricing <span className="text-blue-500">Plans</span>
-            </h1>
-            <p className="text-center text-gray-500 mb-5">
-              Choose a plan that best suits your data needs.
-            </p>
-            <div className="grid gap-3 md:grid-cols-2 my-4">
-              <button
-                className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${
-                  activeTab === "basic"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-800"
-                }`}
-                onClick={() => setActiveTab("basic")}
-              >
-                <div className="flex justify-center items-center py-2 gap-2">
-                  <RiWirelessChargingLine />
-                  Basic Plans
-                </div>
-              </button>
+    <div className="bg-gray-100 pt-14 lg:pt-16">
+      <div className="max-w-7xl mx-auto" id="price">
+        <section
+          className="p-4 md:p-8"
+        >
+          <div className="max-w-screen-xl lg:py-16 py-5">
+            <div
 
-              <button
-                className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${
-                  activeTab === "premium"
-                    ? "bg-blue-500 text-white"
+              className="mx-auto max-w-3xl text-center pb-12 md:pb-20"
+            >
+              <h1 className="text-2xl md:text-4xl font-bold pb-5 text-center text-gray-800 capitalize lg:text-3xl">
+                Pricing <span className="text-blue-500">Plans</span>
+              </h1>
+              <p className="text-center text-gray-500 mb-5">
+                Choose a plan that best suits your data needs.
+              </p>
+              <div className="grid gap-3 md:grid-cols-2 my-4">
+                <button
+                  className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${activeTab === "basic"
+                    ? "bg-[#00053d] text-white"
                     : "bg-gray-200 text-gray-800"
-                }`}
-                onClick={() => setActiveTab("premium")}
-              >
-                <div className="flex justify-center gap-2 items-center py-2">
-                  <MdOutlineWorkspacePremium />
-                  Premium Plans
-                </div>
-              </button>
+                    }`}
+                  onClick={() => setActiveTab("basic")}
+                >
+                  <div className="flex justify-center items-center py-2 gap-2">
+                    <RiWirelessChargingLine />
+                    Basic Plans
+                  </div>
+                </button>
+
+                <button
+                  className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${activeTab === "premium"
+                    ? "bg-[#00053d] text-white"
+                    : "bg-gray-200 text-gray-800"
+                    }`}
+                  onClick={() => setActiveTab("premium")}
+                >
+                  <div className="flex justify-center gap-2 items-center py-2">
+                    <MdOutlineWorkspacePremium />
+                    Premium Plans
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-3 gap-4 ">
+              {filteredPlans.map((plan) => (
+                <PricingPlanCard
+                  key={plan.id}
+                  name={plan.name}
+                  price={plan.price}
+                  features={plan.features}
+                  paymentType={plan.paymentType}
+                />
+              ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-3 gap-4 ">
-            {filteredPlans.map((plan) => (
-              <PricingPlanCard
-                key={plan.id}
-                name={plan.name}
-                price={plan.price}
-                features={plan.features}
-                paymentType={plan.paymentType}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };

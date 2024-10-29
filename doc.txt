@@ -1,0 +1,23 @@
+collaborate member
+=================
+
+1st step
+=============
+1.test clone korbe
+2.git checkout -b demo
+3.git add .
+4.git commit 
+5.git push demo
+
+2nd step (updated code newar jonno)
+==============
+1.git checkout test
+2.git pull 
+3.git checkout demo
+4.git merge test
+5. notun code koro
+
+
+
+3rd step
+=========

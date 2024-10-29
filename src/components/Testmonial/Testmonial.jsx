@@ -23,7 +23,7 @@ const Testimonial = () => {
   } = useQuery({
     queryKey: ["feedbackData"],
     queryFn: async () => {
-      const { data } = await axiosCommon.get('/feedbacks');
+      const { data } = await axiosCommon.get(`/feedbacks`);
       return data;
     },
   });
@@ -99,7 +99,7 @@ const Testimonial = () => {
             feedbackData.map((feedback, index) => (
               <SwiperSlide key={index} className="rounded-3xl">
                 <div className="overflow-hidden  bg-white text-slate-500 shadow-md shadow-slate-200  group transition-transform transform hover:scale-95 rounded-2xl text-center hover:bg-[#2c2f52] lg:max-h-[450px] hover:text-white">
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex flex-col justify-center items-center h-80">
                     <div className="p-4">
                       <header className="flex gap-2 py-1">
                         <a
@@ -113,7 +113,7 @@ const Testimonial = () => {
                           />
                         </a>
                         <div>
-                          <h3 className="text-xl font-medium text-slate-700">
+                          <h3 className="text-xl font-medium text-slate-700 group-hover:text-white">
                             {feedback.name}
                           </h3>
                           <p className="text-sm text-slate-400">
@@ -125,13 +125,13 @@ const Testimonial = () => {
                         </div>
                       </header>
                     </div>
-                    <figure>
+                    {/* <figure>
                       <img
                         src={feedback.feedbackImage || cardIamge}
                         alt="card image"
                         className="aspect-video w-full"
                       />
-                    </figure>
+                    </figure> */}
                     <div className="p-2 ">
                       <p>
                         {feedback.feedback.split(" ").slice(0, 12).join(" ")}...

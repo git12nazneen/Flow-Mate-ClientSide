@@ -1,186 +1,108 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useLoaderData } from "react-router-dom";
-import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { Link, useLocation } from "react-router-dom";
 
-const ItemTypes = {
-  TASK: 'task',
-};
+const Dropdown = () => {
+  const dispatch = useDispatch();
+  const location = useLocation(); // Get the current location
+  const [isOpen, setIsOpen] = useState(false);
 
-const TaskItem = ({ task, index, moveTask }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.TASK,
-    item: { id: task._id, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
-  return (
-    <div
-      ref={drag}
-      className={`p-2 mb-2 bg-gray-100 rounded-md flex justify-between items-center ${isDragging ? "opacity-50" : ""}`}
-    >
-      <span className={`text-gray-800 ${task.completed ? "line-through" : ""}`}>
-        {task.taskTitle.slice(0, 35)}
-      </span>
-    </div>
-  );
-};
+  const user = useSelector((state) => state.auth.user);
+  const { displayName, email, photoURL } = user;
 
-const TaskList = ({ tasks, moveTask }) => {
-  const [, drop] = useDrop(() => ({
-    accept: ItemTypes.TASK,
-    hover(item, monitor) {
-      const dragIndex = item.index;
-      const hoverIndex = tasks.length;
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
-      // If the item is dropped on itself, do nothing
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      // Move the task in the list
-      moveTask(dragIndex, hoverIndex);
-
-      // Update the index for the dragged item
-      item.index = hoverIndex;
-    },
-  }));
+  // Check if the current path includes "dashboard"
+  const isInDashboard = location.pathname.includes("dashboard");
 
   return (
-    <div ref={drop} className="p-4 w-full bg-white rounded-lg shadow-md">
-      {tasks.length === 0 ? (
-        <div className="text-gray-500">No tasks available</div>
-      ) : (
-        tasks.map((task, index) => (
-          <TaskItem key={task._id} task={task} index={index} moveTask={moveTask} />
-        ))
+    <div className="relative inline-block z-50">
+      {/* Dropdown toggle button */}
+      <button
+        onClick={toggleDropdown}
+        className="relative z-10 flex items-center text-sm border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring focus:outline-none"
+      >
+        <span>
+          <img
+            className="object-cover w-8 h-8 rounded-full"
+            src={
+              photoURL ||
+              "https://i.ibb.co/M7Zxxsm/770fb75f5e81e4c2dbe8934f246aeeab.jpg"
+            }
+            alt="User Avatar"
+          />
+        </span>
+        <svg
+          className="w-5 h-5 mx-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </button>
+
+      {/* Dropdown menu */}
+      {isOpen && (
+        <div className="absolute right-0 z-20 lg:w-64 md:w-56 w-38 py-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
+          <li className="flex flex-col md:flex-row justify-center items-center p-2 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+            <img
+              className="flex-shrink-0 object-cover mx-1 rounded-full w-6 h-6"
+              src={photoURL || "https://randomuser.me/api/portraits"}
+              alt="avatar"
+            />
+            <div className="text-center">
+              <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                {displayName || "No Name"}
+              </h1>
+              <p className="lg:text-sm text-xs text-gray-500 dark:text-gray-400">
+                {email || "No Email"}
+              </p>
+            </div>
+          </li>
+
+          <hr className="border-gray-200 dark:border-gray-700" />
+
+          {!isInDashboard && (
+            <>
+              <Link
+                to={"dashboard/profilePage"}
+                className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center"
+              >
+                view profile
+              </Link>
+
+              <Link
+                to={"dashboard/settings"}
+                className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center"
+              >
+                settings
+              </Link>
+
+              <hr className="border-gray-200 dark:border-gray-700" />
+            </>
+          )}
+
+          <button
+            onClick={handleLogout}
+            className="block px-2 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white text-center w-full"
+          >
+            log out
+          </button>
+        </div>
       )}
     </div>
   );
 };
 
-const DragAndDrop = () => {
-  const { teamName } = useLoaderData();
-  const axiosCommon = UseAxiosCommon();
-
-  // Function to fetch tasks by stage
-  const fetchTasksByStage = async (stage) => {
-    if (teamName) {
-      const { data } = await axiosCommon.get(`/createTask/tasksByStage/${teamName}/${stage}`);
-      return data;
-    } else {
-      throw new Error("Team name is missing");
-    }
-  };
-
-  // Fetch tasks for each stage using TanStack Query
-  const {
-    data: todoTasks = [],
-    isLoading: isLoadingTodo,
-    error: errorTodo,
-    refetch: refetchTodo,
-  } = useQuery({
-    queryKey: ["tasks", teamName, "todo"],
-    queryFn: () => fetchTasksByStage("todo"),
-    enabled: !!teamName,
-  });
-
-  const {
-    data: inProgressTasks = [],
-    isLoading: isLoadingInProgress,
-    error: errorInProgress,
-    refetch: refetchInProgress,
-  } = useQuery({
-    queryKey: ["tasks", teamName, "in progress"],
-    queryFn: () => fetchTasksByStage("in progress"),
-    enabled: !!teamName,
-  });
-
-  const {
-    data: completedTasks = [],
-    isLoading: isLoadingCompleted,
-    error: errorCompleted,
-    refetch: refetchCompleted,
-  } = useQuery({
-    queryKey: ["tasks", teamName, "done"],
-    queryFn: () => fetchTasksByStage("done"),
-    enabled: !!teamName,
-  });
-
-  // Log the team name
-  useEffect(() => {
-    console.log("teamName from loader:", teamName);
-  }, [teamName]);
-
-  // Render loading states
-  if (isLoadingTodo || isLoadingInProgress || isLoadingCompleted) {
-    return <div>Loading...</div>;
-  }
-
-  // Render error states
-  if (errorTodo || errorInProgress || errorCompleted) {
-    console.error("Error loading tasks:", errorTodo || errorInProgress || errorCompleted);
-    return (
-      <div>
-        Error loading tasks:{" "}
-        {errorTodo?.message || errorInProgress?.message || errorCompleted?.message}
-      </div>
-    );
-  }
-
-  // Handle task movement
-  const moveTask = (fromIndex, toIndex) => {
-    // Logic to move task and update the backend after UI update
-    const taskToMove = todoTasks[fromIndex];
-    const newTasks = [...todoTasks];
-    newTasks.splice(fromIndex, 1);
-    newTasks.splice(toIndex, 0, taskToMove);
-
-    updateTaskStage(taskToMove._id, "todo"); // Add logic to update stage if necessary
-    refetchTodo(); // Refetch after moving the task
-  };
-
-  // Separate function for updating the task stage on the server
-  const updateTaskStage = async (taskId, newStage) => {
-    try {
-      await axiosCommon.put("/createTask/updateStage", {
-        id: taskId,
-        newStage,
-      });
-      console.log("Task stage updated:", taskId, "to", newStage);
-
-      // Refetch to get updated tasks after the API call completes
-      refetchTodo();
-      refetchInProgress();
-      refetchCompleted();
-    } catch (error) {
-      console.error("Error updating task stage:", error);
-    }
-  };
-
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
-
-        {/* To Do List */}
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">To Do</h2>
-        <TaskList tasks={todoTasks} moveTask={moveTask} />
-
-        {/* In Progress Tasks */}
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">In Progress</h2>
-        <TaskList tasks={inProgressTasks} moveTask={moveTask} />
-
-        {/* Completed Tasks */}
-        <h2 className="text-lg font-semibold text-gray-700 mb-4">Completed</h2>
-        <TaskList tasks={completedTasks} moveTask={moveTask} />
-
-      </div>
-    </DndProvider>
-  );
-};
-
-export default DragAndDrop;
+export default Dropdown;

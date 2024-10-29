@@ -1,3 +1,4 @@
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 import PageHeader from "@/components/pageHeader/PageHeader";
 import { Button } from "@/components/ui/button";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
@@ -47,7 +48,8 @@ const PaymentHistory = () => {
 
   return (
     <div>
-      <section className="container p-10 mx-auto">
+      <UpperNavigation />
+      <section className="container px-10 py-5 mx-auto">
         <PageHeader title="Payment data" breadcrumb="All the payments here show" />
         <div className="flex flex-col lg:flex-row justify-between gap-x-3 mx-10">
           <div className="flex items-center">
@@ -62,7 +64,7 @@ const PaymentHistory = () => {
           {/* Export Button */}
           <Button
             onClick={handleExportToExcel}
-            className="bg-[#020b70] hover:bg-blue-950 text-white px-4 py-2 rounded"
+            className="bg-[#00053d] hover:bg-blue-950 text-white px-4 py-2 rounded"
           >
             Export to Excel
           </Button>
@@ -73,7 +75,7 @@ const PaymentHistory = () => {
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-[#020b70]">
+                  <thead className="bg-[#00053d]">
                     <tr>
                       <th className="px-4 py-3.5 text-sm font-normal text-left text-white">
                         Serial No
