@@ -17,11 +17,11 @@ const DragAndDropTaskManager = () => {
   const fetchTasksByStage = async (stage) => {
     if (!teamName) throw new Error("Team name is missing");
     const { data } = await axiosCommon.get(`/createTask/tasksByStage/${teamName}/${stage}`);
-    console.log(`Fetched ${stage} tasks:`, data);
     return data;
   };
 
   // Fetch tasks for each stage
+
   const { data: todoTasks = [] } = useQuery({
     queryKey: ["tasks", teamName, "todo"],
     queryFn: () => fetchTasksByStage("todo"),
@@ -30,7 +30,7 @@ const DragAndDropTaskManager = () => {
 
   const { data: inProgressTasks = [] } = useQuery({
     queryKey: ["tasks", teamName, "inProgress"],
-    queryFn: () => fetchTasksByStage("in progress"),
+    queryFn: () => fetchTasksByStage("inProgress"),
     enabled: !!teamName,
   });
 
@@ -49,6 +49,27 @@ const DragAndDropTaskManager = () => {
     });
   }, [todoTasks, inProgressTasks, completedTasks]);
 
+  // Function to update task stage in backend
+  const updateTaskStage = async (taskId, newStage) => {
+    console.log("Updating task stage:", taskId, newStage);
+
+
+    const update = { newStage };
+
+    try {
+      const response = await axiosCommon.put(`/createTask/updateStage/${taskId}`, update);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        console.error("Error updating task stage:", error.response.data);
+        return { error: error.response.data };
+      } else {
+        console.error("Error updating task stage:", error.message);
+        return { error: "Network error or server not responding" };
+      }
+    }
+  };
+
   // Handle drag start
   const onDragStart = (e, id, stage) => {
     e.dataTransfer.setData("task", JSON.stringify({ id, stage }));
@@ -58,17 +79,23 @@ const DragAndDropTaskManager = () => {
   const onDragOver = (e) => e.preventDefault();
 
   // Handle drop
-  const onDrop = (e, targetStage) => {
+  const onDrop = async (e, targetStage) => {
     e.preventDefault();
     const { id, stage: currentStage } = JSON.parse(e.dataTransfer.getData("task"));
 
     if (currentStage !== targetStage) {
       const taskToMove = taskLists[currentStage].find((task) => task._id === id);
-      setTaskLists((prev) => ({
-        ...prev,
-        [currentStage]: prev[currentStage].filter((task) => task._id !== id),
-        [targetStage]: [...prev[targetStage], { ...taskToMove }],
-      }));
+
+      // Update backend and then frontend state
+      const updateResult = await updateTaskStage(id, targetStage);
+
+      if (updateResult) {
+        setTaskLists((prev) => ({
+          ...prev,
+          [currentStage]: prev[currentStage].filter((task) => task._id !== id),
+          [targetStage]: [...prev[targetStage], { ...taskToMove, stage: targetStage }],
+        }));
+      }
     }
   };
 
@@ -92,7 +119,6 @@ const DragAndDropTaskManager = () => {
                 onDragStart={(e) => onDragStart(e, task._id, stage)}
                 className="bg-white p-3 rounded-md shadow-md cursor-move"
               >
-                {/* Display task name or other identifying property */}
                 {task.taskTitle.slice(0, 50)}
               </li>
             ))}
