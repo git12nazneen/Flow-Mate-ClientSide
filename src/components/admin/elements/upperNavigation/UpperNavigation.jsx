@@ -57,8 +57,13 @@ const UpperNavigation = () => {
               Dashboard
             </Link>
           </div>
+          <div >
+          <div className="relative lg:ml-4" onClick={toggleHandler}>
+            <CommonButton text="Create" />
+          </div>
+          {toggleOpen && <ProjectCreate />}
+        </div>
 
-         
           {/* Hamburger icon for mobile */}
           <button
             className="text-3xl lg:hidden"
@@ -67,12 +72,7 @@ const UpperNavigation = () => {
             {isNavOpen ? <MdClose /> : <MdMenu />}
           </button>
         </div>
-        <div >
-            <div className="relative" onClick={toggleHandler}>
-              <CommonButton text="Create" />
-            </div>
-            {toggleOpen && <ProjectCreate />}
-          </div>
+        
         {/* Links and actions (responsive) */}
         <div
           className={`${isNavOpen ? "block" : "hidden"
@@ -86,19 +86,22 @@ const UpperNavigation = () => {
               className="w-full p-2  bg-opacity-20 text-gray-900 bg-slate-500 placeholder-white rounded-md outline-none"
             />
           </div>
-         
+
           {/* User actions and Date-Time */}
           <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-4 mx-8">
             {user && <Dropdown />}
             <div className="text-center flex text-sm">
-              <p className="text-sm font-bold text-gray-600 pr-6">{formattedDate}</p>           
+              <p className="text-sm font-bold text-gray-600 pr-6">{formattedDate}</p>
               <p className="text-sm font-bold text-gray-600">{formattedTime}</p>
             </div>
           </div>
-          
+
         </div>
       </nav>
     </div>
+
+
+
   );
 };
 

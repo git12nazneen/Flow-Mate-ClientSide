@@ -5,7 +5,7 @@ const PageHeader = ({ title, breadcrumb }) => {
     <div className="bg-blue-100 rounded-2xl p-6 flex items-center justify-between mx-10 my-10 shadow-xl">
       {/* Left side (Text and breadcrumb) */}
       <div>
-        <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
+        <h1 className="text-xl lg:text-2xl font-semibold text-gray-800">{title}</h1>
         <nav className="text-sm text-gray-500 mt-2">
           <a href="#" className="hover:underline">Home</a>
           <span className="mx-2">•</span>
@@ -15,7 +15,7 @@ const PageHeader = ({ title, breadcrumb }) => {
 
       {/* Right side (Image) */}
       <div>
-        <img src={img} alt="Page Illustration" className="w-32 h-32 object-cover" />
+        <img src={img} alt="Page Illustration" className="w-auto lg:w-32 h-32 lg:object-cover" />
       </div>
     </div>
   );

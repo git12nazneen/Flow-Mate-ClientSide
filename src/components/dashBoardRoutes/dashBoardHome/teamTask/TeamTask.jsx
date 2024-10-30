@@ -37,6 +37,8 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 // Main Component
 const TeamTask = () => {
   const axiosCommon = UseAxiosCommon();
+  const { user } = useSelector((state) => state.auth);
+  console.log("user", user); // Log user for debugging
   // track user
   const [elapsedTime, setElapsedTime] = useState({}); // Track elapsed time for tasks
   const [timers, setTimers] = useState({}); // Track timers for each task
@@ -137,6 +139,18 @@ const TeamTask = () => {
   // delete funciton
 
   const handleDelete = async (task) => {
+
+    // Check if the user is authorized to delete this task
+    if (task.email !== user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Unauthorized",
+        text: "You cannot delete this task as you are not the admin.",
+      });
+      return; // Exit the function early if the emails don't match
+    }
+
+
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -159,6 +173,7 @@ const TeamTask = () => {
 
           // Optionally update the local state if you're using useState to manage tasks
           // setTasks((prevTasks) => prevTasks.filter((t) => t._id !== task._id));
+
 
           Swal.fire({
             position: "center",
@@ -184,14 +199,22 @@ const TeamTask = () => {
   // Timer handling
 
   // Timer handlin
-
   const handleStopTimer = async (task) => {
+    // Check if the user is authorized to stop this timer
+    if (task.workerMail !== user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Unauthorized",
+        text: "You cannot stop this timer as it is not assigned to you.",
+      });
+      return; // Exit the function early if the emails don't match
+    }
+
     clearInterval(timers[task._id]); // Stop the timer
     setTimers((prev) => ({ ...prev, [task._id]: null }));
 
     // Save the stopped state and elapsed time in localStorage
-    const stoppedTimers =
-      JSON.parse(localStorage.getItem("stoppedTimers")) || {};
+    const stoppedTimers = JSON.parse(localStorage.getItem("stoppedTimers")) || {};
 
     if (elapsedTime[task._id]) {
       stoppedTimers[task._id] = {
@@ -204,11 +227,11 @@ const TeamTask = () => {
       const dataToSend = {
         taskId: task._id,
         elapsedTime: elapsedTime[task._id],
-        workerMail: task?.workerMail,
+        workerMail: task.workerMail,
         stopped: true,
-        taskTitle: task?.taskTitle,
-        taskSubmitted: task?.assignedTo,
-        taskDescription: task?.description,
+        taskTitle: task.taskTitle,
+        taskSubmitted: task.assignedTo,
+        taskDescription: task.description,
         taskDueDate: dayjs(task.dueDate).format("YYYY-MM-DD"),
       };
 
@@ -245,10 +268,11 @@ const TeamTask = () => {
       }
     }
   };
+
+  // useEffect to handle timers
   useEffect(() => {
     if (tasks) {
-      const stoppedTimers =
-        JSON.parse(localStorage.getItem("stoppedTimers")) || {};
+      const stoppedTimers = JSON.parse(localStorage.getItem("stoppedTimers")) || {};
       setStoppedTimersState(stoppedTimers);
 
       tasks.forEach((task) => {
@@ -287,7 +311,6 @@ const TeamTask = () => {
       Object.values(timers).forEach(clearInterval);
     };
   }, [tasks, timers]);
-
   // Timer handlin
 
   const exportToCSV = () => {
@@ -479,7 +502,7 @@ const TeamTask = () => {
             >
               <button
                 id="dropdownDelayButton"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-[#00053d] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button"
               >
                 Sort by Date
@@ -677,11 +700,29 @@ const TeamTask = () => {
                       <RiDeleteBin6Line />
                     </span>
                   </div>
+                 
                   <div className="p-2 border bg-blue-200 rounded-sm">
-                    <Link to={`/dashboard/updateTask/${task._id}`}>
-                      <FaEdit />
-                    </Link>
+                    {task.email === user.email ? (
+                      <Link to={`/dashboard/updateTask/${task._id}`}>
+                        <FaEdit />
+                      </Link>
+                    ) : (
+                      // Show a warning icon or message if you want, or leave empty
+                      <div
+                        onClick={() =>
+                          Swal.fire({
+                            icon: "error",
+                            title: "Unauthorized",
+                            text: "You cannot edit this task as you are not the admin.",
+                          })
+                        }
+                        className="cursor-pointer text-red-500" // Optional styling
+                      >
+                        <FaEdit /> {/* This icon can be shown in red or disabled */}
+                      </div>
+                    )}
                   </div>
+
                 </div>
               </div>
             </div>

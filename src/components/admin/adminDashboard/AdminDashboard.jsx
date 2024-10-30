@@ -114,7 +114,7 @@ const AdminDashboard = () => {
         <div className="flex lg:flex-row flex-col justify-between px-10 mx-auto">
           <div className="lg:w-2/3 w-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 gap-3 text-center mx-5 my-10">
-              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
+              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900 mb-10 lg:mb-0">
                 <CardHeader className="flex items-center">
                   {/* <FaDollarSign className="mr-2 text-3xl" /> */}
                   <img src={seven} className="h-12 w-12" alt="" />
@@ -128,7 +128,7 @@ const AdminDashboard = () => {
               </Card>
 
               {/* Login User Section */}
-              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900 shadow-xl">
+              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900 shadow-xl mb-10 lg:mb-0">
                 <CardHeader className="flex items-center">
                   {/* <FaUserFriends className="mr-2 text-3xl" /> */}
                   <img src={five} className="h-12 w-12" alt="" />
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
               </Card>
 
               {/* Subscription User Section */}
-              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
+              <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900 mb-10 lg:mb-0">
                 <CardHeader className="flex items-center">
                   {/* <FaNewspaper className="mr-2 text-3xl" /> */}
                   <img src={eight} className="h-12 w-12" alt="" />
@@ -186,21 +186,7 @@ const AdminDashboard = () => {
                     Count: {tasks.length}
                   </p>
                 </div>
-              </div>
-
-
-              {/* Card 3: All Contact Mails */}
-              {/* <Card className="transition-transform transform hover:scale-105 bg-white text-slate-900">
-            <CardHeader className="flex items-center">
-              < FaTasks className="mr-2 text-3xl" />
-              <CardTitle>All Contact Mails</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-lg font-semibold  text-center">
-              Count: {contactUs.length}
-              </p>
-            </CardContent>
-          </Card> */}
+              </div>           
             </div>
           </div>
         </div>
@@ -208,7 +194,7 @@ const AdminDashboard = () => {
 
         {/* Chart Section */}
         <div className="grid grid-cols-1 xl:grid-cols-2 my-10 mx-16 gap-5">
-          <div className="bg-white rounded-xl shadow-md">
+          <div className="bg-white rounded-xl shadow-md mb-10 lg:mb-0">
 
             <SmallBarChart data={userGrowthData} /> {/* Use the Bar chart */}
           </div>

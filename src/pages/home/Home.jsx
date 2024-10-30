@@ -26,21 +26,10 @@ const Home = () => {
       <BannerImage />
       <MarqueeSection />
       <AutoMateTask/>
-      {/* <HeroHeaderSection /> */}
-      {/* <Banner /> */}
-
-      {/* <ModalPage /> */}
-
-      {/* <MarketingComponent /> */}
       <Features />
-      {/* <OurTeams /> */}
       <ProjectIdea/>
-     
-
       <Testmonial />
-      {/* <Newsletters /> */}
       <FAQ />
-      {/* <Contact/> */}
       <ForPrice/>
     </div>
   );

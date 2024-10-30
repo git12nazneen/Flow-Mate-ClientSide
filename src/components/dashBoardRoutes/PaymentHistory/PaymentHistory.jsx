@@ -49,11 +49,11 @@ const PaymentHistory = () => {
   return (
     <div>
       <UpperNavigation />
-      <section className="container px-10 py-5 mx-auto">
+      <section className="container px-0 lg:px-10 py-5 mx-auto">
         <PageHeader title="Payment data" breadcrumb="All the payments here show" />
-        <div className="flex flex-col lg:flex-row justify-between gap-x-3 mx-10">
+        <div className="flex flex-row lg:flex-row justify-between gap-x-3 mx-10 ">
           <div className="flex items-center">
-            <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+            <h2 className="text-sm lg:text-lg font-medium text-gray-800 dark:text-white">
               Payment History
             </h2>
             <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
@@ -64,14 +64,14 @@ const PaymentHistory = () => {
           {/* Export Button */}
           <Button
             onClick={handleExportToExcel}
-            className="bg-[#00053d] hover:bg-blue-950 text-white px-4 py-2 rounded"
+            className="bg-[#00053d] hover:bg-blue-950 text-white px-2 lg:px-4 py-1 lg:py-2 rounded"
           >
             Export to Excel
           </Button>
         </div>
 
         <div className="flex flex-col mt-6 mx-10">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className=" -my-2 overflow-x-auto mx-0 sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

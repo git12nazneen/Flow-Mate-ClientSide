@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const InProgress = () => {
   const { teamName } = useLoaderData();
   const axiosCommon = UseAxiosCommon();
-  const stage = "in progress";
+  const stage = "inProgress";
   useEffect(() => {
     console.log("teamName from loader:", teamName);
   }, [teamName]); // Add teamName as a dependency to log only when it changes
