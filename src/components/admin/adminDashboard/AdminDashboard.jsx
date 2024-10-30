@@ -17,6 +17,7 @@ import five from '../../../assets/icon/5.png'
 import six from '../../../assets/icon/6.png'
 import seven from '../../../assets/icon/7.png'
 import eight from '../../../assets/icon/8.png'
+import AllUsersLineChart from "@/components/dashBoardRoutes/dashBoardHome/allUsersLineChart/allUsersLineChart";
 
 
 const AdminDashboard = () => {
@@ -110,6 +111,9 @@ const AdminDashboard = () => {
       <div className="lg:my-8">
         <div className="mx-5">
           <PageHeader title="FlowMate Admin Dashboard" breadcrumb={`Hello ${user.displayName}, Welcome to the admin dashboard`} />
+        </div>
+        <div>
+          <AllUsersLineChart/>
         </div>
         <div className="flex lg:flex-row flex-col justify-between px-10 mx-auto">
           <div className="lg:w-2/3 w-auto">
