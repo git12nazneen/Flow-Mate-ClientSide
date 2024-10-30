@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { updateUserProfile } from "@/redux/slices/authSlice";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import Swal from "sweetalert2";
+import PageHeader from "@/components/pageHeader/PageHeader";
 
 const DashBoardProfile = () => {
   const axiosCommon = UseAxiosCommon();
@@ -70,9 +71,8 @@ const DashBoardProfile = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h1 className="text-center my-5 font-bold text-[#00053d] text-2xl">
-        User Profile
-      </h1>
+     
+      <PageHeader title='User Profile' breadcrumb='See your information'></PageHeader>
       <div className="px-4">
         <div className="flex justify-center items-center p-4">
           <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl w-full">

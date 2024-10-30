@@ -19,6 +19,7 @@ import PageHeader from "@/components/pageHeader/PageHeader";
 import ActivityChart from "./Recharts/ActivityChart";
 import SupportiveCard from "./SuuportiveCard";
 import UserDashboardPieChart from "./UserDashboardPieChart";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 const DashBoardHome = () => {
   const dispatch = useDispatch();
@@ -70,74 +71,23 @@ const DashBoardHome = () => {
   return (
     <div className="mb-20">
       {/* Navbar */}
-      <div className="flex flex-col bg-gradient-to-r from-slate-200 to-gray-300 text-slate-950">
-        <nav className="flex flex-col lg:flex-row justify-between items-center px-6 py-4 bg-opacity-10 backdrop-filter backdrop-blur-lg sticky top-0 z-10">
-          {/* Logo section */}
-          <div className="flex items-center justify-between w-full lg:w-auto mb-4 lg:mb-0">
-            <div className="flex items-center space-x-2">
-              <MdDashboard className="text-3xl" />
-              <Link to="/" className="text-2xl font-semibold">
-                Dashboard
-              </Link>
-            </div>
-
-
-            {/* Hamburger icon for mobile */}
-            <button
-              className="text-3xl lg:hidden"
-              onClick={() => setIsNavOpen(!isNavOpen)}
-            >
-              {isNavOpen ? <MdClose /> : <MdMenu />}
-            </button>
-          </div>
-          <div >
-            <div className="relative" onClick={toggleHandler}>
-              <CommonButton text="Create" />
-            </div>
-            {toggleOpen && <ProjectCreate />}
-          </div>
-          {/* Links and actions (responsive) */}
-          <div
-            className={`${isNavOpen ? "block" : "hidden"
-              } w-full lg:w-auto lg:flex lg:flex-row lg:items-center lg:space-x-4`}
-          >
-            {/* Search field on its own line */}
-            <div className="w-full lg:w-auto mb-4 lg:mb-0 mr-8">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full p-2  bg-opacity-20 text-gray-900 bg-slate-500 placeholder-white rounded-md outline-none"
-              />
-            </div>
-
-            {/* User actions and Date-Time */}
-            <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-4 mx-8">
-              {user && <Dropdown />}
-              <div className="text-center flex text-sm">
-                <p className="text-sm font-bold text-gray-600 pr-6">{formattedDate}</p>
-                <p className="text-sm font-bold text-gray-600">{formattedTime}</p>
-              </div>
-            </div>
-
-          </div>
-        </nav>
-      </div>
+      <UpperNavigation></UpperNavigation>
       <div className="mx-5">
 
         <PageHeader title="FlowMate User Dashboard" breadcrumb="  Here is some user information" />
       </div>
       {/* Dashboard Content */}
       <div className="lg:flex flex-1 my-10 mx-10">
-        <div className="px-5 py-6 rounded-2xl  hover:shadow-sky-200 w-full">
+        <div className=" py-6 rounded-2xl  hover:shadow-sky-200 w-full">
           <DashBoardCards />
         </div>
       </div>
 
 
       {/* Charts and Graphs */}
-      <div className="flex lg:flex-row flex-col justify-between mx-14 my-10 gap-6">
+      <div className="flex lg:flex-row flex-col justify-between mx-14 my-5 lg:my-10 gap-6">
         {/* Visitor Insights Chart */}
-        <div className="flex-1  mx-auto rounded-2xl ">
+        <div className="flex-1 mx-auto rounded-2xl ">
           <ActivityChart />
         </div>
 
