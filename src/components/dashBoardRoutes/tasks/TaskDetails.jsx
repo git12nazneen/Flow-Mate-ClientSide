@@ -61,41 +61,69 @@ const TaskDetails = () => {
   const handleDownloadFile = async (fileUrl, index) => {
     const fileExtension = getFileExtension(fileUrl);
 
-    // For PDF files, open directly
+    // Directly open PDF files in a new tab
     if (fileExtension === "pdf") {
-      // Directly open the PDF file in a new tab
-      window.open(fileUrl, "_blank");
+      try {
+        // Open the PDF file in a new tab
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error("Network response was not ok.");
+
+        // Ensure the content type is application/pdf
+        if (response.headers.get("content-type") !== "application/pdf") {
+          throw new Error("The file is not a valid PDF.");
+        }
+
+        const blob = await response.blob();
+        const fileDownloadURL = URL.createObjectURL(blob);
+
+        // Create a link element for download
+        const link = document.createElement("a");
+        link.href = fileDownloadURL;
+        link.setAttribute("download", `file_${index}.pdf`); // Set the download attribute
+        document.body.appendChild(link);
+        link.click(); // Trigger the download
+        document.body.removeChild(link); // Cleanup
+
+        // Release the object URL
+        URL.revokeObjectURL(fileDownloadURL);
+      } catch (error) {
+        console.error("Error downloading PDF:", error);
+        Swal.fire({
+          title: "Download Error",
+          text: "Failed to download the PDF. Please try again.",
+          icon: "error"
+        });
+      }
     } else {
-      // Use fetch for other file types
+      // Handle other file types as before
       try {
         const response = await fetch(fileUrl);
-
         if (!response.ok) throw new Error("Network response was not ok.");
 
         const blob = await response.blob();
         const fileDownloadURL = URL.createObjectURL(blob);
 
-        // Create a link element
+        // Create a link element for download
         const link = document.createElement("a");
         link.href = fileDownloadURL;
-
-        // Set the download attribute
-        link.setAttribute("download", `file_${index}.${fileExtension}`);
+        link.setAttribute("download", `file_${index}.${fileExtension}`); // Set the download attribute
         document.body.appendChild(link);
+        link.click(); // Trigger the download
+        document.body.removeChild(link); // Cleanup
 
-        // Simulate a click to trigger the download
-        link.click();
-
-        // Cleanup
-        document.body.removeChild(link);
-        URL.revokeObjectURL(fileDownloadURL); // Release the object URL
+        // Release the object URL
+        URL.revokeObjectURL(fileDownloadURL);
       } catch (error) {
         console.error("Error downloading file:", error);
-        // Open the file URL in a new tab as a fallback
-        window.open(fileUrl, "_blank");
+        Swal.fire({
+          title: "Download Error",
+          text: "Failed to download the file. Please try again.",
+          icon: "error"
+        });
       }
     }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
