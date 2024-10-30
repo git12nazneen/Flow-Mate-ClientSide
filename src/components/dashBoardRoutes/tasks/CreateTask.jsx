@@ -247,7 +247,7 @@ export function CreateTask({ boardName, teamName, team }) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={loading}>
+            <Button className='bg-[#00053d] hover:bg-black text-white' type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </Button>
           </DialogFooter>
