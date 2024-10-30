@@ -202,7 +202,7 @@ export function CreateTask({ boardName, teamName, team }) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Todo</SelectLabel>
-                      <SelectItem value="in progress">In Progress</SelectItem>
+                      <SelectItem value="inProgress">In Progress</SelectItem>
                       <SelectItem value="done">Completed</SelectItem>
                       <SelectItem value="todo">Todo</SelectItem>
                     </SelectGroup>
