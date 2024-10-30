@@ -175,13 +175,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-        <div className="me-[60px]">
-          <AllUsersLineChart
-            subscriptionUsers={userGrowthData.subscriptionUsers}
-            loggedUsers={userGrowthData.loggedInUsers}
-            paidUsers={userGrowthData.paidUsers}
-          />
-        </div>
+      
         {/* Chart Section */}
         <div className="grid grid-cols-1 xl:grid-cols-2 my-10 mx-16 gap-5">
           <div className="bg-white rounded-xl shadow-md mb-10 lg:mb-0">
@@ -189,6 +183,13 @@ const AdminDashboard = () => {
             <SmallBarChart data={userGrowthData} /> {/* Use the Bar chart */}
           </div>
           <PieChartInteraction data={userInteractionData} />
+        </div>
+        <div className="me-[60px] bg-white py-10 rounded-lg shadow-md mx-10">
+          <AllUsersLineChart
+            subscriptionUsers={userGrowthData.subscriptionUsers}
+            loggedUsers={userGrowthData.loggedInUsers}
+            paidUsers={userGrowthData.paidUsers}
+          />
         </div>
       </div>
     </div>
