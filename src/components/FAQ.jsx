@@ -19,7 +19,7 @@ export function FAQ() {
 
   return (
 
-    <div className="pt-10 pb-10 px-2 md:px-20">
+    <div className="pt-10 pb-10 px-2 md:px-10">
       <div data-aos="zoom-in" className="text-center pb-10">
         <h1 className="text-2xl md:text-4xl font-bold mb-5">
           Frequently Asked Questions
@@ -37,7 +37,7 @@ export function FAQ() {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row container mx-auto mt-5 mb-20 justify-between gap-5 bg-white rounded-lg rounded-b-3xl py-8 lg:px-6 px-1 shadow-md">
+      <div className="flex flex-col md:flex-row lg:flex-row container mx-auto mt-5 mb-20 justify-between gap-5 bg-white rounded-lg rounded-b-3xl py-8 md:px-3 lg:px-6 px-1 shadow-md">
         {/* Left section with title and description */}
         <div className="w-full lg:w-1/2 p-5">
           <div className="flex justify-center items-center pt-5">
@@ -58,8 +58,7 @@ export function FAQ() {
               <div className="flex items-center bg-[#00053d] text-gray-200 rounded-md shadow-sm">
                 <div className="w-3/4 p-4">
                   <p className="text-lg ">
-                    By automating tasks, setting deadlines, and tracking project
-                    progress.
+                    By automating tasks, setting deadlines, and tracking project.
                   </p>
                 </div>
                 <div className="w-1/4 bg-sky-100 flex justify-center items-center py-8">

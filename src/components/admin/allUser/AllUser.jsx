@@ -1,4 +1,3 @@
-
 import PageHeader from '@/components/pageHeader/PageHeader';
 import React, { useEffect, useState } from 'react';
 
@@ -60,37 +59,38 @@ const AllUser = () => {
     <>
       <PageHeader title='Show user data' breadcrumb='See all the user information' />
       <div className="container mx-auto p-10">
-        <div className="hidden md:block overflow-x-auto">
+        {/* Make this div always visible and maintain responsiveness */}
+        <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300 text-sm md:text-base shadow-md rounded-lg">
             <thead>
               <tr className="bg-[#00053d] text-white">
-                <th className="p-4 border-b border-gray-300 text-left">Photo</th>
-                <th className="p-4 border-b border-gray-300 text-left">Name</th>
-                <th className="p-4 border-b border-gray-300 text-left">Email</th>
-                <th className="p-4 border-b border-gray-300 text-left">Role</th>
-                <th className="p-4 border-b border-gray-300 text-left">Status</th>
-                <th className="p-4 border-b border-gray-300 text-left">Actions</th>
+                <th className="p-3 border border-gray-300 text-left">Photo</th>
+                <th className="p-3 border border-gray-300 text-left">Name</th>
+                <th className="p-3 border border-gray-300 text-left">Email</th>
+                <th className="p-3 border border-gray-300 text-left">Role</th>
+                <th className="p-3 border border-gray-300 text-left">Status</th>
+                <th className="p-3 border border-gray-300 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {currentUsers.map((user) => (
                 <tr key={user.id} className="border-b hover:bg-blue-50 transition duration-200">
-                  <td className="p-4 border-b border-gray-200">
+                  <td className="p-3 border border-gray-200">
                     <img
                       src={user.photo}
                       alt={`${user.name}'s avatar`}
-                      className="rounded-full object-cover w-10 h-10 md:w-16 md:h-16 border-2 border-gray-300"
+                      className="rounded-full object-cover w-6 h-6 lg:w-10 lg:h-10 md:w-10 md:h-10 border-2 border-gray-300"
                     />
                   </td>
-                  <td className="p-4 border-b border-gray-200">{user?.name}</td>
-                  <td className="p-4 border-b border-gray-200">{user?.email}</td>
-                  <td className="p-4 border-b border-gray-200">{user?.role}</td>
-                  <td className="p-4 border-b border-gray-200">{user?.status || 'inactive'}</td>
-                  <td className="p-4 border-b border-gray-200 space-x-2">
+                  <td className="p-3 border border-gray-200">{user?.name}</td>
+                  <td className="p-3 border border-gray-200">{user?.email}</td>
+                  <td className="p-3 border border-gray-200">{user?.role}</td>
+                  <td className="p-3 border border-gray-200">{user?.status || 'inactive'}</td>
+                  <td className="p-3 border border-gray-200 space-x-2">
                     {user.role !== 'admin' && (
                       <button
                         onClick={() => handleMakeAdmin(user.id)}
-                        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-200"
+                        className="bg-[#00053d] text-white px-3 py-1 rounded hover:bg-green-600 transition duration-200"
                       >
                         Make Admin
                       </button>
@@ -124,4 +124,4 @@ const AllUser = () => {
   );
 };
 
-export default AllUser;
+export default AllUser; 

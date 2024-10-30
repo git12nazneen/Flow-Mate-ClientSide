@@ -69,97 +69,93 @@ const Testimonial = () => {
       </div>
 
       <div className="container mx-auto px-5 py-2">
-        <Swiper
-          modules={[Autoplay, EffectCoverflow]}
-          effect={"coverflow"}
-          autoplay={{ delay: 3000 }}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          spaceBetween={30}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 1 },
-            1024: { slidesPerView: 2 },
-            1280: { slidesPerView: 3 },
-          }}
-          loop={true}
-          pagination={{ clickable: true }}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-            updateVisibleSlides(swiper);
-          }}
-          onResize={(swiper) => updateVisibleSlides(swiper)}
-        >
-          {feedbackData.length > 0 ? (
-            feedbackData.map((feedback, index) => (
-              <SwiperSlide key={index} className="rounded-3xl">
-                <div className="overflow-hidden  bg-white text-slate-500 shadow-md shadow-slate-200  group transition-transform transform hover:scale-95 rounded-2xl text-center hover:bg-[#2c2f52] lg:max-h-[450px] hover:text-white">
-                  <div className="flex flex-col justify-center items-center h-80">
-                    <div className="p-4">
-                      <header className="flex gap-2 py-1">
-                        <a
-                          href="#"
-                          className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-white"
-                        >
-                          <img
-                            src={feedback.image || defaultImage}
-                            alt={feedback.name}
-                            className="max-w-full rounded-full"
-                          />
-                        </a>
-                        <div>
-                          <h3 className="text-xl font-medium text-slate-700 group-hover:text-white">
-                            {feedback.name}
-                          </h3>
-                          <p className="text-sm text-slate-400">
-                            Given on{" "}
-                            {feedback.createdAt
-                              ? new Date(feedback.createdAt).toLocaleString()
-                              : "Unknown date"}
-                          </p>
-                        </div>
-                      </header>
-                    </div>
-                    {/* <figure>
-                      <img
-                        src={feedback.feedbackImage || cardIamge}
-                        alt="card image"
-                        className="aspect-video w-full"
-                      />
-                    </figure> */}
-                    <div className="p-2 ">
-                      <p>
-                        {feedback.feedback.split(" ").slice(0, 12).join(" ")}...
-                      </p>
-                    </div>
-                    <div className="flex justify-end gap-2 p-2 pt-0">
-                      <p className="inline-flex h-10 items-center justify-center gap-2 rounded px-5 text-sm font-medium text-emerald-500 transition hover:bg-emerald-100 ">
-                        <span className="relative">
-                          <Rating
-                            style={{ maxWidth: 120 }}
-                            value={
-                              typeof feedback.rating === "number"
-                                ? feedback.rating
-                                : 0
-                            } // Fallback to 0 if the rating is invalid
-                            readOnly
-                          />
-                        </span>
-                      </p>
-                    </div>
-                  </div>
+      <Swiper
+  modules={[Autoplay, EffectCoverflow, Pagination]}
+  effect={"coverflow"}
+  autoplay={{ delay: 3000 }}
+  coverflowEffect={{
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: true,
+  }}
+  spaceBetween={20} // Adjusted spacing for better layout on medium screens
+  slidesPerView={1} // Default view for small screens
+  breakpoints={{
+    640: { slidesPerView: 1 },    // Small screens
+    768: { slidesPerView: 2 },    // Medium screens (tablets)
+    1024: { slidesPerView: 2 },   // Large screens (small laptops)
+    1280: { slidesPerView: 3 },   // Extra-large screens (desktops)
+  }}
+  loop={true}
+  pagination={{ clickable: true }}
+  onSwiper={(swiper) => {
+    swiperRef.current = swiper;
+    updateVisibleSlides(swiper);
+  }}
+  onResize={(swiper) => updateVisibleSlides(swiper)}
+>
+  {feedbackData.length > 0 ? (
+    feedbackData.map((feedback, index) => (
+      <SwiperSlide key={index} className="rounded-3xl">
+        <div className="overflow-hidden bg-white text-slate-500 shadow-md shadow-slate-200 group transition-transform transform hover:scale-95 rounded-2xl text-center hover:bg-[#2c2f52] lg:max-h-[450px] hover:text-white">
+          <div className="flex flex-col justify-center items-center h-80">
+            <div className="p-4">
+              <header className="flex gap-2 py-1">
+                <a
+                  href="#"
+                  className="relative inline-flex h-12 w-12 items-center justify-center rounded-full text-white"
+                >
+                  <img
+                    src={feedback.image || defaultImage}
+                    alt={feedback.name}
+                    className="max-w-full rounded-full"
+                  />
+                </a>
+                <div>
+                  <h3 className="text-xl font-medium text-slate-700 group-hover:text-white">
+                    {feedback.name}
+                  </h3>
+                  <p className="text-sm text-slate-400">
+                    Given on{" "}
+                    {feedback.createdAt
+                      ? new Date(feedback.createdAt).toLocaleString()
+                      : "Unknown date"}
+                  </p>
                 </div>
-              </SwiperSlide>
-            ))
-          ) : (
-            <p>No feedback available.</p>
-          )}
-        </Swiper>
+              </header>
+            </div>
+
+            <div className="p-2">
+              <p>
+                {feedback.feedback.split(" ").slice(0, 12).join(" ")}...
+              </p>
+            </div>
+            <div className="flex justify-end gap-2 p-2 pt-0">
+              <p className="inline-flex h-10 items-center justify-center gap-2 rounded px-5 text-sm font-medium text-emerald-500 transition hover:bg-emerald-100">
+                <span className="relative">
+                  <Rating
+                    style={{ maxWidth: 120 }}
+                    value={
+                      typeof feedback.rating === "number"
+                        ? feedback.rating
+                        : 0
+                    } 
+                    readOnly
+                  />
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </SwiperSlide>
+    ))
+  ) : (
+    <p>No feedback available.</p>
+  )}
+</Swiper>
+
       </div>
     </div>
   );

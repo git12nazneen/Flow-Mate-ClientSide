@@ -104,7 +104,7 @@ const DragAndDropTaskManager = () => {
       {["todo", "inProgress", "completed"].map((stage) => (
         <div
           key={stage}
-          className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg border border-gray-400"
+          className="w-full md:w-1/3 bg-white p-4 rounded-lg border shadow-md"
           onDragOver={onDragOver}
           onDrop={(e) => onDrop(e, stage)}
         >
@@ -117,7 +117,7 @@ const DragAndDropTaskManager = () => {
                 key={task._id}
                 draggable
                 onDragStart={(e) => onDragStart(e, task._id, stage)}
-                className="bg-white p-3 rounded-md shadow-md cursor-move"
+                className="bg-gray-100 p-3 rounded-md shadow-md cursor-move border"
               >
                 {task.taskTitle.slice(0, 50)}
               </li>

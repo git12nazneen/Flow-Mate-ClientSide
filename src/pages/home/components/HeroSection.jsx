@@ -14,7 +14,7 @@ function HeroSection() {
       <section className=" py-16">
         <HeroHeaderSection />
         <div>
-          <div className="text-4xl font-bold md:text-[92px] text-center text-[#00053d] md:leading-[5.5rem] my-8">
+          <div className="text-4xl font-bold md:text-[62px] text-center text-[#00053d] md:leading-[5.5rem] my-8">
             Empower Your Team, <br /> Achieve More Together
           </div>
 
