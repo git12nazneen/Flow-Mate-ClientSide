@@ -105,13 +105,7 @@ const AdminDashboard = () => {
         <div className="mx-5">
           <PageHeader title="FlowMate Admin Dashboard" breadcrumb={`Hello ${user.displayName}, Welcome to the admin dashboard`} />
         </div>
-        <div className="me-[60px]">
-          <AllUsersLineChart
-            subscriptionUsers={userGrowthData.subscriptionUsers}
-            loggedUsers={userGrowthData.loggedInUsers}
-            paidUsers={userGrowthData.paidUsers}
-          />
-        </div>
+        
         <div className="flex lg:flex-row flex-col justify-between px-10 mx-auto me-5">
           <div className="lg:w-2/3 w-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 gap-3 text-center mx-5 my-10">
@@ -161,6 +155,7 @@ const AdminDashboard = () => {
               </Card>
             </div>
           </div>
+          
           <div className="lg:w-1/3 w-auto h-auto ">
             <div className="grid grid-cols-1 lg:grid-cols-1 lg:gap-6 gap-3 text-center lg:my-10 my-3 mx-5 lg:mx-0">
               <div className="transition-transform transform hover:scale-105 bg-white text-slate-900 h-auto lg:h-[385px] py-5 px-5 lg:px-10 rounded-xl shadow-xl border flex flex-col justify-center items-center">
@@ -177,7 +172,13 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-
+        <div className="me-[60px]">
+          <AllUsersLineChart
+            subscriptionUsers={userGrowthData.subscriptionUsers}
+            loggedUsers={userGrowthData.loggedInUsers}
+            paidUsers={userGrowthData.paidUsers}
+          />
+        </div>
         {/* Chart Section */}
         <div className="grid grid-cols-1 xl:grid-cols-2 my-10 mx-16 gap-5">
           <div className="bg-white rounded-xl shadow-md">
