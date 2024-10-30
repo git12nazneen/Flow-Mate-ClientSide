@@ -1,10 +1,9 @@
+import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData } from "react-router-dom";
-import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import { DragDropContext, Droppable, Draggable } from '@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration';
 
-const DragAndDrop = () => {
+const DragAndDropTaskManager = () => {
   const { teamName } = useLoaderData();
   const axiosCommon = UseAxiosCommon();
 
@@ -14,15 +13,15 @@ const DragAndDrop = () => {
     completed: [],
   });
 
+  // Fetch tasks by stage
   const fetchTasksByStage = async (stage) => {
-    if (!teamName) {
-      throw new Error("Team name is missing");
-    }
+    if (!teamName) throw new Error("Team name is missing");
     const { data } = await axiosCommon.get(`/createTask/tasksByStage/${teamName}/${stage}`);
+    console.log(`Fetched ${stage} tasks:`, data);
     return data;
   };
 
-  // Fetch tasks for each stage using react-query
+  // Fetch tasks for each stage
   const { data: todoTasks = [] } = useQuery({
     queryKey: ["tasks", teamName, "todo"],
     queryFn: () => fetchTasksByStage("todo"),
@@ -41,6 +40,7 @@ const DragAndDrop = () => {
     enabled: !!teamName,
   });
 
+  // Update task lists when data changes
   useEffect(() => {
     setTaskLists({
       todo: todoTasks,
@@ -49,86 +49,58 @@ const DragAndDrop = () => {
     });
   }, [todoTasks, inProgressTasks, completedTasks]);
 
-  const handleDragEnd = async (result) => {
-    if (!result.destination) return;
+  // Handle drag start
+  const onDragStart = (e, id, stage) => {
+    e.dataTransfer.setData("task", JSON.stringify({ id, stage }));
+  };
 
-    const { source, destination } = result;
+  // Handle drag over
+  const onDragOver = (e) => e.preventDefault();
 
-    const sourceListId = source.droppableId.replace('Tasks', '');
-    const destinationListId = destination.droppableId.replace('Tasks', '');
+  // Handle drop
+  const onDrop = (e, targetStage) => {
+    e.preventDefault();
+    const { id, stage: currentStage } = JSON.parse(e.dataTransfer.getData("task"));
 
-    // Create copies of the source and destination lists
-    const sourceList = Array.from(taskLists[sourceListId]);
-    const [movedTask] = sourceList.splice(source.index, 1); // Remove the task from the source list
-    const destinationList = Array.from(taskLists[destinationListId]);
-    destinationList.splice(destination.index, 0, movedTask); // Add the task to the destination list
-
-    // Update the state with the new lists
-    setTaskLists(prev => ({
-      ...prev,
-      [sourceListId]: sourceList,
-      [destinationListId]: destinationList,
-    }));
-
-    // Update the task's stage in the backend
-    if (movedTask?._id) {
-      try {
-        await axiosCommon.put("/createTask/updateStage", {
-          id: movedTask._id,
-          newStage: destinationListId,
-        });
-      } catch (error) {
-        console.error("Error updating task stage:", error);
-      }
+    if (currentStage !== targetStage) {
+      const taskToMove = taskLists[currentStage].find((task) => task._id === id);
+      setTaskLists((prev) => ({
+        ...prev,
+        [currentStage]: prev[currentStage].filter((task) => task._id !== id),
+        [targetStage]: [...prev[targetStage], { ...taskToMove }],
+      }));
     }
   };
 
-  if (taskLists.todo.length === 0 && taskLists.inProgress.length === 0 && taskLists.completed.length === 0) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 gap-3 px-5 py-10">
-        {['todo', 'inProgress', 'completed'].map((status) => (
-          <Droppable droppableId={`${status}Tasks`} key={status}>
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="p-4 w-full bg-white rounded-lg shadow-md"
+    <div className="p-8 flex flex-col md:flex-row gap-4 justify-center">
+      {["todo", "inProgress", "completed"].map((stage) => (
+        <div
+          key={stage}
+          className="w-full md:w-1/3 bg-gray-200 p-4 rounded-lg border border-gray-400"
+          onDragOver={onDragOver}
+          onDrop={(e) => onDrop(e, stage)}
+        >
+          <h4 className="text-lg font-semibold text-gray-700 text-center mb-3 capitalize">
+            {stage.replace(/([A-Z])/g, " $1")}
+          </h4>
+          <ul className="space-y-2">
+            {taskLists[stage].map((task) => (
+              <li
+                key={task._id}
+                draggable
+                onDragStart={(e) => onDragStart(e, task._id, stage)}
+                className="bg-white p-3 rounded-md shadow-md cursor-move"
               >
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
-                </h2>
-                {taskLists[status].length === 0 ? (
-                  <div className="text-gray-500">No tasks in {status}</div>
-                ) : (
-                  taskLists[status].map((task, index) => (
-                    <Draggable key={task._id} draggableId={task._id} index={index}>
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="p-2 mb-2 bg-gray-100 rounded-md cursor-pointer"
-                        >
-                          <span className={`text-gray-800 ${task.completed ? "line-through" : ""}`}>
-                            {task.taskTitle.slice(0, 50)}
-                          </span>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))
-                )}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
-      </div>
-    </DragDropContext>
+                {/* Display task name or other identifying property */}
+                {task.taskTitle.slice(0, 50)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   );
 };
 
-export default DragAndDrop;
+export default DragAndDropTaskManager;
