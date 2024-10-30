@@ -118,7 +118,7 @@ export function AddTeamMember({ refetch, reset, team }) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" className="flex justify-start items-start">
+            <Button type="submit" className="bg-[#00053d] text-white rounded-lg shadow-md transition-transform transform hover:scale-105 hover:bg-[#00053d]">
               Add Member
             </Button>
           </DialogFooter>

@@ -202,7 +202,7 @@ export function CreateTask({ boardName, teamName, team }) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Todo</SelectLabel>
-                      <SelectItem value="in progress">In Progress</SelectItem>
+                      <SelectItem value="inProgress">In Progress</SelectItem>
                       <SelectItem value="done">Completed</SelectItem>
                       <SelectItem value="todo">Todo</SelectItem>
                     </SelectGroup>
@@ -247,7 +247,7 @@ export function CreateTask({ boardName, teamName, team }) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={loading}>
+            <Button className='bg-[#00053d] hover:bg-black text-white' type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </Button>
           </DialogFooter>
