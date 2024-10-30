@@ -11,8 +11,8 @@ const ForPrice = () => {
             <img src={img} alt="Illustration" className="h-60 md:h-80 lg:items-start items-center" />
           </div>
 
-          <div className="text-center md:text-left max-w-md px-5 lg:px-0">
-            <h1 className="text-xl lg:text-3xl md:text-5xl text-gray-800 mb-4">
+          <div className="text-center md:text-left max-w-md px-5 md:px-5 lg:px-0">
+            <h1 className="text-xl lg:text-3xl md:text-3xl text-gray-800 mb-4">
               Flexible Pricing for Every Team
             </h1>
             <p className="lg:text-lg text-gray-500 mb-6">

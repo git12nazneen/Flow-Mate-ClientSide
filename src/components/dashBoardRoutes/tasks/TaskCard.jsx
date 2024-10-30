@@ -1,14 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { VscFolderActive } from "react-icons/vsc";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { useEffect, useState } from "react";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -33,7 +24,7 @@ const TaskCard = () => {
 
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const {
-    register,
+    register, 
     handleSubmit,
 
     reset,
@@ -99,29 +90,29 @@ const TaskCard = () => {
 
 
 
-  const handleStageChange = async (task, newStage) => {
-    try {
-      const res = await axiosCommon.put(`/createTask/${task._id}`, {
-        stage: newStage, // Send the updated stage to the server
-      });
-      if (res.status === 200) {
-        refetch(); // Refetch the tasks after the stage is updated
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Stage updated successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Failed to update stage!",
-      });
-    }
-  };
+  // const handleStageChange = async (task, newStage) => {
+  //   try {
+  //     const res = await axiosCommon.put(`/createTask/${task._id}`, {
+  //       stage: newStage, // Send the updated stage to the server
+  //     });
+  //     if (res.status === 200) {
+  //       refetch(); // Refetch the tasks after the stage is updated
+  //       Swal.fire({
+  //         position: "center",
+  //         icon: "success",
+  //         title: "Stage updated successfully",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "Failed to update stage!",
+  //     });
+  //   }
+  // };
 
 
 
@@ -615,17 +606,17 @@ const TaskCard = () => {
                   </div>
 
                   {/* Task Details */}
-                  <div className="flex items-center justify-between mb-3">
+                  {/* <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center text-gray-600 text-sm">
                       <span className="mr-1">
                         <VscFolderActive />
                       </span>
                       <span className="mr-5"> Activity: </span>
                       {/* Stage Selector */}
-                      <Select
+                      {/* <Select
                         onValueChange={(newStage) => {
-                          setStage(newStage); // Update local state
-                          handleStageChange(task, newStage); // Send the stage update request
+                          // setStage(newStage); 
+                          // handleStageChange(task, newStage); 
                         }}
                       >
                         <SelectTrigger className="w-[180px]">
@@ -642,7 +633,7 @@ const TaskCard = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
+                  </div> */} 
 
                   {/* Delete and Edit Icons */}
                   <div className="flex justify-between gap-1">

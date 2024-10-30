@@ -213,64 +213,62 @@ const PricingPlans = () => {
 
   return (
     <div className="bg-gray-100 pt-14 lg:pt-16">
-      <div className="max-w-7xl mx-auto" id="price">
-        <section
-          className="p-4 md:p-8"
-        >
-          <div className="max-w-screen-xl lg:py-16 py-5">
-            <div
-
-              className="mx-auto max-w-3xl text-center pb-12 md:pb-20"
-            >
-              <h1 className="text-2xl md:text-4xl font-bold pb-5 text-center text-gray-800 capitalize lg:text-3xl">
-                Pricing <span className="text-blue-500">Plans</span>
-              </h1>
-              <p className="text-center text-gray-500 mb-5">
-                Choose a plan that best suits your data needs.
-              </p>
-              <div className="grid gap-3 md:grid-cols-2 my-4">
-                <button
-                  className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${activeTab === "basic"
+    <div className="max-w-7xl mx-auto" id="price">
+      <section className="p-4 md:p-8">
+        <div className="max-w-screen-xl lg:py-16 py-5">
+          <div className="mx-auto max-w-3xl text-center pb-12 md:pb-20">
+            <h1 className="text-2xl md:text-3xl font-bold pb-5 text-center text-gray-800 capitalize lg:text-3xl">
+              Pricing <span className="text-blue-500">Plans</span>
+            </h1>
+            <p className="text-center text-gray-500 mb-5">
+              Choose a plan that best suits your data needs.
+            </p>
+            <div className="grid gap-3 md:grid-cols-2 my-4">
+              <button
+                className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${
+                  activeTab === "basic"
                     ? "bg-[#00053d] text-white"
                     : "bg-gray-200 text-gray-800"
-                    }`}
-                  onClick={() => setActiveTab("basic")}
-                >
-                  <div className="flex justify-center items-center py-2 gap-2">
-                    <RiWirelessChargingLine />
-                    Basic Plans
-                  </div>
-                </button>
-
-                <button
-                  className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${activeTab === "premium"
+                }`}
+                onClick={() => setActiveTab("basic")}
+              >
+                <div className="flex justify-center items-center py-2 gap-2">
+                  <RiWirelessChargingLine />
+                  Basic Plans
+                </div>
+              </button>
+  
+              <button
+                className={`w-full px-3 py-2 font-medium text-gray-800 uppercase transition-colors duration-300 transform rounded-lg focus:outline-none ${
+                  activeTab === "premium"
                     ? "bg-[#00053d] text-white"
                     : "bg-gray-200 text-gray-800"
-                    }`}
-                  onClick={() => setActiveTab("premium")}
-                >
-                  <div className="flex justify-center gap-2 items-center py-2">
-                    <MdOutlineWorkspacePremium />
-                    Premium Plans
-                  </div>
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-col-3 lg:grid-cols-3 gap-4 ">
-              {filteredPlans.map((plan) => (
-                <PricingPlanCard
-                  key={plan.id}
-                  name={plan.name}
-                  price={plan.price}
-                  features={plan.features}
-                  paymentType={plan.paymentType}
-                />
-              ))}
+                }`}
+                onClick={() => setActiveTab("premium")}
+              >
+                <div className="flex justify-center gap-2 items-center py-2">
+                  <MdOutlineWorkspacePremium />
+                  Premium Plans
+                </div>
+              </button>
             </div>
           </div>
-        </section>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredPlans.map((plan) => (
+              <PricingPlanCard
+                key={plan.id}
+                name={plan.name}
+                price={plan.price}
+                features={plan.features}
+                paymentType={plan.paymentType}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
+  </div>
+  
   );
 };
 

@@ -26,10 +26,6 @@ import { useDropzone } from "react-dropzone";
 import { BounceLoader } from "react-spinners";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
-import TodoList from "../../tasks/TodoList";
-import InProgress from "../../tasks/InProgress";
-import Completed from "../../tasks/Completed";
-import axios from "axios";
 import CalendarView from "./CalendarView";
 import DragAndDrop from "../../tasks/DragAndDrop";
 import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
@@ -82,8 +78,6 @@ const TeamTask = () => {
     reset(); // Reset form fields
   };
 
-  const [stage, setStage] = useState(""); // Track the stage
-
   // Get the teamName from useLoaderData
   const { teamName } = useLoaderData(); // Assuming teamName is included in the loader data
 
@@ -112,29 +106,7 @@ const TeamTask = () => {
     enabled: !!teamName, // Ensure query is only executed when teamName exists
   });
 
-  const handleStageChange = async (task, newStage) => {
-    try {
-      const res = await axiosCommon.put(`/createTask/${task._id}`, {
-        stage: newStage, // Send the updated stage to the server
-      });
-      if (res.status === 200) {
-        refetch(); // Refetch the tasks after the stage is updated
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Stage updated successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Failed to update stage!",
-      });
-    }
-  };
+
 
   // delete funciton
 
@@ -590,15 +562,10 @@ const TeamTask = () => {
               className="bg-white hover:shadow-lg hover:shadow-sky-200 w-80 p-4 rounded-lg shadow-lg my-2 h-80"
             >
               <div className="flex justify-between">
-                <div className="text-black bg-sky-300 px-2 py-1 rounded-3xl  text-xs font-semibold mb-2 uppercase">
+                <div className="text-sm bg-blue-100 text-blue-400 font-bold px-2 py-1 rounded-3xl  mb-2 uppercase">
                   {task?.priority}
                 </div>
-                <Link
-                  to={`/dashboard/taskDetails/${task._id}`}
-                  className="text-black bg-sky-300 px-2 py-1 rounded-3xl text-xs font-semibold mb-2 uppercase"
-                >
-                  <span>See Details</span>
-                </Link>
+                
               </div>
               {/* Priority */}
 
@@ -626,33 +593,17 @@ const TeamTask = () => {
                 </h1>
               </div>
 
-              {/* Task Details */}
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center text-gray-600 text-sm">
-                  <span className="mr-1">
-                    <VscFolderActive />
-                  </span>
-                  <span className="mr-5"> Activity: </span>
-                  {/* Stage Selector */}
-                  <Select
-                    onValueChange={(newStage) => {
-                      setStage(newStage); // Update local state
-                      handleStageChange(task, newStage); // Send the stage update request
-                    }}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select a Stage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Todo</SelectLabel>
-                        <SelectItem value="in progress">In Progress</SelectItem>
-                        <SelectItem value="done">Completed</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+              <div className="flex items-center mb-3">
+                
+                <h1 className="pr-3 text-gray-600">See your task: </h1>
+                <Link
+                  to={`/dashboard/taskDetails/${task._id}`}
+                  className="text-sm bg-blue-100 text-blue-400 font-semibold px-2 py-1 rounded-3xl mt-1  "
+                >
+                  <span>See Details</span>
+                </Link>
                 </div>
-              </div>
+            
 
               {/* Delete and Edit Icons */}
               <div className="flex justify-between gap-1">
