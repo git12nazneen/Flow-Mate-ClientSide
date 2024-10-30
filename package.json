@@ -12,11 +12,9 @@
     "test": "jest"
   },
   "dependencies": {
-
     "@atlaskit/drag-and-drop": "^0.15.1",
     "@atlaskit/pragmatic-drag-and-drop": "^1.4.0",
     "@atlaskit/pragmatic-drag-and-drop-react-beautiful-dnd-migration": "^1.2.4",
-
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.21.0",
     "@dnd-kit/core": "^6.1.0",
@@ -59,17 +57,11 @@
     "papaparse": "^5.4.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
-
-    "react-apexcharts": "^1.4.1",
-
     "react-apexcharts": "^1.5.0",
-    "react-beautiful-dnd": "^13.1.1",
-
     "react-big-calendar": "^1.15.0",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^7.4.0",
     "react-day-picker": "^8.10.1",
-    "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",
     "react-dropdown": "^1.11.0",
