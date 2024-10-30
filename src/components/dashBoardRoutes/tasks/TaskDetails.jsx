@@ -200,7 +200,7 @@ const TaskDetails = () => {
               <div key={index} className="flex justify-between mb-4 items-center">
                 <span className="text-gray-700">{getFileExtension(fileUrl).toUpperCase()} File</span>
                 <div className="flex space-x-4">
-                  {getFileExtension(fileUrl) !== "pdf" && (
+                  {(
                     <a
                       href={fileUrl}
                       target="_blank"
