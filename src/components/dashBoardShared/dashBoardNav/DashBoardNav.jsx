@@ -47,7 +47,7 @@ const DashBoardNav = () => {
                 className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
               >
                 <RiDashboardHorizontalFill />
-                AdminDashboard
+                Admin Dashboard
               </NavLink>
             ) : (
               <NavLink
@@ -73,7 +73,7 @@ const DashBoardNav = () => {
               className="flex items-center gap-1 hover:bg-[#00053d] rounded p-2"
             >
               <RiSecurePaymentLine />
-              Show all Board
+              Show All Board
             </NavLink>
 
             {/* <NavLink
