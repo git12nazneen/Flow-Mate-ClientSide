@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import loginBg from "@/assets/login.jpg";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

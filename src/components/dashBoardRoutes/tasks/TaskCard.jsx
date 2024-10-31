@@ -375,13 +375,14 @@ const TaskCard = () => {
 
           // Upload file to Cloudinary with resource_type "auto" for all file types
           const response = await axios.post(
-            `https://api.cloudinary.com/v1_1/dadvrb8ri/upload`, // Cloudinary upload URL
+            `https://api.cloudinary.com/v1_1/dadvrb8ri/upload`,
             formData,
             {
               headers: { "Content-Type": "multipart/form-data" },
               params: { resource_type: "auto" }, // Automatically detects the type of the file
             }
           );
+
           console.log("Cloudinary upload response:", response.data);
 
           // Return the secure URL to access the file
@@ -417,12 +418,17 @@ const TaskCard = () => {
 
       console.log("Files successfully saved on the server:", response.data);
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error response from Cloudinary:", error.response);
+      } else {
+        console.error("Error uploading files:", error);
+      }
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Failed to upload files!",
+        text: "Failed to upload files! " + (error.response?.data?.message || error.message),
       });
-      console.error("Error in file upload or saving to server:", error);
     } finally {
       isUploading = false;
     }
@@ -430,7 +436,11 @@ const TaskCard = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    accept: {
+      '*/*': [] // Accepts all file types
+    },
   });
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
