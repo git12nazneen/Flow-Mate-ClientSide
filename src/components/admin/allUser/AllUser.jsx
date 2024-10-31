@@ -1,6 +1,7 @@
 import PageHeader from '@/components/pageHeader/PageHeader';
 import UseAxiosCommon from '@/hooks/UseAxiosCommon';
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AllUser = () => {
@@ -28,9 +29,60 @@ const AllUser = () => {
     },
   });
 
+  // Mutation to handle blocking/unblocking user using email
+  const blockUserMutation = useMutation({
+    mutationFn: async ({ email, status }) => {
+      return await axiosCommon.patch(`/users/toggleBlockUser/${email}`, { status });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+    },
+  });
 
   const handleToggleAdmin = (email, currentRole) => {
-    toggleAdminMutation.mutate({ email, role: currentRole === 'admin' ? 'user' : 'admin' });
+    Swal.fire({
+      title: "Do you want to make this change?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Do",
+      denyButtonText: `Don't`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toggleAdminMutation.mutate(
+          { email, role: currentRole === 'admin' ? 'user' : 'admin' },
+          {
+            onSuccess: () => {
+              Swal.fire("Saved!", "User role updated successfully!", "success");
+            },
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+  const handleBlockUser = (email, currentStatus) => {
+    Swal.fire({
+      title: "Do you want to make this change?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Do",
+      denyButtonText: `Don't`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        blockUserMutation.mutate(
+          { email, status: currentStatus === 'blocked' ? 'active' : 'blocked' },
+          {
+            onSuccess: () => {
+              Swal.fire("Saved!", `User has been ${currentStatus === 'blocked' ? 'unblocked' : 'blocked'} successfully!`, "success");
+            },
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -72,7 +124,7 @@ const AllUser = () => {
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
                       onClick={() => handleToggleAdmin(user.email, user.role)}
-                      className={`px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-red-500 hover:bg-red-600' : 'bg-[#00053d] hover:bg-green-600'
+                      className={`font-bold px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-blue-900 hover:bg-blue-700' : 'bg-[#00053d] hover:bg-blue-950'
                         }`}
                     >
                       {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
@@ -80,8 +132,8 @@ const AllUser = () => {
                   </td>
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
-                      onClick={() => handleBlockUser(user.id)}
-                      className={`px-3 py-1 rounded text-white hover:bg-red-600 transition duration-200 ${user.status === 'blocked' ? 'bg-gray-500' : 'bg-red-500'}`}
+                      onClick={() => handleBlockUser(user.email, user.status)}
+                      className={`font-bold px-3 py-1 rounded  hover:bg-slate-500 transition duration-200 ${user.status === 'blocked' ? 'bg-slate-300  text-blue-950' : 'bg-black text-white'}`}
                     >
                       {user.status === 'blocked' ? 'Unblock' : 'Block'}
                     </button>
