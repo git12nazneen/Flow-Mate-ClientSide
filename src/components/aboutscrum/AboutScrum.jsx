@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Button } from '../ui/button';
-import features from '../../assets/marketing/feature-11.png'
+import features from '../../assets/marketing/about.png'
 import MainButton from '@/Shared/MainButton';
 import { HashLink } from 'react-router-hash-link';
 const AboutScrum = () => {

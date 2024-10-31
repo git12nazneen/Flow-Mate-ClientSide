@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import signUpBg from "@/assets/signup.jpg";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
@@ -22,8 +22,7 @@ const SignUp = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
+
   const onSubmit = (data) => {
     const { password, confirmPassword, email, name, photo } = data;
 
@@ -90,7 +89,7 @@ const SignUp = () => {
                     text: "Your account has been created successfully!",
                   });
                   reset();
-                  navigate("/"); // Navigate to home after successful registration and user data save
+                  navigate(location?.state?.from || "/");
                 }
               })
               .catch((error) => {
@@ -127,7 +126,7 @@ const SignUp = () => {
       .unwrap()
       .then((userCredential) => {
         const user = userCredential;
-        console.log("User credentials:", user);
+        // console.log("User credentials:", user);
 
         // Prepare user information for the database
         const userInfo = {
@@ -208,18 +207,18 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <section className="h-screen">
-        <div className="flex justify-center ">
+    <div className="">
+      <section className="">
+        <div className="flex justify-center">
           <div
             className="hidden bg-cover lg:block lg:w-[28%]"
             style={{
               backgroundImage:
-                "url('https://i.ibb.co.com/WDbfCN8/password-lock-phone-screen.jpg')",
+                `url(${signUpBg})`,
             }}
           ></div>
 
-          <div className="flex items-center w-full max-w-3xl p-5 mx-auto lg:px-8 lg:w-[72%] ">
+          <div className="flex items-center w-full max-w-3xl p-3 mx-auto lg:px-8 lg:w-[72%] ">
             <div className="w-full text">
               <img
                 className="w-auto h-20 mx-auto"
