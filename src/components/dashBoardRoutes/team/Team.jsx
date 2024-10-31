@@ -157,10 +157,11 @@ const Team = () => {
                       <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
                         Email
                       </th>
+                      {team?.teamLeader === userss[0]?._id &&
                       <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
                         Actions
                       </th>
-                      
+                      }
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
