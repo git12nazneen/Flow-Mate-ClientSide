@@ -3,8 +3,6 @@ import UseAxiosCommon from '@/hooks/UseAxiosCommon';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import * as XLSX from 'xlsx';
 
 const AllUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -87,23 +85,6 @@ const AllUser = () => {
     });
   };
 
-  const handleExportToExcel = () => {
-    const filteredUsers = users.map(user => ({
-      Photo: user.photo,
-      Name: user.name,
-      Email: user.email,
-      Role: user.role,
-      Status: user.status || 'inactive',
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(filteredUsers);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-
-    XLSX.writeFile(workbook, "UsersData.xlsx");
-  };
-
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -113,11 +94,6 @@ const AllUser = () => {
     <>
       <PageHeader title='Show user data' breadcrumb='See all the user information' />
       <div className="container mx-auto p-10">
-        <div className='flex justify-end my-4'>
-          <Button className='bg-[#00053d]' onClick={handleExportToExcel} >
-            Export to Excel
-          </Button>
-        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300 text-sm md:text-base shadow-md rounded-lg">
             <thead>
@@ -148,7 +124,8 @@ const AllUser = () => {
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
                       onClick={() => handleToggleAdmin(user.email, user.role)}
-                      className={`font-bold px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-blue-900 hover:bg-blue-700' : 'bg-[#00053d] hover:bg-blue-950'}`}
+                      className={`px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-blue-900 hover:bg-blue-700' : 'bg-[#00053d] hover:bg-blue-950'
+                        }`}
                     >
                       {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                     </button>
@@ -156,7 +133,7 @@ const AllUser = () => {
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
                       onClick={() => handleBlockUser(user.email, user.status)}
-                      className={`font-bold px-3 py-1 rounded hover:bg-slate-500 transition duration-200 ${user.status === 'blocked' ? 'bg-slate-300 text-blue-950' : 'bg-black text-white'}`}
+                      className={` px-3 py-1 rounded  hover:bg-slate-500 transition duration-200 ${user.status === 'blocked' ? 'bg-slate-300  text-blue-950' : 'bg-black text-white'}`}
                     >
                       {user.status === 'blocked' ? 'Unblock' : 'Block'}
                     </button>
