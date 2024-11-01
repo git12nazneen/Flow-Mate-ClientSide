@@ -5,6 +5,7 @@ import { updateUserProfile } from "@/redux/slices/authSlice";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
 import Swal from "sweetalert2";
 import PageHeader from "@/components/pageHeader/PageHeader";
+import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNavigation";
 
 const DashBoardProfile = () => {
   const axiosCommon = UseAxiosCommon();
@@ -71,7 +72,7 @@ const DashBoardProfile = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-     
+      <UpperNavigation />
       <PageHeader title='User Profile' breadcrumb='See your information'></PageHeader>
       <div className="px-4">
         <div className="flex justify-center items-center p-4">

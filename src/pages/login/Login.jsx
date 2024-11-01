@@ -21,7 +21,7 @@ const Login = () => {
       .unwrap()
       .then((userCredential) => {
         const user = userCredential;
-        console.log("User credentials:", user);
+        // console.log("User credentials:", user);
 
         // Prepare user information for the database
         const userInfo = {
