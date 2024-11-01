@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import * as XLSX from 'xlsx';
+import UpperNavigation from '../elements/upperNavigation/UpperNavigation';
 
 const AllUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,6 +112,7 @@ const AllUser = () => {
 
   return (
     <>
+      <UpperNavigation />
       <PageHeader title='Show user data' breadcrumb='See all the user information' />
       <div className="container mx-auto p-10">
         <div className='flex justify-end my-4'>

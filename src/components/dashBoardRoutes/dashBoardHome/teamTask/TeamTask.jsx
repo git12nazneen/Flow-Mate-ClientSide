@@ -34,7 +34,7 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 const TeamTask = () => {
   const axiosCommon = UseAxiosCommon();
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user); // Log user for debugging
+  // console.log("user", user); // Log user for debugging
   // track user
   const [elapsedTime, setElapsedTime] = useState({}); // Track elapsed time for tasks
   const [timers, setTimers] = useState({}); // Track timers for each task
@@ -83,7 +83,7 @@ const TeamTask = () => {
 
   // Log teamName only when it changes
   useEffect(() => {
-    console.log("teamName from loader:", teamName);
+    // console.log("teamName from loader:", teamName);
   }, [teamName]); // Add teamName as a dependency to log only when it changes
 
   const {
@@ -136,7 +136,7 @@ const TeamTask = () => {
     if (result.isConfirmed) {
       try {
         const res = await axiosCommon.delete(`/createTask/${task._id}`);
-        console.log("Delete response:", res.data); // Log the response for debugging
+        // console.log("Delete response:", res.data); // Log the response for debugging
 
         // Check the response message for success
         if (res.data.message === "Task deleted successfully") {

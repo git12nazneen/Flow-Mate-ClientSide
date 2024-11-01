@@ -64,9 +64,9 @@ export const router = createBrowserRouter([
   // Dashboard routes
   {
     path: "dashboard",
-    element: <PrivateRoutes>
+    element:
       <DashBoard />
-    </PrivateRoutes>,
+    ,
     children: [
       {
         index: true,
@@ -84,14 +84,18 @@ export const router = createBrowserRouter([
       },
       {
         path: "profilePage",
-        element: <DashBoardProfile />,
+        element: <PrivateRoutes>
+          <DashBoardProfile />
+        </PrivateRoutes>,
       },
       {
         path: "admin",
         children: [
           {
             path: "dashboard/profilePage",
-            element: <DashBoardProfile />,
+            element: <PrivateRoutes>
+              <DashBoardProfile />
+            </PrivateRoutes>,
           },
         ],
         element: (
@@ -107,13 +111,12 @@ export const router = createBrowserRouter([
           fetch(`${import.meta.env.VITE_API_URL}/team/${params.teamName}`),
       },
 
-      // {
-      //   path: "tasks",
-      //   element: <Tasks />,
-      // },
+
       {
         path: "taskDetails/:id",
-        element: <TaskDetails />,
+        element: <PrivateRoutes>
+          <TaskDetails />
+        </PrivateRoutes>,
         loader: ({ params }) =>
           fetch(
             `https://flowmate-a-team-collaboration-tool.vercel.app/createTask/${params.id}`
@@ -122,7 +125,9 @@ export const router = createBrowserRouter([
 
       {
         path: "taskCard",
-        element: <TaskCard />,
+        element: <PrivateRoutes>
+          <TaskCard />
+        </PrivateRoutes>,
 
       },
       {
@@ -136,15 +141,21 @@ export const router = createBrowserRouter([
 
       {
         path: "payment_history",
-        element: <PaymentHistory />,
+        element: <PrivateRoutes>
+          <PaymentHistory />
+        </PrivateRoutes>,
       },
       {
         path: 'all_users',
-        element: <AllUser />
+        element: <PrivateRoutes>
+          <AllUser />
+        </PrivateRoutes>
       },
       {
         path: "create-team",
-        element: <TeamCreate />,
+        element: <PrivateRoutes>
+          <TeamCreate />
+        </PrivateRoutes>,
       },
       // {
       //   path: "my-team",
@@ -152,30 +163,42 @@ export const router = createBrowserRouter([
       // },
       {
         path: "team-request",
-        element: <TeamRequest />,
+        element: <PrivateRoutes>
+          <TeamRequest />
+        </PrivateRoutes>,
       },
       {
         path: "boardSystem",
-        element: <BoardSystem />,
+        element: <PrivateRoutes>
+          <BoardSystem />
+        </PrivateRoutes>,
       },
       {
         path: "createBoard/:id",
-        element: <BoardDetails />,
+        element: <PrivateRoutes>
+          <BoardDetails />
+        </PrivateRoutes>,
         loader: ({ params }) =>
           fetch(`https://flowmate-a-team-collaboration-tool.vercel.app/createBoard/${params.id}`),
       },
 
       {
         path: "userActivity",
-        element: <UserActivity />,
+        element: <PrivateRoutes>
+          <UserActivity />
+        </PrivateRoutes>,
       },
       {
         path: "all-team",
-        element: <AllTeam />,
+        element: <PrivateRoutes>
+          <AllTeam />
+        </PrivateRoutes>,
       },
       {
         path: "teamTask/:teamName",
-        element: <TeamTask />,
+        element: <PrivateRoutes>
+          <TeamTask />
+        </PrivateRoutes>,
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/team/${params.teamName}`),
       },
@@ -185,7 +208,9 @@ export const router = createBrowserRouter([
       // },
       {
         path: "team-task/:teamName",
-        element: <TodoList />,
+        element: <PrivateRoutes>
+          <TodoList />
+        </PrivateRoutes>,
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/team/${params.teamName}`),
       }

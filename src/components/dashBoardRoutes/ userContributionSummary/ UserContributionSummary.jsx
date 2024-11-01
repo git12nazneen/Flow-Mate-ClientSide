@@ -114,7 +114,7 @@ const UserContributionSummary = () => {
       try {
         const response = await axiosCommon.get(`/users/file-count/${userEmail}`);
         setContributions(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error('Error fetching contributions:', error);
       }
@@ -127,7 +127,7 @@ const UserContributionSummary = () => {
     queryKey: ["totalTask"],
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/createTask/task-count/${userEmail}`);
-      console.log(data);
+      // console.log(data);
       return data;
     },
     enabled: !!userEmail,
