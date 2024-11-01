@@ -50,7 +50,7 @@ export function CardWithForm({ closeForm }) {
       return data;
     },
     onSuccess: async () => {
-      console.log("Data Saved Successfully");
+      // console.log("Data Saved Successfully");
       toast.success("Project Created Successfully!");
       setLoading(false);
       await queryClient.invalidateQueries("boards"); // Refetch the boards query
@@ -73,7 +73,7 @@ export function CardWithForm({ closeForm }) {
       displayName: user?.displayName,
     };
     try {
-      console.log("Sending boardData to /createBoard");
+      // console.log("Sending boardData to /createBoard");
       const response = await mutateAsync(boardData);
       console.log(response);
     } catch (error) {

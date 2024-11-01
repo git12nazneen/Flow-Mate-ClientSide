@@ -295,7 +295,7 @@ const TeamTask = () => {
       });
       return;
     }
-    console.log(teamName);
+    // console.log(teamName);
 
 
     // Prepare tasks for CSV export
@@ -346,8 +346,8 @@ const TeamTask = () => {
 
   let isUploading = false; // Add a flag to track uploading status
   const onDrop = async (acceptedFiles, taskId) => {
-    console.log("Accepted Files:", acceptedFiles);
-    console.log("Before Upload - Task ID:", taskId);
+    // console.log("Accepted Files:", acceptedFiles);
+    // console.log("Before Upload - Task ID:", taskId);
 
     if (!taskId) {
       console.error("Task ID is invalid!");
@@ -360,7 +360,12 @@ const TeamTask = () => {
     }
 
     if (isUploading) {
-      console.log("Upload is already in progress. Please wait.");
+      // console.log("Upload is already in progress. Please wait.");
+      Swal.fire({
+        icon: "info",
+        title: "Upload in Progress",
+        text: "Please wait for the current upload to complete.",
+      });
       return;
     }
 
@@ -380,16 +385,16 @@ const TeamTask = () => {
             formData
           );
 
-          console.log("Cloudinary upload response:", response.data);
+          // console.log("Cloudinary upload response:", response.data);
           return response.data.secure_url; // Collect the secure URL for each file
         })
       );
 
-      console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
+      // console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
 
       // Send all file URLs to the backend for storage
       const url = `/createTask/file/${taskId}`;
-      console.log("Requesting URL to server:", url);
+      // console.log("Requesting URL to server:", url);
 
       const response = await axiosCommon.put(
         url,
@@ -412,12 +417,12 @@ const TeamTask = () => {
         imageAlt: "Custom image",
       });
 
-      console.log("Files successfully saved on the server:", response.data);
+      // console.log("Files successfully saved on the server:", response.data);
 
       // Update file count for the user
       const updateFileCountUrl = `/users/update-file-count/${userEmail}`;
       await axiosCommon.put(updateFileCountUrl);
-      console.log("File count updated for user:", userEmail);
+      // console.log("File count updated for user:", userEmail);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -626,10 +631,10 @@ const TeamTask = () => {
                       onChange: (event) => {
                         const files = event.target.files;
                         if (files.length > 0) {
-                          console.log(
-                            "Before calling onDrop - Task ID:",
-                            task._id
-                          );
+                          // console.log(
+                          //   "Before calling onDrop - Task ID:",
+                          //   task._id
+                          // );
                           onDrop(Array.from(files), task._id); // Pass task ID to onDrop
                         }
                       },

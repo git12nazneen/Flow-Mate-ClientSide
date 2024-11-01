@@ -24,7 +24,7 @@ const TaskCard = () => {
 
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const {
-    register, 
+    register,
     handleSubmit,
 
     reset,
@@ -350,8 +350,8 @@ const TaskCard = () => {
   let isUploading = false; // Add a flag to track uploading status
 
   const onDrop = async (acceptedFiles, taskId) => {
-    console.log("Accepted Files:", acceptedFiles);
-    console.log("Before Upload - Task ID:", taskId);
+    // console.log("Accepted Files:", acceptedFiles);
+    // console.log("Before Upload - Task ID:", taskId);
 
     if (!taskId) {
       console.error("Task ID is invalid!");
@@ -359,7 +359,7 @@ const TaskCard = () => {
     }
 
     if (isUploading) {
-      console.log("Upload is already in progress. Please wait.");
+      // console.log("Upload is already in progress. Please wait.");
       return;
     }
 
@@ -383,18 +383,18 @@ const TaskCard = () => {
             }
           );
 
-          console.log("Cloudinary upload response:", response.data);
+          // console.log("Cloudinary upload response:", response.data);
 
           // Return the secure URL to access the file
           return response.data.secure_url; // Collect the secure URL for each file
         })
       );
 
-      console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
+      // console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
 
       // Send all file URLs to the backend for storage
       const url = `/createTask/file/${taskId}`;
-      console.log("Requesting URL to server:", url);
+      // console.log("Requesting URL to server:", url);
 
       const response = await axiosCommon.put(
         url,
@@ -416,7 +416,7 @@ const TaskCard = () => {
         imageAlt: "Custom image",
       });
 
-      console.log("Files successfully saved on the server:", response.data);
+      // console.log("Files successfully saved on the server:", response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Error response from Cloudinary:", error.response);
@@ -623,7 +623,7 @@ const TaskCard = () => {
                       </span>
                       <span className="mr-5"> Activity: </span>
                       {/* Stage Selector */}
-                      {/* <Select
+                  {/* <Select
                         onValueChange={(newStage) => {
                           // setStage(newStage); 
                           // handleStageChange(task, newStage); 
@@ -643,7 +643,7 @@ const TaskCard = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div> */} 
+                  </div> */}
 
                   {/* Delete and Edit Icons */}
                   <div className="flex justify-between gap-1">
@@ -668,10 +668,10 @@ const TaskCard = () => {
                           onChange: (event) => {
                             const files = event.target.files;
                             if (files.length > 0) {
-                              console.log(
-                                "Before calling onDrop - Task ID:",
-                                task._id
-                              );
+                              // console.log(
+                              //   "Before calling onDrop - Task ID:",
+                              //   task._id
+                              // );
                               onDrop(Array.from(files), task._id); // Pass task ID to onDrop
                             }
                           },
