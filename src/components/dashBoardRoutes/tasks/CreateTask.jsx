@@ -50,18 +50,17 @@ export function CreateTask({ boardName, teamName, team }) {
       return data;
     },
     onSuccess: () => {
-      console.log("Data Saved Successfully");
       toast.success("Task Added Successfully!");
       setLoading(false);
 
       // Invalidate and refetch tasks (if necessary)
-      queryClient.invalidateQueries("tasks"); // Replace 'tasks' with the appropriate query key.
+      queryClient.invalidateQueries("tasks"); 
       navigate(`/dashboard/all-team`);
     },
   });
 
   // get the users
-  const { data: users = [], isError } = useQuery({
+  const { data: users = [] } = useQuery({
     queryKey: ["data", user?.email],
     queryFn: async () => {
       const res = await axiosCommon.get(`/users`);
