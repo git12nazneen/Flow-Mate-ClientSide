@@ -86,7 +86,7 @@ const UserDashboardAreaChart = () => {
     queryKey: ["task"],
     queryFn: async () => {
       const { data } = await axiosCommon.get(`/createTask/task-count/${userEmail}`);
-      console.log(data);
+      // console.log(data);
       return data;
     },
     enabled: !!userEmail, // Only fetch if userEmail is available

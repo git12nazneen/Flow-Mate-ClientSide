@@ -10,7 +10,7 @@ const DashBoardSubscriptionUser = () => {
   const user = useSelector((state) => state.auth.user);
 
   const [error, setError] = useState(null);
-  console.log(error)
+  // console.log(error)
 
 
   // Fetching paid user data
@@ -23,7 +23,7 @@ const DashBoardSubscriptionUser = () => {
 
     queryFn: async () => {
       const res = await axiosCommon.get("/newsletters");
-      console.log(res)
+      // console.log(res)
       return res.data;
     },
 

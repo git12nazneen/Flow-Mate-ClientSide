@@ -8,7 +8,7 @@ const InProgress = () => {
   const axiosCommon = UseAxiosCommon();
   const stage = "inProgress";
   useEffect(() => {
-    console.log("teamName from loader:", teamName);
+    // console.log("teamName from loader:", teamName);
   }, [teamName]); // Add teamName as a dependency to log only when it changes
   // Fetch tasks using TanStack Query
   const {
@@ -58,9 +58,8 @@ const InProgress = () => {
             className="p-2 mb-2 bg-gray-100 rounded-md flex justify-between items-center"
           >
             <span
-              className={`text-gray-800 ${
-                todo.completed ? "line-through" : ""
-              }`}
+              className={`text-gray-800 ${todo.completed ? "line-through" : ""
+                }`}
             >
               {todo.taskTitle.slice(0, 35)} {/* Display the title */}
             </span>
