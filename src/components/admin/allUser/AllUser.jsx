@@ -124,7 +124,7 @@ const AllUser = () => {
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
                       onClick={() => handleToggleAdmin(user.email, user.role)}
-                      className={`font-bold px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-blue-900 hover:bg-blue-700' : 'bg-[#00053d] hover:bg-blue-950'
+                      className={`px-3 py-1 rounded text-white transition duration-200 ${user.role === 'admin' ? 'bg-blue-900 hover:bg-blue-700' : 'bg-[#00053d] hover:bg-blue-950'
                         }`}
                     >
                       {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
@@ -133,7 +133,7 @@ const AllUser = () => {
                   <td className="p-3 border border-gray-200 space-x-2">
                     <button
                       onClick={() => handleBlockUser(user.email, user.status)}
-                      className={`font-bold px-3 py-1 rounded  hover:bg-slate-500 transition duration-200 ${user.status === 'blocked' ? 'bg-slate-300  text-blue-950' : 'bg-black text-white'}`}
+                      className={` px-3 py-1 rounded  hover:bg-slate-500 transition duration-200 ${user.status === 'blocked' ? 'bg-slate-300  text-blue-950' : 'bg-black text-white'}`}
                     >
                       {user.status === 'blocked' ? 'Unblock' : 'Block'}
                     </button>
