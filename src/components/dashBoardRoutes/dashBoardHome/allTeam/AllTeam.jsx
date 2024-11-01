@@ -86,6 +86,7 @@ const AllTeam = () => {
               <thead className="bg-[#00053d] ">
                 <tr>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Team Name</th>
+                  <th className="p-4 text-left text-gray-200 font-semibold uppercase">Task</th>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Admin</th>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Members</th>
                   <th className="p-4 text-left text-gray-200 font-semibold uppercase">Actions</th>
@@ -102,6 +103,12 @@ const AllTeam = () => {
                         {team?.teamName}
                       </Link>
                     </td>
+                    <td>  <Link
+                        to={`/dashboard/teamTask/${team?.teamName}`}
+                        className="bg-slate-300 rounded-sm px-2 py-1  text-gray-800 text-md"
+                      >
+                        See Task
+                      </Link></td>
                     <td className="p-4 text-gray-700 text-base opacity-90">{team.displayName}</td>
                     <td className="p-4 text-gray-700 text-base opacity-80">{team.teamMembers.length}</td>
                     <td className="p-4">
