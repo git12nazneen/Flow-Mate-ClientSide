@@ -565,7 +565,7 @@ const TeamTask = () => {
                 <div className="text-sm bg-blue-100 text-blue-400 font-bold px-2 py-1 rounded-3xl  mb-2 uppercase">
                   {task?.priority}
                 </div>
-                
+
               </div>
               {/* Priority */}
 
@@ -594,7 +594,7 @@ const TeamTask = () => {
               </div>
 
               <div className="flex items-center mb-3">
-                
+
                 <h1 className="pr-3 text-gray-600">See your task: </h1>
                 <Link
                   to={`/dashboard/taskDetails/${task._id}`}
@@ -602,8 +602,8 @@ const TeamTask = () => {
                 >
                   <span>See Details</span>
                 </Link>
-                </div>
-            
+              </div>
+
 
               {/* Delete and Edit Icons */}
               <div className="flex justify-between gap-1">
@@ -651,7 +651,7 @@ const TeamTask = () => {
                       <RiDeleteBin6Line />
                     </span>
                   </div>
-                 
+
                   <div className="p-2 border bg-blue-200 rounded-sm">
                     {task.email === user.email ? (
                       <Link to={`/dashboard/updateTask/${task._id}`}>
