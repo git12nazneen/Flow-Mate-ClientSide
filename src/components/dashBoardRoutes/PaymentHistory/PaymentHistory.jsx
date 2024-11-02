@@ -2,12 +2,13 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 import PageHeader from "@/components/pageHeader/PageHeader";
 import { Button } from "@/components/ui/button";
 import UseAxiosCommon from "@/hooks/UseAxiosCommon";
+import UseAxiosSecure from "@/hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 
 const PaymentHistory = () => {
-  const axiosCommon = UseAxiosCommon();
+  const axiosSecure = UseAxiosSecure();
   const {
     data: payment = [],
     isLoading,
@@ -16,7 +17,7 @@ const PaymentHistory = () => {
   } = useQuery({
     queryKey: ["payment"],
     queryFn: async () => {
-      const { data } = await axiosCommon.get("/payments/payment");
+      const { data } = await axiosSecure.get("/payments/payment");
       return data;
     },
   });
