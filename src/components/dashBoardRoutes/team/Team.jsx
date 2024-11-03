@@ -113,7 +113,7 @@ const Team = () => {
   if (isError) {
     return <div className="text-red-500">Error loading members....</div>;
   }
-
+console.log(team?.teamLeader === userss[0]?._id)
   return (
     <>
       <UpperNavigation />
