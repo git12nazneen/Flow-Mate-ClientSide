@@ -13,14 +13,24 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 const Team = () => {
   const axiosCommon = UseAxiosCommon();
   const initialTeam = useLoaderData();
-
   const { boardName, teamName } = initialTeam;
-
   const [team, setTeam] = useState(initialTeam); // Use state to manage team data
+
+  // Select the user from Redux store
   const user = useSelector((state) => state.auth.user);
   const email = user?.email;
 
-  // Fetch users
+  // Loading state for the component
+  const [isUserLoading, setIsUserLoading] = useState(true);
+
+  useEffect(() => {
+    // Set loading to false once user data is loaded
+    if (user) {
+      setIsUserLoading(false);
+    }
+  }, [user]);
+
+  // Fetch all users
   const {
     data: users = [],
     refetch,
@@ -35,14 +45,15 @@ const Team = () => {
   });
 
   // Fetch the current logged-in user
-  const { data: userss = {}, isLoading: loading } = useQuery({
-    queryKey: ["data", email],
-    queryFn: async () => {
-      const res = await axiosCommon.get(`/users?email=${email}`);
-      return res.data[0];
-    },
-    enabled: !!email,
-  });
+const { data: userss = {}, isLoading: loading } = useQuery({
+  queryKey: ["data", email],
+  queryFn: async () => {
+    const res = await axiosCommon.get(`/users?email=${email}`);
+    return res.data; 
+  },
+  enabled: !!email,
+});
+
 
   // Fetch user teams
   const {
@@ -63,11 +74,9 @@ const Team = () => {
     ?.map((memberId) => users.find((user) => user?._id === memberId))
     ?.filter((member) => member !== undefined) || [];
 
-
   // Remove member logic
   const handleRemoveMember = async (id) => {
     try {
-      // Show confirmation alert before proceeding
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -78,18 +87,13 @@ const Team = () => {
         confirmButtonText: "Yes, remove the member!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          // Proceed to remove the member if confirmed
           await axiosCommon.delete(`/delete/${team._id}/${id}`);
-
-          // Update the team members in state
           setTeam((prevTeam) => ({
             ...prevTeam,
             teamMembers: prevTeam.teamMembers.filter(
               (memberId) => memberId !== id
             ),
           }));
-
-          // Show success alert
           Swal.fire({
             title: "Deleted!",
             text: "The member has been removed.",
@@ -105,8 +109,10 @@ const Team = () => {
     }
   };
 
+
+
   // Loading state
-  if (isLoading || loading || loadingTeam) {
+  if (isLoading || loading || loadingTeam || isUserLoading) {
     return <Loader />;
   }
 
@@ -121,7 +127,7 @@ const Team = () => {
       <div className="md:w-[1050px] mx-auto mt-8">
         <section className="container p-10 mx-auto">
           <div className="flex flex-col lg:flex-row justify-between gap-x-3 mb-6">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 ">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
               Team {team?.teamName} Members
             </h2>
 
@@ -131,8 +137,8 @@ const Team = () => {
                 boardName={boardName}
                 teamName={teamName}
               />
-
-              {team?.teamLeader === userss[0]?._id && (
+              {/* Render AddTeamMember only if current user is the team leader */}
+              {team?.teamLeader === userss?._id && userss && (
                 <AddTeamMember refetch={refetch} team={team} />
               )}
             </div>
@@ -158,15 +164,15 @@ const Team = () => {
                       <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
                         Email
                       </th>
-                      {team?.teamLeader === userss[0]?._id &&
+                      {team?.teamLeader === userss?._id && (
                         <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
                           Actions
                         </th>
-                      }
+                      )}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredMembers && filteredMembers?.map((member) => (
+                    {filteredMembers?.map((member) => (
                       <tr
                         key={member._id}
                         className="hover:bg-gray-50 transition-colors duration-150"
@@ -175,14 +181,10 @@ const Team = () => {
                           <div className="flex items-center gap-x-2">
                             <img
                               className="object-cover w-10 h-10 rounded-full"
-                              src={
-                                member?.photo
-                              }
+                              src={member?.photo}
                               alt={member.name}
                             />
-                            <span className="font-medium">
-                              {member?.name}
-                            </span>
+                            <span className="font-medium">{member?.name}</span>
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -191,16 +193,17 @@ const Team = () => {
                         <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {member.email}
                         </td>
-
-                        {team?.teamLeader === userss[0]?._id && (
+                        {team?.teamLeader === userss?._id && (
                           <td className="px-4 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
                               <button
                                 onClick={() => handleRemoveMember(member._id)}
-                                disabled={member?.role === "team-admin"} // Disable button if the member is a 'team-admin'
-                                className={`text-white p-2 rounded-md bg-red-500 hover:bg-red-600 duration-75 
-                              ${member?.role === "team-admin" ? "opacity-50 cursor-not-allowed" : ""
-                                  }`}
+                                disabled={member?.role === "team-admin"}
+                                className={`text-white p-2 rounded-md bg-red-500 hover:bg-red-600 duration-75 ${
+                                  member?.role === "team-admin"
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : ""
+                                }`}
                               >
                                 <svg
                                   width="20"
@@ -210,11 +213,11 @@ const Team = () => {
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
-                                    fill="currentColor"
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                  ></path>
+                                    d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12.5C11 13.3284 10.3284 14 9.5 14H5.5C4.67157 14 4 13.3284 4 12.5V4H3.5C3.22386 4 3 3.77614 3 3.5ZM5 4V12.5C5 12.7761 5.22386 13 5.5 13H9.5C9.77614 13 10 12.7761 10 12.5V4H5Z"
+                                    fill="white"
+                                    fillRule="evenodd"
+                                    clipRule="evenodd"
+                                  />
                                 </svg>
                               </button>
                             </div>
