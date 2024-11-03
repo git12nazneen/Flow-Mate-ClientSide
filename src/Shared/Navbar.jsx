@@ -41,13 +41,13 @@ function Navbar() {
   const [isAdmin, isAdminLoading] = UseAdmin();
   const links = user
     ? [
-        ...defaultLinks,
-        {
-          route: isAdmin ? "/dashboard/admin" : "/dashboard",
-          name: isAdminLoading ? "Loading..." : "Dashboard",
-          badgeCount: 0,
-        },
-      ]
+      ...defaultLinks,
+      {
+        route: isAdmin ? "/dashboard/admin" : "/dashboard",
+        name: isAdminLoading ? "Loading..." : "Dashboard",
+        badgeCount: 0,
+      },
+    ]
     : defaultLinks;
 
   const [menu, setMenu] = useState(false);
@@ -117,9 +117,8 @@ function Navbar() {
 
       {/* MOBILE */}
       <div
-        className={`block text lg:hidden shadow-sm fixed top-0 w-full z-[999] bg-white py-4 animate-in fade-in zoom-in ${
-          menu ? "bg-primary py-2" : ""
-        }`}
+        className={`block text lg:hidden shadow-sm fixed top-0 w-full z-[999] bg-white py-4 animate-in fade-in zoom-in ${menu ? "bg-primary py-2" : ""
+          }`}
       >
         <div className="flex justify-between mx-[10px]">
           <Link to="/">
@@ -134,7 +133,7 @@ function Navbar() {
               <X className="cursor-pointer text-black" onClick={toggleMenu} />
             ) : (
               <img
-                src="../../public/logo/nenu.svg"
+                src='https://i.ibb.co.com/55qdSRv/icons8-hamburger-menu-48.png'
                 alt="logo"
                 className="cursor-pointer"
                 onClick={toggleMenu}

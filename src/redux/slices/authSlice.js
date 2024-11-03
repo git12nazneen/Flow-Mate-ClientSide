@@ -1,5 +1,5 @@
 // authSlice.js
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -8,9 +8,8 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
-  getIdToken,
-} from "firebase/auth";
-import auth from "../../../Firebase/Firebase.config";
+} from 'firebase/auth';
+import auth from '../../../Firebase/Firebase.config';
 
 // Initialize Google Auth Provider
 const googleProvider = new GoogleAuthProvider();
@@ -18,7 +17,6 @@ const googleProvider = new GoogleAuthProvider();
 // Initial state
 const initialState = {
   user: null,
-  token: localStorage.getItem("authToken") || null,
   isAuthenticated: false,
   loading: true,
   error: null,
@@ -26,98 +24,76 @@ const initialState = {
 
 // Async actions for Redux Toolkit
 export const createUser = createAsyncThunk(
-  "auth/createUser",
+  'auth/createUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Fetch token from Firebase
-      const token = localStorage.getItem("authToken") || null;
-
-      // Return both user data and token
+      // Extract serializable user data
       const userData = {
         uid: user.uid,
         email: user.email,
-        token: token,
       };
 
       return userData;
     } catch (error) {
-      return rejectWithValue(error.message || "Failed to create user");
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const signInWithGoogle = createAsyncThunk(
-  "auth/signInWithGoogle",
+  'auth/signInWithGoogle',
   async (_, { rejectWithValue }) => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      // Fetch token from Firebase
-      const token = localStorage.getItem("authToken") || null;
-
       const userData = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        token: token,
+        uid: result.user.uid,
+        email: result.user.email,
+        displayName: result.user.displayName,
+        photoURL: result.user.photoURL,
       };
 
       return userData;
     } catch (error) {
-      return rejectWithValue(error.message || "Google sign-in failed");
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const signInWithEmail = createAsyncThunk(
-  "auth/signInWithEmail",
+  'auth/signInWithEmail',
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const user = result.user;
-
-      // Fetch token from Firebase
-      const token = await getIdToken(user);
-
       const userData = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        token: token,
+        uid: result.user.uid,
+        email: result.user.email,
+        displayName: result.user.displayName,
+        photoURL: result.user.photoURL,
       };
 
       return userData;
     } catch (error) {
-      return rejectWithValue(error.message || "Email sign-in failed");
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const logout = createAsyncThunk(
-  "auth/logout",
+  'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
-      localStorage.removeItem("authToken");
-      return null;
     } catch (error) {
-      return rejectWithValue(error.message || "Logout failed");
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const updateUserProfile = createAsyncThunk(
-  "auth/updateUserProfile",
+  'auth/updateUserProfile',
   async ({ name, photo }, { rejectWithValue }) => {
     try {
       if (auth.currentUser) {
@@ -131,33 +107,25 @@ export const updateUserProfile = createAsyncThunk(
           photoURL: photo,
         };
       }
-      return rejectWithValue("No user is signed in.");
+      return rejectWithValue('No user is signed in.');
     } catch (error) {
-      return rejectWithValue(error.message || "Profile update failed");
+      return rejectWithValue(error.message);
     }
   }
 );
 
 // Setup listener to manage user authentication state
 export const fetchCurrentUser = createAsyncThunk(
-  "auth/fetchCurrentUser",
+  'auth/fetchCurrentUser',
   async (_, { dispatch }) => {
     return new Promise((resolve) => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        dispatch(clearUser());
-        resolve();
-        return;
-      }
-      onAuthStateChanged(auth, async (user) => {
+      onAuthStateChanged(auth, (user) => {
         if (user) {
-          const token = localStorage.getItem("authToken") || null;
           const userData = {
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
-            token: token,
           };
 
           dispatch(setUser(userData));
@@ -171,18 +139,16 @@ export const fetchCurrentUser = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
-      state.token = action.payload.token; // Store token in state
       state.isAuthenticated = !!action.payload; // Set isAuthenticated based on payload
       state.loading = false; // Set loading to false after setting user
     },
     clearUser: (state) => {
       state.user = null;
-      state.token = null; // Clear token when logging out
       state.isAuthenticated = false; // Clear authentication state
       state.loading = false; // Set loading to false when clearing user
     },
@@ -197,7 +163,6 @@ const authSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.token = action.payload.token; // Set token after user creation
         state.error = null;
         state.loading = false; // Set loading to false when fulfilled
       })
@@ -210,7 +175,6 @@ const authSlice = createSlice({
       })
       .addCase(signInWithGoogle.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.token = action.payload.token; // Set token after Google sign-in
         state.error = null;
         state.loading = false; // Set loading to false when fulfilled
       })
@@ -223,7 +187,6 @@ const authSlice = createSlice({
       })
       .addCase(signInWithEmail.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.token = action.payload.token; // Set token after email sign-in
         state.error = null;
         state.loading = false; // Set loading to false when fulfilled
       })
@@ -236,7 +199,6 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
-        state.token = null; // Clear token on logout
         state.error = null;
         state.loading = false; // Set loading to false when fulfilled
       })
