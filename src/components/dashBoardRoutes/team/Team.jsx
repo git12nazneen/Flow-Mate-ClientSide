@@ -16,8 +16,7 @@ const Team = () => {
 
   const { boardName, teamName } = initialTeam;
 
-  // Use state to manage team data and provide a default fallback value
-  const [team, setTeam] = useState(initialTeam || { teamMembers: [] });
+  const [team, setTeam] = useState(initialTeam); // Use state to manage team data
   const user = useSelector((state) => state.auth.user);
   const email = user?.email;
 
@@ -59,12 +58,11 @@ const Team = () => {
     enabled: !!user?.email,
   });
 
-  // Filter members of the team, safely handling undefined values
+  // Filter members of the team
   const filteredMembers = team?.teamMembers
-    ? team.teamMembers
-      .map((memberId) => users.find((user) => user._id === memberId))
-      .filter((member) => member !== undefined)
-    : [];
+    ?.map((memberId) => users.find((user) => user?._id === memberId))
+    ?.filter((member) => member !== undefined) || [];
+
 
   // Remove member logic
   const handleRemoveMember = async (id) => {
@@ -168,7 +166,7 @@ const Team = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredMembers?.map((member) => (
+                    {filteredMembers && filteredMembers?.map((member) => (
                       <tr
                         key={member._id}
                         className="hover:bg-gray-50 transition-colors duration-150"
