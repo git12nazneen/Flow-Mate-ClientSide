@@ -51,7 +51,7 @@ const DragAndDropTaskManager = () => {
 
   // Function to update task stage in backend
   const updateTaskStage = async (taskId, newStage) => {
-    console.log("Updating task stage:", taskId, newStage);
+    // console.log("Updating task stage:", taskId, newStage);
 
 
     const update = { newStage };

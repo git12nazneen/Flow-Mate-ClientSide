@@ -49,10 +49,10 @@ const teamitems = [
 const OurTeams = () => {
     useEffect(() => {
         AOS.init(); // Initialize AOS
-    }, []);
+    }, []); // Empty dependency array to prevent infinite loop
 
     return (
-        <div className="max-w-7xl mx-auto bg-transparent"> {/* Ensures transparent background */}
+        <div className="max-w-7xl mx-auto bg-transparent">
             <div className="flex justify-center mx-auto pb-10">
                 <div className="my-5 lg:my-0">
                     <h2 className="text-center text-xl lg:text-4xl md:text-4xl font-bold leading-8 text-slate-800 pb-5">
@@ -64,10 +64,10 @@ const OurTeams = () => {
                 </div>
             </div>
 
-            <div className="w-full px-10 pt-0 bg-transparent"> {/* Transparent background */}
+            <div className="w-full px-10 pt-0 bg-transparent">
                 <Marquee
                     direction="left"
-                    gradient  // Removes any default gradient
+                    gradient={false} // Removes any default gradient
                     autoFill
                     speed={20}
                     pauseOnHover
@@ -76,16 +76,15 @@ const OurTeams = () => {
                     {teamitems.map((item, index) => (
                         <div key={index} className="logo-container mr-[89px]">
                             <div
-                                key={index}
                                 className="relative mt-16 mb-32 sm:mb-24 transform transition-transform duration-300 hover:scale-105 rounded-md"
                             >
-                                <div className="rounded overflow-hidden shadow-md bg-transparent  hover:bg-sky-50 transition-all duration-300 w-64 lg:h-60 h-96 flex flex-col justify-between mt-10">
+                                <div className="rounded overflow-hidden shadow-md bg-transparent hover:bg-sky-50 transition-all duration-300 w-64 lg:h-60 h-96 flex flex-col justify-between mt-10">
                                     <div className="absolute -mt-20 w-full flex justify-center">
                                         <div className="h-32 w-32">
                                             <img
                                                 src={item.image}
                                                 alt={`Display Picture of ${item.name}`}
-                                                className="rounded-full object-cover h-full w-full shadow-md bg-transparent" // Ensure transparent background
+                                                className="rounded-full object-cover h-full w-full shadow-md bg-transparent"
                                             />
                                         </div>
                                     </div>

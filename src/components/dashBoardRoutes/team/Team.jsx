@@ -59,9 +59,10 @@ const Team = () => {
   });
 
   // Filter members of the team
-  const filteredMembers = team.teamMembers
-    .map((memberId) => users.find((user) => user._id === memberId))
-    .filter((member) => member !== undefined);
+  const filteredMembers = team?.teamMembers
+    ?.map((memberId) => users.find((user) => user?._id === memberId))
+    ?.filter((member) => member !== undefined) || [];
+
 
   // Remove member logic
   const handleRemoveMember = async (id) => {
@@ -158,14 +159,14 @@ console.log(team?.teamLeader === userss[0]?._id)
                         Email
                       </th>
                       {team?.teamLeader === userss[0]?._id &&
-                      <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
-                        Actions
-                      </th>
+                        <th className="py-4 px-4 text-sm font-semibold text-gray-700 border-b border-gray-200 text-left">
+                          Actions
+                        </th>
                       }
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredMembers?.map((member) => (
+                    {filteredMembers && filteredMembers?.map((member) => (
                       <tr
                         key={member._id}
                         className="hover:bg-gray-50 transition-colors duration-150"
@@ -190,7 +191,7 @@ console.log(team?.teamLeader === userss[0]?._id)
                         <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {member.email}
                         </td>
-                       
+
                         {team?.teamLeader === userss[0]?._id && (
                           <td className="px-4 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
@@ -198,9 +199,8 @@ console.log(team?.teamLeader === userss[0]?._id)
                                 onClick={() => handleRemoveMember(member._id)}
                                 disabled={member?.role === "team-admin"} // Disable button if the member is a 'team-admin'
                                 className={`text-white p-2 rounded-md bg-red-500 hover:bg-red-600 duration-75 
-                              ${
-                             member?.role === "team-admin" ? "opacity-50 cursor-not-allowed" : ""
-                             }`}
+                              ${member?.role === "team-admin" ? "opacity-50 cursor-not-allowed" : ""
+                                  }`}
                               >
                                 <svg
                                   width="20"

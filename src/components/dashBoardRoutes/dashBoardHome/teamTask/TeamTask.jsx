@@ -34,7 +34,7 @@ import UpperNavigation from "@/components/admin/elements/upperNavigation/UpperNa
 const TeamTask = () => {
   const axiosCommon = UseAxiosCommon();
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user); // Log user for debugging
+  // console.log("user", user); // Log user for debugging
   // track user
   const [elapsedTime, setElapsedTime] = useState({}); // Track elapsed time for tasks
   const [timers, setTimers] = useState({}); // Track timers for each task
@@ -83,7 +83,7 @@ const TeamTask = () => {
 
   // Log teamName only when it changes
   useEffect(() => {
-    console.log("teamName from loader:", teamName);
+    // console.log("teamName from loader:", teamName);
   }, [teamName]); // Add teamName as a dependency to log only when it changes
 
   const {
@@ -136,7 +136,7 @@ const TeamTask = () => {
     if (result.isConfirmed) {
       try {
         const res = await axiosCommon.delete(`/createTask/${task._id}`);
-        console.log("Delete response:", res.data); // Log the response for debugging
+        // console.log("Delete response:", res.data); // Log the response for debugging
 
         // Check the response message for success
         if (res.data.message === "Task deleted successfully") {
@@ -295,7 +295,7 @@ const TeamTask = () => {
       });
       return;
     }
-    console.log(teamName);
+    // console.log(teamName);
 
 
     // Prepare tasks for CSV export
@@ -346,8 +346,8 @@ const TeamTask = () => {
 
   let isUploading = false; // Add a flag to track uploading status
   const onDrop = async (acceptedFiles, taskId) => {
-    console.log("Accepted Files:", acceptedFiles);
-    console.log("Before Upload - Task ID:", taskId);
+    // console.log("Accepted Files:", acceptedFiles);
+    // console.log("Before Upload - Task ID:", taskId);
 
     if (!taskId) {
       console.error("Task ID is invalid!");
@@ -360,7 +360,12 @@ const TeamTask = () => {
     }
 
     if (isUploading) {
-      console.log("Upload is already in progress. Please wait.");
+      // console.log("Upload is already in progress. Please wait.");
+      Swal.fire({
+        icon: "info",
+        title: "Upload in Progress",
+        text: "Please wait for the current upload to complete.",
+      });
       return;
     }
 
@@ -380,16 +385,16 @@ const TeamTask = () => {
             formData
           );
 
-          console.log("Cloudinary upload response:", response.data);
+          // console.log("Cloudinary upload response:", response.data);
           return response.data.secure_url; // Collect the secure URL for each file
         })
       );
 
-      console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
+      // console.log("Uploaded file URLs from Cloudinary:", cloudinaryUrls);
 
       // Send all file URLs to the backend for storage
       const url = `/createTask/file/${taskId}`;
-      console.log("Requesting URL to server:", url);
+      // console.log("Requesting URL to server:", url);
 
       const response = await axiosCommon.put(
         url,
@@ -412,12 +417,12 @@ const TeamTask = () => {
         imageAlt: "Custom image",
       });
 
-      console.log("Files successfully saved on the server:", response.data);
+      // console.log("Files successfully saved on the server:", response.data);
 
       // Update file count for the user
       const updateFileCountUrl = `/users/update-file-count/${userEmail}`;
       await axiosCommon.put(updateFileCountUrl);
-      console.log("File count updated for user:", userEmail);
+      // console.log("File count updated for user:", userEmail);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -565,7 +570,7 @@ const TeamTask = () => {
                 <div className="text-sm bg-blue-100 text-blue-400 font-bold px-2 py-1 rounded-3xl  mb-2 uppercase">
                   {task?.priority}
                 </div>
-                
+
               </div>
               {/* Priority */}
 
@@ -594,7 +599,7 @@ const TeamTask = () => {
               </div>
 
               <div className="flex items-center mb-3">
-                
+
                 <h1 className="pr-3 text-gray-600">See your task: </h1>
                 <Link
                   to={`/dashboard/taskDetails/${task._id}`}
@@ -602,8 +607,8 @@ const TeamTask = () => {
                 >
                   <span>See Details</span>
                 </Link>
-                </div>
-            
+              </div>
+
 
               {/* Delete and Edit Icons */}
               <div className="flex justify-between gap-1">
@@ -626,10 +631,10 @@ const TeamTask = () => {
                       onChange: (event) => {
                         const files = event.target.files;
                         if (files.length > 0) {
-                          console.log(
-                            "Before calling onDrop - Task ID:",
-                            task._id
-                          );
+                          // console.log(
+                          //   "Before calling onDrop - Task ID:",
+                          //   task._id
+                          // );
                           onDrop(Array.from(files), task._id); // Pass task ID to onDrop
                         }
                       },
@@ -651,7 +656,7 @@ const TeamTask = () => {
                       <RiDeleteBin6Line />
                     </span>
                   </div>
-                 
+
                   <div className="p-2 border bg-blue-200 rounded-sm">
                     {task.email === user.email ? (
                       <Link to={`/dashboard/updateTask/${task._id}`}>

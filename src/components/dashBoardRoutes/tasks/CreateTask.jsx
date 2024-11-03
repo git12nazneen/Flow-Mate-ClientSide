@@ -34,16 +34,26 @@ export function CreateTask({ boardName, teamName, team }) {
   const [taskTitle, setTaskTitle] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
   const [stage, setStage] = useState("");
-  const [workerMail, setworkerMail] = useState("");
+  const [workerMail, setWorkerMail] = useState("");
   const [priority, setPriority] = useState("");
   const [loading, setLoading] = useState(false);
   const axiosCommon = UseAxiosCommon();
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
-  // Get query client
   const queryClient = useQueryClient();
 
-  // data post
+  // Get users based on the team name from the backend
+  const { data: users = [] } = useQuery({
+    queryKey: ["filteredUsers", team?.teamMembers],
+    queryFn: async () => {
+      const res = await axiosCommon.get(`/users/team/${teamName}`);
+      return res.data; // Assuming the response is an array of user objects
+    },
+    enabled: !!team?.teamMembers, // Only fetch when team members are available
+  });
+  // console.log(users); // Debugging line to check users fetched
+
+  // Data post mutation
   const { mutateAsync } = useMutation({
     mutationFn: async (taskData) => {
       const { data } = await axiosCommon.post(`/createTask`, taskData);
@@ -52,47 +62,19 @@ export function CreateTask({ boardName, teamName, team }) {
     onSuccess: () => {
       toast.success("Task Added Successfully!");
       setLoading(false);
-
-      // Invalidate and refetch tasks (if necessary)
-      queryClient.invalidateQueries("tasks"); 
+      queryClient.invalidateQueries("tasks");
       navigate(`/dashboard/all-team`);
     },
-  });
-
-  // get the users
-  const { data: users = [] } = useQuery({
-    queryKey: ["data", user?.email],
-    queryFn: async () => {
-      const res = await axiosCommon.get(`/users`);
-      return Array.isArray(res.data) ? res.data : [res.data];
+    onError: () => {
+      toast.error("Failed to create task");
+      setLoading(false);
     },
-    enabled: !!user?.email,
   });
-  // Get the current user's ID
-  const currentUser = users.length > 0 ? users[0] : null;
-  const userId = currentUser?._id;
-  const allMembersId = team?.teamMembers || [];
-
-  // Check if the current user is part of the team members
-  const filteredMembers = allMembersId.includes(userId)
-    ? users.filter((user) => allMembersId.includes(user._id))
-    : [];
-
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Log the form values before submitting to verify the data
-    console.log("Form Values:", {
-      taskTitle,
-      assignedTo,
-      stage,
-      priority,
-      startDate,
-      workerMail,
-    });
-
     const taskData = {
       taskTitle,
       assignedTo,
@@ -102,29 +84,20 @@ export function CreateTask({ boardName, teamName, team }) {
       startDate: startDate.toISOString(),
       email: user?.email,
       userName: user?.displayName,
-      boardName: boardName,
-      teamName: teamName,
+      boardName,
+      teamName,
     };
 
     try {
-      console.log("Sending taskData to /createTask");
-      const response = await mutateAsync(taskData);
-      console.log(response);
-
-      // Show a success toast notification
-      toast.success("Task created successfully");
-
-      // Optionally reset form fields after successful submission
+      await mutateAsync(taskData);
+      // Clear form fields after successful submission
       setTaskTitle("");
       setAssignedTo("");
       setStage("");
       setPriority("");
       setStartDate(new Date());
+      setWorkerMail("");
     } catch (error) {
-      console.error("Error creating task:", error);
-
-      console.log("Error creating task:", error);
-
       toast.error("Failed to create task");
     }
   };
@@ -132,14 +105,14 @@ export function CreateTask({ boardName, teamName, team }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" bg-[#00053d] hover:bg-black text-white  py-2 px-4 rounded hover:text-white" variant="outline">
-          Create task{" "}
+        <Button className="bg-[#00053d] hover:bg-black text-white py-2 px-4 rounded" variant="outline">
+          Create task
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create Task</DialogTitle>
-          <DialogDescription>Here you are creating task</DialogDescription>
+          <DialogDescription>Here you are creating a task</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 py-4">
@@ -150,6 +123,7 @@ export function CreateTask({ boardName, teamName, team }) {
                 placeholder="Enter task title"
                 value={taskTitle}
                 onChange={(e) => setTaskTitle(e.target.value)}
+                required
               />
             </div>
             <div className="flex flex-col lg:flex-row justify-between gap-6">
@@ -157,12 +131,13 @@ export function CreateTask({ boardName, teamName, team }) {
                 <Label htmlFor="assign">Assign Task To</Label>
                 <Select
                   onValueChange={(value) => {
-                    const selectedMember = filteredMembers.find(
-                      (member) => member.name === value
-                    );
+                    const selectedMember = users.find((member) => member.name === value);
                     if (selectedMember) {
                       setAssignedTo(selectedMember.name);
-                      setworkerMail(selectedMember.email);
+                      setWorkerMail(selectedMember.email);
+                    } else {
+                      setAssignedTo("");
+                      setWorkerMail("");
                     }
                   }}
                 >
@@ -171,7 +146,7 @@ export function CreateTask({ boardName, teamName, team }) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {filteredMembers.map((member) => (
+                      {users.map((member) => (
                         <SelectItem key={member._id} value={member.name}>
                           {member.name}
                         </SelectItem>
@@ -187,20 +162,21 @@ export function CreateTask({ boardName, teamName, team }) {
                   type="email"
                   placeholder="example@gmail.com"
                   value={workerMail}
-                  onChange={(e) => setworkerMail(e.target.value)}
+                  onChange={(e) => setWorkerMail(e.target.value)}
+                  required
                 />
               </div>
             </div>
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div className="grid gap-2 w-full">
                 <Label htmlFor="stage">Select Stage</Label>
-                <Select onValueChange={setStage}>
+                <Select onValueChange={setStage} required>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Stage" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Todo</SelectLabel>
+                      <SelectLabel>Stages</SelectLabel>
                       <SelectItem value="inProgress">In Progress</SelectItem>
                       <SelectItem value="done">Completed</SelectItem>
                       <SelectItem value="todo">Todo</SelectItem>
@@ -208,7 +184,6 @@ export function CreateTask({ boardName, teamName, team }) {
                   </SelectContent>
                 </Select>
               </div>
-
               <div className="grid gap-2 w-full">
                 <Label htmlFor="date">Task Date</Label>
                 <div className="relative">
@@ -217,17 +192,14 @@ export function CreateTask({ boardName, teamName, team }) {
                     onChange={(date) => setStartDate(date)}
                     className="w-full p-2 border rounded"
                   />
-                  <span className="absolute right-3 top-2.5 text-gray-400">
-                    📅 {/* You can replace this with an icon if you want */}
-                  </span>
+                  <span className="absolute right-3 top-2.5 text-gray-400">📅</span>
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div className="grid text-start gap-2 w-full">
                 <Label htmlFor="priority">Priority Level</Label>
-                <Select onValueChange={setPriority}>
+                <Select onValueChange={setPriority} required>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select Priority Level" />
                   </SelectTrigger>

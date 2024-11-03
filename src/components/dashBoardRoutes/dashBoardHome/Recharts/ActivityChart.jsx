@@ -9,7 +9,7 @@ ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, T
 
 const ActivityChart = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user); // Log user for debugging
+  // console.log("user", user); // Log user for debugging
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const ActivityChart = () => {
       .get("https://flowmate-a-team-collaboration-tool.vercel.app/timerData")
       .then((response) => {
         const allData = response.data;
-        console.log("Fetched Data:", allData); // Debugging fetched data
+        // console.log("Fetched Data:", allData); // Debugging fetched data
 
         const filteredData = allData.filter(
           (item) => item.workerMail === user.email
@@ -29,7 +29,7 @@ const ActivityChart = () => {
           console.warn("No data found for the current user’s email.");
         }
 
-        const labels = filteredData.map((item) => item.taskTitle.slice(0,10));
+        const labels = filteredData.map((item) => item.taskTitle.slice(0, 10));
         const elapsedHours = filteredData.map((item) => {
           if (!item.elapsedTime) {
             console.warn("Missing elapsedTime for:", item);
